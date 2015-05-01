@@ -19,6 +19,8 @@ Development for this forums requires the following software to be installed:
 
 [WINDOWS](https://github.com/SeanNguyen/nusforums/wiki/Setting-thing-up---Windows-8)
 
+[UBUNTU] (https://github.com/SeanNguyen/nusforums/wiki/Setting-thing-up----Ubuntu)
+
 ## Securing (TODO)
 
 It is important to ensure that your NodeBB and database servers are secured. Bear these points in mind:
