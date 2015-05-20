@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('repoApp')
-  .config(function ($stateProvider) {
+var app = angular.module('ratingApp');
+app.config(function ($stateProvider) {
     $stateProvider
       .state('main', {
         url: '/',
