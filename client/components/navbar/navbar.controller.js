@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('repoApp')
+angular.module('ratingApp')
   .controller('NavbarCtrl', function ($scope, $location) {
     $scope.menu = [{
       'title': 'Home',
