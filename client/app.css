@@ -1,7 +1,11 @@
+/*Global stuff*/
+.container-fluid {
+    padding: 0px;
+}
 
-/**
- * Bootstrap Fonts
- */
+.navbar {
+    margin: 0px;
+}
 
 @font-face {
     font-family: 'Glyphicons Halflings';
