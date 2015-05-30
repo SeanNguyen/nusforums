@@ -22,4 +22,10 @@ app.controller('TopicsController', function($rootScope, $scope) {
 		$scope.showedTopics.splice(index, 1);
 		$rootScope.dataController.removeTopic(topicId);
 	}
+
+	$scope.getPreview = function(topic) {
+		var thread = topic.thread;
+		thread = thread.substring(0, 100) + '...';
+		return thread;
+	}
 });
