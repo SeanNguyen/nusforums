@@ -1,4 +1,5 @@
 #topics {
+	position: relative;
 	padding-top: 5em;
 }
 
@@ -15,6 +16,15 @@
 	border-bottom-style: solid;
 	border-bottom-color: #0288D1;
 	border-bottom-width: 0.1em;
+}
+
+#topics .topicContentView {
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.95);
+	top:0; bottom: 0;
+	left: 0; right: 0;
+	z-index: 1000;
+	padding-top: 10%;
 }
 
 #topics .topicContentView h2 {

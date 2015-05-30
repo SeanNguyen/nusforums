@@ -1,5 +1,5 @@
 <div ng-controller="TopicsController" class="container" id="topics">
-	<div ng-show="state === 'search'">
+	<div>
 		<div class="searchBox">
 			<div class="input-group input-group-lg">
 		    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword">
@@ -8,7 +8,7 @@
 		    	</span>
 	    </div><!-- /input-group -->
 		</div>
-		<div ng-repeat="topic in showedTopics" class="topicView">
+		<div ng-repeat="topic in showedTopics" class="topicView" ng-click="viewTopic(topic.id)">
 			<h4>{{topic.title}}</h4>
 			<h5>{{getPreview(topic)}}</h5>
 			<div class="actionBar">
@@ -24,7 +24,10 @@
 			</div>
 		</div>
 	</div>
-	<div ng-show="state === 'view'" class="topicContentView">
+	<div ng-show="state === 'view'" class="container topicContentView">
+		<button type="button" class="btn btn-default btn-danger" ng-click="closeTopic()">
+			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Close
+		</button>
 		<h2>{{currentTopic.title}}</h2>
 		<h4>{{currentTopic.thread}}</h4>
 		<div class="row" id="infoTag">

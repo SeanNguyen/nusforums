@@ -86,10 +86,13 @@ function DataController () {
 		return topics;
 	}
 
-	this.getTopic = function (index) {
-		var model = topics[index];
+	this.getTopic = function (id) {
 		//TODO: modify this with shadow copy (clone)
-		return model;
+		for (var i = topics.length - 1; i >= 0; i--) {
+			if(topics[i].id === id) {
+				return topics[i];
+			}
+		};
 	}
 
 	this.addTopic = function (model) {

@@ -4,7 +4,7 @@ var app = angular.module('ratingApp');
 var STATE = {search: 'search', view: 'view'};
 
 app.controller('TopicsController', function($rootScope, $scope) {
-	$scope.state = STATE.view;
+	$scope.state = STATE.search;
 	$scope.search = {keyword: ''};
 	$scope.showedTopics = $rootScope.dataController.getTopics();
 	$scope.currentTopic = $scope.showedTopics[0];
@@ -42,5 +42,15 @@ app.controller('TopicsController', function($rootScope, $scope) {
 	$scope.getAssetName = function(id) {
 		var model = $rootScope.dataController.getAsset(id);
 		return model.name;
+	}
+
+	$scope.viewTopic = function(id) {
+		var topic = $rootScope.dataController.getTopic(id);
+		$scope.currentTopic = topic;
+		$scope.state = STATE.view;
+	}
+
+	$scope.closeTopic = function() {
+		$scope.state = STATE.search;
 	}
 });
