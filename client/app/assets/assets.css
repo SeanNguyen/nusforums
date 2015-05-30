@@ -1,0 +1,27 @@
+#asset {
+	padding-top: 5em;
+}
+#asset .actionBar {
+	min-height: 50px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+#asset .assetView {
+	padding: 1em;
+	margin: 1em;
+
+	border-bottom-style: solid;
+	border-bottom-color: #0288D1;
+	border-bottom-width: 0.1em;
+}
+
+#asset h4 {
+	font-size: 2em;
+	font-weight: 200;
+}
+
+#asset h5 {
+	font-size: 1em;
+	font-weight: 400;
+}

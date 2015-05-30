@@ -1,4 +1,5 @@
 #topics {
+	position: relative;
 	padding-top: 5em;
 }
 
@@ -17,6 +18,56 @@
 	border-bottom-width: 0.1em;
 }
 
+#topics .topicContentView {
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.95);
+	top:0; bottom: 0;
+	left: 0; right: 0;
+	z-index: 1000;
+	padding-top: 10%;
+}
+
+#topics .topicContentView h2 {
+	font-size: 2em;
+	font-weight: 900;
+}
+
+#topics .topicContentView h4 {
+	font-size: 1.5em;
+	font-weight: 300;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-bottom-style: solid;
+	border-bottom-color: #E91E63;
+	border-bottom-width: 0.1em;
+}
+
+#topics #inputSection h5 {
+	font-weight: 700;
+	padding-left: 2em;
+	margin-top: 2em;
+}
+
+#topics #inputSection .input-group {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#topics #inputSection {
+	padding-bottom: 2em;
+	border-bottom-style: solid;
+	border-bottom-color: #0288D1;
+	border-bottom-width: 0.2em;
+}
+
+#topics .topicContentView #infoTag {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-bottom-style: solid;
+	border-bottom-color: #E91E63;
+	border-bottom-width: 0.3em;
+}
+
 #topics h4 {
 	font-size: 2em;
 	font-weight: 200;
@@ -25,4 +76,16 @@
 #topics h5 {
 	font-size: 1em;
 	font-weight: 400;
+}
+
+#topics .validation {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-bottom-style: solid;
+	border-bottom-color: #0288D1;
+	border-bottom-width: 0.1em;
+}
+
+#topics .validation .voteButtonGroup {
+	text-align: right;
 }
