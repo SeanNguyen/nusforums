@@ -1,0 +1,18 @@
+#predictor {
+	padding-top: 5em;
+}
+
+#predictor .actionBar {
+	min-height: 50px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+#predictor .predictorView {
+	padding: 1em;
+	margin: 1em;
+
+	border-bottom-style: solid;
+	border-bottom-color: #0288D1;
+	border-bottom-width: 0.1em;
+}
