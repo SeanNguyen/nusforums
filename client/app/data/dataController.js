@@ -33,6 +33,17 @@ function DataController () {
 						new PredictorModel("30", "Predictor 2", "Data Scientist")
 						];
 
+	var topics = [new TopicModel("1", "Google finance review"), 
+					new TopicModel("2", "Finance review of Apple"),
+					new TopicModel("3", "New year finance prediction"), 
+					new TopicModel("4", "Topic ABC"), 
+					new TopicModel("5", "Example"),
+					new TopicModel("6", "Google finance review"), 
+					new TopicModel("7", "Finance review of Apple"),
+					new TopicModel("8", "New year finance prediction"), 
+					new TopicModel("9", "Topic ABC"), 
+					new TopicModel("10", "Example")];
+
 	//public methods
 	this.getPredictors = function () {
 		//TODO: modify this with shadow copy (clone)
@@ -53,6 +64,30 @@ function DataController () {
 		for (var i = predictors.length - 1; i >= 0; i--) {
 			if(predictors[i].id === id) {
 				predictors.splice(i, 1);
+				break;
+			}
+		};
+	}
+
+	this.getTopics = function () {
+		//TODO: modify this with shadow copy (clone)
+		return topics;
+	}
+
+	this.getTopic = function (index) {
+		var model = topics[index];
+		//TODO: modify this with shadow copy (clone)
+		return model;
+	}
+
+	this.addTopic = function (model) {
+		topics.push(model);
+	}
+
+	this.removeTopic = function (id) {
+		for (var i = topics.length - 1; i >= 0; i--) {
+			if(topics[i].id === id) {
+				topics.splice(i, 1);
 				break;
 			}
 		};

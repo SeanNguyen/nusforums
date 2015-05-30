@@ -4,8 +4,9 @@ angular.module('ratingApp')
   .controller('NavbarCtrl', function ($scope, $location) {
     $scope.menu = [
       {'title': 'Home', 'link': '/'},
+      {'title': 'Topics', 'link': '/topics'},
       {'title': 'Predictors', 'link': '/predictors'},
-      {'title': 'Assets', 'link': '/assets'},
+      {'title': 'Assets', 'link': '/assets'}
     ];
 
     $scope.isCollapsed = true;
