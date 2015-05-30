@@ -4,7 +4,7 @@ var app = angular.module('ratingApp');
 var STATE = {search: 'search', view: 'view'};
 
 app.controller('TopicsController', function($rootScope, $scope) {
-	$scope.state = STATE.view;
+	$scope.state = STATE.search;
 	$scope.search = {keyword: ''};
 	$scope.showedTopics = $rootScope.dataController.getTopics();
 	$scope.currentTopic = $scope.showedTopics[0];

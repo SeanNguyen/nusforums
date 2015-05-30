@@ -6,7 +6,7 @@ angular.module('ratingApp')
       {'title': 'Home', 'link': '/'},
       {'title': 'Topics', 'link': '/topics'},
       {'title': 'Predictors', 'link': '/predictors'},
-      {'title': 'Assets', 'link': '/assets'},
+      {'title': 'Assets', 'link': '/assetsSearch'},
       {'title': 'Forums', 'link': 'http://localhost:4567'}
     ];
 
