@@ -37,7 +37,7 @@
 			<div class="col-xs-12">Prediction: </div>
 			<div class="col-xs-12">Validated By: </div>
 		</div>
-		<div class="row">
+		<div class="row" id="inputSection">
 			<h5>Add your validation</h5>
 			<div class="col-xs-12 col-sm-6">
 				<div class="input-group">
@@ -56,6 +56,22 @@
 				  <span class="input-group-addon" id="basic-addon1">Prediction</span>
 				  <input type="text" class="form-control" placeholder="Prediction" aria-describedby="basic-addon1">
 				</div>
+			</div>
+		</div>
+
+		<div class="row validation">
+			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(currentTopic.predictor)}}</div>
+			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(currentTopic.asset)}}</div>
+			<div class="col-xs-12 col-sm-4">Other info: </div>
+			<div class="col-xs-12">Prediction: </div>
+			<div class="col-xs-12">Validated By: </div>
+			<div class="row voteButtonGroup">
+				<button type="button" class="btn btn-default">
+						<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Agree
+				</button>
+				<button type="button" class="btn btn-default">
+						<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Disagree
+				</button>
 			</div>
 		</div>
 	</div>
