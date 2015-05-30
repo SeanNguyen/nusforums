@@ -10,4 +10,4 @@ var companySchema = new mongoose.Schema({
 	stockSticker: String,
 });
 
-mongoose.model('Company', companySchema);
+module.exports = mongoose.model('Company', companySchema);

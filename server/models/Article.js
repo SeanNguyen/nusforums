@@ -10,17 +10,4 @@ var articleSchema = new mongoose.Schema({
 	author: String,
 });
 
-articleSchema.pre('save', function(next) {
-	// get the current date
-	var now = new Date();
-
-	// change the updated_at to current
-	this.updated_at = now;
-
-	//if create_at not exists, add to that field
-	if (!this.created_at) {
-		this.created_at = now;
-	}
-});
-
 module.exports = mongoose.model('Article', articleSchema);

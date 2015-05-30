@@ -9,7 +9,7 @@ var assetPriceSchema = new mongoose.Schema({
 	flag_commidites: String,
 	startDate: Date,
 	endDate: Date,
-	price: float,
+	price: Number,
 });
 
 module.exports = mongoose.model('AssetPrice', assetPriceSchema);

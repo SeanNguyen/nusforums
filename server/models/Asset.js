@@ -6,7 +6,7 @@ var assetSchema = new mongoose.Schema({
 	flag_bond: String,
 	flag_index: String,
 	flag_currency: String,
-	flag_commidites: String,
+	flag_commidities: String,
 });
 
-mongoose.model('Asset', assetSchema);
+module.exports = mongoose.model('Asset', assetSchema);

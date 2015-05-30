@@ -8,3 +8,8 @@ mongoose.connect('mongodb://localhost/forumdb', function(err) {
 		console.log('connection successful');
 	}
 });
+require('./Article');
+require('./Asset');
+require('./AssetPrice');
+require('./Company');
+require('./Person');
