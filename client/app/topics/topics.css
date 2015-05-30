@@ -42,6 +42,17 @@
 	border-bottom-width: 0.1em;
 }
 
+#topics .topicContentView h5 {
+	font-weight: 700;
+	padding-left: 2em;
+	margin-top: 2em;
+}
+
+#topics .topicContentView .input-group{
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
 #topics .topicContentView #infoTag {
 	padding-top: 1em;
 	padding-bottom: 1em;
