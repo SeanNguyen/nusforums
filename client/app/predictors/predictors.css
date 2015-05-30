@@ -1,7 +1,6 @@
 #predictor {
 	padding-top: 5em;
 }
-
 #predictor .actionBar {
 	min-height: 50px;
 	text-align: right;
@@ -15,4 +14,14 @@
 	border-bottom-style: solid;
 	border-bottom-color: #0288D1;
 	border-bottom-width: 0.1em;
+}
+
+#predictor h4 {
+	font-size: 2em;
+	font-weight: 200;
+}
+
+#predictor h5 {
+	font-size: 1em;
+	font-weight: 400;
 }
