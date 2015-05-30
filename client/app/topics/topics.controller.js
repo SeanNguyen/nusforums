@@ -8,6 +8,7 @@ app.controller('TopicsController', function($rootScope, $scope) {
 	$scope.search = {keyword: ''};
 	$scope.showedTopics = $rootScope.dataController.getTopics();
 	$scope.currentTopic = $scope.showedTopics[0];
+	$scope.inputPost = new PostModel();
 
 	//public methods
 	$scope.onSearch = function() {
@@ -52,5 +53,13 @@ app.controller('TopicsController', function($rootScope, $scope) {
 
 	$scope.closeTopic = function() {
 		$scope.state = STATE.search;
+	}
+
+	$scope.addPost = function() {
+		var predictor = $scope.currentTopic.predictor;
+		var asset = $scope.currentTopic.asset;
+		var prediction = $scope.currentTopic.prediction;
+		var post = new PostModel('1', asset, predictor, prediction);
+		$scope.currentTopic.posts.push(post);
 	}
 });

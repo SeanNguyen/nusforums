@@ -54,6 +54,7 @@
 }
 
 #topics #inputSection {
+	padding-bottom: 2em;
 	border-bottom-style: solid;
 	border-bottom-color: #0288D1;
 	border-bottom-width: 0.2em;

@@ -34,7 +34,7 @@
 			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(currentTopic.predictor)}}</div>
 			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(currentTopic.asset)}}</div>
 			<div class="col-xs-12 col-sm-4">Other info: </div>
-			<div class="col-xs-12">Prediction: </div>
+			<div class="col-xs-12">Prediction: {{currentTopic.prediction}}</div>
 			<div class="col-xs-12">Validated By: </div>
 		</div>
 		<div class="row" id="inputSection">
@@ -42,28 +42,32 @@
 			<div class="col-xs-12 col-sm-6">
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">Predictor</span>
-				  <input type="text" class="form-control" placeholder="Predictor" aria-describedby="basic-addon1">
+				  <input type="text" class="form-control" placeholder="Predictor" aria-describedby="basic-addon1" ng-model="currentTopic.predictor">
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">Asset</span>
-				  <input type="text" class="form-control" placeholder="Asset" aria-describedby="basic-addon1">
+				  <input type="text" class="form-control" placeholder="Asset" aria-describedby="basic-addon1" ng-model="currentTopic.asset">
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">Prediction</span>
-				  <input type="text" class="form-control" placeholder="Prediction" aria-describedby="basic-addon1">
+				  <input type="text" class="form-control" placeholder="Prediction" aria-describedby="basic-addon1" ng-model="currentTopic.prediction">
 				</div>
+				<button type="button" class="btn btn-default btn-success col-xs-12" ng-click="addPost(inputPost)">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+				</button>
 			</div>
+			
 		</div>
 
-		<div class="row validation">
-			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(currentTopic.predictor)}}</div>
-			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(currentTopic.asset)}}</div>
+		<div class="row validation" ng-repeat="post in currentTopic.posts">
+			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(post.predictor)}}</div>
+			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(post.asset)}}</div>
 			<div class="col-xs-12 col-sm-4">Other info: </div>
-			<div class="col-xs-12">Prediction: </div>
+			<div class="col-xs-12">Prediction: post.prediction</div>
 			<div class="col-xs-12">Validated By: </div>
 			<div class="row voteButtonGroup">
 				<button type="button" class="btn btn-default">
