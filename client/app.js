@@ -16,5 +16,5 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
   });
 
 app.controller('AppController', function($rootScope) {
-
+	$rootScope.dataController = new DataController();
 });

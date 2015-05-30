@@ -1,13 +1,13 @@
 <div ng-controller="PredictorsController" class="container" id="predictor">
 	<div class="searchBox">
 		<div class="input-group input-group-lg">
-	    	<input type="text" class="form-control" placeholder="Search for...">
-		    <span class="input-group-btn">
+	    	<input type="text" class="form-control" placeholder="Search for..." ng-model="search.keyword">
+		    <span class="input-group-btn" ng-click="onSearch()">
 	        	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search </button>
 	    	</span>
     </div><!-- /input-group -->
 	</div>
-	<div ng-repeat="predictor in predictors" class="predictorView">
+	<div ng-repeat="predictor in showedPredictors" class="predictorView">
 		<h4>{{predictor.name}}</h4>
 		<h5>{{predictor.description}}</h5>
 		<div class="actionBar">
@@ -23,7 +23,7 @@
 			<button type="button" class="btn btn-default btn-warning">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Report
 			</button>
-			<button type="button" class="btn btn-default btn-danger">
+			<button type="button" class="btn btn-default btn-danger" ng-click="removePredictor($index)">
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 			</button>
 		</div>

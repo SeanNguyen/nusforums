@@ -10,7 +10,7 @@ var article = require('./controllers/ArticleController.js');
 module.exports = function(app) {
 
   // Insert routes below
-  //app.use('/api/things', require('./api/thing'));
+  app.use('/api/things', require('./api/thing'));
   /* Article */
   app.get('/articles', article.index);
   app.post('/articles', article.create);
