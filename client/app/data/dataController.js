@@ -33,7 +33,11 @@ function DataController () {
 						new PredictorModel("30", "Predictor 2", "Data Scientist")
 						];
 
-	var topics = [new TopicModel("1", "Google finance review", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus, nisl id consequat tristique, nisl leo maximus elit, a lobortis lorem tortor eget metus. Nulla ac lectus nec nibh blandit efficitur in eget ipsum. Ut facilisis libero mi, a efficitur leo laoreet finibus. Suspendisse dapibus eu ex vel mollis. Nunc sit amet aliquet ex. Nunc quis felis ut erat commodo lacinia eu at magna. Morbi maximus sagittis augue id malesuada. Curabitur vel fermentum orci, eget sodales tortor. Nam egestas ut leo non eleifend. Aenean ac pharetra massa. Integer arcu ex, molestie at lacinia id, blandit non mauris. Maecenas gravida leo id quam facilisis, ac faucibus quam sodales. Sed laoreet viverra dui, pellentesque maximus felis feugiat ut. Donec tortor lacus, sodales et elit eget, tincidunt pulvinar lorem."), 
+	var topics = [new TopicModel("1", 
+								"Google finance review", 
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus, nisl id consequat tristique, nisl leo maximus elit, a lobortis lorem tortor eget metus. Nulla ac lectus nec nibh blandit efficitur in eget ipsum. Ut facilisis libero mi, a efficitur leo laoreet finibus. Suspendisse dapibus eu ex vel mollis. Nunc sit amet aliquet ex. Nunc quis felis ut erat commodo lacinia eu at magna. Morbi maximus sagittis augue id malesuada. Curabitur vel fermentum orci, eget sodales tortor. Nam egestas ut leo non eleifend. Aenean ac pharetra massa. Integer arcu ex, molestie at lacinia id, blandit non mauris. Maecenas gravida leo id quam facilisis, ac faucibus quam sodales. Sed laoreet viverra dui, pellentesque maximus felis feugiat ut. Donec tortor lacus, sodales et elit eget, tincidunt pulvinar lorem.",
+								"2", "1"),
+
 					new TopicModel("2", "Finance review of Apple", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus, nisl id consequat tristique, nisl leo maximus elit, a lobortis lorem tortor eget metus. Nulla ac lectus nec nibh blandit efficitur in eget ipsum. Ut facilisis libero mi, a efficitur leo laoreet finibus. Suspendisse dapibus eu ex vel mollis. Nunc sit amet aliquet ex. Nunc quis felis ut erat commodo lacinia eu at magna. Morbi maximus sagittis augue id malesuada. Curabitur vel fermentum orci, eget sodales tortor. Nam egestas ut leo non eleifend. Aenean ac pharetra massa. Integer arcu ex, molestie at lacinia id, blandit non mauris. Maecenas gravida leo id quam facilisis, ac faucibus quam sodales. Sed laoreet viverra dui, pellentesque maximus felis feugiat ut. Donec tortor lacus, sodales et elit eget, tincidunt pulvinar lorem."),
 					new TopicModel("3", "New year finance prediction", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus, nisl id consequat tristique, nisl leo maximus elit, a lobortis lorem tortor eget metus. Nulla ac lectus nec nibh blandit efficitur in eget ipsum. Ut facilisis libero mi, a efficitur leo laoreet finibus. Suspendisse dapibus eu ex vel mollis. Nunc sit amet aliquet ex. Nunc quis felis ut erat commodo lacinia eu at magna. Morbi maximus sagittis augue id malesuada. Curabitur vel fermentum orci, eget sodales tortor. Nam egestas ut leo non eleifend. Aenean ac pharetra massa. Integer arcu ex, molestie at lacinia id, blandit non mauris. Maecenas gravida leo id quam facilisis, ac faucibus quam sodales. Sed laoreet viverra dui, pellentesque maximus felis feugiat ut. Donec tortor lacus, sodales et elit eget, tincidunt pulvinar lorem."), 
 					new TopicModel("4", "Topic ABC", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus, nisl id consequat tristique, nisl leo maximus elit, a lobortis lorem tortor eget metus. Nulla ac lectus nec nibh blandit efficitur in eget ipsum. Ut facilisis libero mi, a efficitur leo laoreet finibus. Suspendisse dapibus eu ex vel mollis. Nunc sit amet aliquet ex. Nunc quis felis ut erat commodo lacinia eu at magna. Morbi maximus sagittis augue id malesuada. Curabitur vel fermentum orci, eget sodales tortor. Nam egestas ut leo non eleifend. Aenean ac pharetra massa. Integer arcu ex, molestie at lacinia id, blandit non mauris. Maecenas gravida leo id quam facilisis, ac faucibus quam sodales. Sed laoreet viverra dui, pellentesque maximus felis feugiat ut. Donec tortor lacus, sodales et elit eget, tincidunt pulvinar lorem."), 
@@ -44,16 +48,23 @@ function DataController () {
 					new TopicModel("9", "Topic ABC", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus, nisl id consequat tristique, nisl leo maximus elit, a lobortis lorem tortor eget metus. Nulla ac lectus nec nibh blandit efficitur in eget ipsum. Ut facilisis libero mi, a efficitur leo laoreet finibus. Suspendisse dapibus eu ex vel mollis. Nunc sit amet aliquet ex. Nunc quis felis ut erat commodo lacinia eu at magna. Morbi maximus sagittis augue id malesuada. Curabitur vel fermentum orci, eget sodales tortor. Nam egestas ut leo non eleifend. Aenean ac pharetra massa. Integer arcu ex, molestie at lacinia id, blandit non mauris. Maecenas gravida leo id quam facilisis, ac faucibus quam sodales. Sed laoreet viverra dui, pellentesque maximus felis feugiat ut. Donec tortor lacus, sodales et elit eget, tincidunt pulvinar lorem."), 
 					new TopicModel("10", "Example", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus, nisl id consequat tristique, nisl leo maximus elit, a lobortis lorem tortor eget metus. Nulla ac lectus nec nibh blandit efficitur in eget ipsum. Ut facilisis libero mi, a efficitur leo laoreet finibus. Suspendisse dapibus eu ex vel mollis. Nunc sit amet aliquet ex. Nunc quis felis ut erat commodo lacinia eu at magna. Morbi maximus sagittis augue id malesuada. Curabitur vel fermentum orci, eget sodales tortor. Nam egestas ut leo non eleifend. Aenean ac pharetra massa. Integer arcu ex, molestie at lacinia id, blandit non mauris. Maecenas gravida leo id quam facilisis, ac faucibus quam sodales. Sed laoreet viverra dui, pellentesque maximus felis feugiat ut. Donec tortor lacus, sodales et elit eget, tincidunt pulvinar lorem.")];
 
+	var assets = [new AssetModel('1', 'Gas Price', 'The Price of Gas'), 
+					new AssetModel('2', 'Oil Price', 'The Price of Oil'), ];
+
 	//public methods
+	// PREDICTOR
 	this.getPredictors = function () {
 		//TODO: modify this with shadow copy (clone)
 		return predictors;
 	}
 
-	this.getPredictor = function (index) {
-		var model = predictors[index];
+	this.getPredictor = function (id) {
 		//TODO: modify this with shadow copy (clone)
-		return model;
+		for (var i = predictors.length - 1; i >= 0; i--) {
+			if(predictors[i].id === id) {
+				return predictors[i];
+			}
+		};
 	}
 
 	this.addPredictor = function (model) {
@@ -69,6 +80,7 @@ function DataController () {
 		};
 	}
 
+	//TOPIC
 	this.getTopics = function () {
 		//TODO: modify this with shadow copy (clone)
 		return topics;
@@ -92,4 +104,32 @@ function DataController () {
 			}
 		};
 	}
+
+	//ASSET
+	this.getAssets = function () {
+		//TODO: modify this with shadow copy (clone)
+		return assets;
+	}
+
+	this.getAsset = function (id) {
+		//TODO: modify this with shadow copy (clone)
+		for (var i = assets.length - 1; i >= 0; i--) {
+			if(assets[i].id === id) {
+				return assets[i];
+			}
+		};
+	}
+
+	this.addAsset = function (model) {
+		assets.push(model);
+	}
+
+	this.removeAsset = function (id) {
+		for (var i = assets.length - 1; i >= 0; i--) {
+			if(assets[i].id === id) {
+				assets.splice(i, 1);
+				break;
+			}
+		};
+	}	
 }

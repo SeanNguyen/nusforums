@@ -17,6 +17,29 @@
 	border-bottom-width: 0.1em;
 }
 
+#topics .topicContentView h2 {
+	font-size: 2em;
+	font-weight: 900;
+}
+
+#topics .topicContentView h4 {
+	font-size: 1.5em;
+	font-weight: 300;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-bottom-style: solid;
+	border-bottom-color: #E91E63;
+	border-bottom-width: 0.1em;
+}
+
+#topics .topicContentView #infoTag {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-bottom-style: solid;
+	border-bottom-color: #E91E63;
+	border-bottom-width: 0.3em;
+}
+
 #topics h4 {
 	font-size: 2em;
 	font-weight: 200;
