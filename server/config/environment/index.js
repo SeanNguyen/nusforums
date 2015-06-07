@@ -41,6 +41,16 @@ var all = {
     }
   },
 
+  mysql: {
+    client: 'mysql',
+    connection: {
+      host: 'localhost',
+      user: 'test',
+      password: '123456',
+      database: 'forumdb',
+      charset: 'utf8'
+    }
+  }
 };
 
 // Export the config object based on the NODE_ENV

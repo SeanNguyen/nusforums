@@ -1,7 +1,6 @@
 /**
  * Main application file
  */
-
 'use strict';
 
 // Set default node environment to development
@@ -9,17 +8,22 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
 var config = require('./config/environment');
-
-// Setup database
-var db = require('./models/db');
+var db = require('./db/migrate.js');
+var bodyParser = require('body-parser');
 
 // Setup server
 var app = express();
+
+// body-parser middleware for handling request
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+// Setup database
+db.init();
+
 var server = require('http').createServer(app);
 require('./config/express')(app);
 require('./routes')(app);
-
-
 
 // Start server
 server.listen(config.port, config.ip, function () {

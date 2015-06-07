@@ -1,9 +1,12 @@
+
 var controllers = {
 	article: require('./ArticleController'),
 	asset: require('./AssetController'),
-	assetPrice: require('./AssetPriceController'),
+	price: require('./PriceController'),
 	company: require('./CompanyController'),
-	people: require('./PeopleController')
+	person: require('./PersonController'),
+	user: require('./UserController'),
+	auth: require('./AuthController')
 }
 
 module.exports = controllers;
