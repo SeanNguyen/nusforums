@@ -31,16 +31,8 @@ var all = {
 
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
-
-  // MongoDB connection options
-  mongo: {
-    options: {
-      db: {
-        safe: true
-      }
-    }
-  },
-
+  
+  // MySQL connection
   mysql: {
     client: 'mysql',
     connection: {

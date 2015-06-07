@@ -10,7 +10,7 @@ var controllers = require('./controllers');
 module.exports = function(app) {
 
   // Routing for the server
-  app.use('/api/things', require('./api/thing'));
+  //app.use('/api/things', require('./api/thing'));
 
   /* User */
   app.get('/users', controllers.user.retrieveAll);
