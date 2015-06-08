@@ -55,11 +55,24 @@ app.controller('TopicsController', function($rootScope, $scope) {
 		$scope.state = STATE.search;
 	}
 
-	$scope.addPost = function() {
-		var predictor = $scope.currentTopic.predictor;
-		var asset = $scope.currentTopic.asset;
-		var prediction = $scope.currentTopic.prediction;
-		var post = new PostModel('1', asset, predictor, prediction);
-		$scope.currentTopic.posts.push(post);
+	$scope.addPost = function(inputPost) {
+		if(!inputPost.predictor ||  !inputPost.asset || !inputPost.prediction) {
+			alert("Please Fill All The Field");
+			return;
+		}
+		var predictor = inputPost.predictor.originalObject.id;
+		var asset = inputPost.asset.originalObject.id;
+		var prediction = inputPost.prediction;
+
+		//validation
+		if(prediction && prediction.length > 0
+			&& $rootScope.dataController.getPredictor(predictor)
+			&& $rootScope.dataController.getAsset(asset)) {
+			var post = new PostModel('1', asset, predictor, prediction);
+			$scope.currentTopic.posts.push(post);			
+		} else {
+			alert("Please Fill The Correct Name !!!");
+		}
+
 	}
 });

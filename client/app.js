@@ -5,7 +5,8 @@ var app = angular.module('ratingApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'angucomplete'
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {

@@ -37,24 +37,43 @@
 			<div class="col-xs-12">Prediction: {{currentTopic.prediction}}</div>
 			<div class="col-xs-12">Validated By: </div>
 		</div>
+
 		<div class="row" id="inputSection">
 			<h5>Add your validation</h5>
 			<div class="col-xs-12 col-sm-6">
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">Predictor</span>
-				  <input type="text" class="form-control" placeholder="Predictor" aria-describedby="basic-addon1" ng-model="currentTopic.predictor">
+				  <angucomplete id="ex1"
+		              placeholder="name"
+		              pause="50"
+		              selectedobject="inputPost.predictor"
+		              localdata="dataController.getPredictors()"
+		              searchfields="name"
+		              titlefield="name",
+		              minlength="1"
+		              inputclass="form-control form-control-small"/>
+				  <!-- <input type="text" class="form-control" placeholder="Predictor" aria-describedby="basic-addon1" ng-model="currentTopic.predictor"> -->
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">Asset</span>
-				  <input type="text" class="form-control" placeholder="Asset" aria-describedby="basic-addon1" ng-model="currentTopic.asset">
+				  <angucomplete id="ex1"
+		              placeholder="asset"
+		              pause="50"
+		              selectedobject="inputPost.asset"
+		              localdata="dataController.getAssets()"
+		              searchfields="name"
+		              titlefield="name",
+		              minlength="1"
+		              inputclass="form-control form-control-small"/>
+				  <!-- <input type="text" class="form-control" placeholder="Asset" aria-describedby="basic-addon1" ng-model="currentTopic.asset"> -->
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">Prediction</span>
-				  <input type="text" class="form-control" placeholder="Prediction" aria-describedby="basic-addon1" ng-model="currentTopic.prediction">
+				  <input type="text" class="form-control" placeholder="Prediction" aria-describedby="basic-addon1" ng-model="inputPost.prediction">
 				</div>
 				<button type="button" class="btn btn-default btn-success col-xs-12" ng-click="addPost(inputPost)">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
@@ -67,7 +86,7 @@
 			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(post.predictor)}}</div>
 			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(post.asset)}}</div>
 			<div class="col-xs-12 col-sm-4">Other info: </div>
-			<div class="col-xs-12">Prediction: post.prediction</div>
+			<div class="col-xs-12">Prediction: {{post.prediction}}</div>
 			<div class="col-xs-12">Validated By: </div>
 			<div class="row voteButtonGroup">
 				<button type="button" class="btn btn-default">
