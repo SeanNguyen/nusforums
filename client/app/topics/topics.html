@@ -2,7 +2,7 @@
 	<div>
 		<div class="searchBox">
 			<div class="input-group input-group-lg">
-		    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword">
+		    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword" ng-change="onSearch()">
 			    <span class="input-group-btn" ng-click="onSearch()">
 		        	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search </button>
 		    	</span>

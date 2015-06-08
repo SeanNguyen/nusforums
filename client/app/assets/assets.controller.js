@@ -11,8 +11,8 @@ app.controller('AssetsController', function($rootScope, $scope) {
 		for (var i = assets.length - 1; i >= 0; i--) {
 			var assetName = assets[i].name.toLowerCase();
 			var keyword = $scope.search.keyword.toLowerCase();
-			if(assetsName.includes(keyword)) {
-				$scope.showedAssets.push(predictors[i]);
+			if(assetName.includes(keyword)) {
+				$scope.showedAssets.push(assets[i]);
 			}
 		}
 	}
