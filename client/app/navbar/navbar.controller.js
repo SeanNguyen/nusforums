@@ -7,7 +7,8 @@ angular.module('ratingApp')
       {'title': 'Topics', 'link': '/topics'},
       {'title': 'Predictors', 'link': '/predictors'},
       {'title': 'Assets', 'link': '/assetsSearch'},
-      {'title': 'Forums', 'link': 'http://localhost:4567'}
+      {'title': 'Leader Board', 'link': '/leaderBoard'},
+      {'title': 'Forums', 'link': 'http://localhost:4567'},
     ];
 
     $scope.isCollapsed = true;
