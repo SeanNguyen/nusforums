@@ -1,12 +1,12 @@
 
 var controllers = {
-	article: require('./ArticleController'),
+	news: require('./NewsController'),
 	asset: require('./AssetController'),
-	price: require('./PriceController'),
-	company: require('./CompanyController'),
-	person: require('./PersonController'),
+	assetprice: require('./AssetPriceController'),
+	news_checked: require('./NewsCheckedController'),
+	predictor: require('./PredictorController'),
 	user: require('./UserController'),
 	auth: require('./AuthController')
-}
+};
 
 module.exports = controllers;

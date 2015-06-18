@@ -5,34 +5,34 @@ var knex = require('knex') (config.mysql);
 var Bookshelf = require('bookshelf')(knex);
 
 var User = Bookshelf.Model.extend({
-	tableName: 'user'
+	tableName: 'users'
 });
 exports.User = User;
 
-var Article = Bookshelf.Model.extend({
-	tableName: 'article',
+var News = Bookshelf.Model.extend({
+	tableName: 'news',
 	hasTimestamps: true
 });
-exports.Article = Article;
+exports.News = News;
+
+var CheckedNews = Bookshelf.Model.extend({
+    tableName: 'news_checked'
+});
+exports.CheckedNews = CheckedNews;
 
 var Asset = Bookshelf.Model.extend({
 	tableName: 'asset'
 });
 exports.Asset = Asset;
 
-var Company = Bookshelf.Model.extend({
-	tableName: 'company'
+var AssetPrice = Bookshelf.Model.extend({
+	tableName: 'assetprice'
 });
-exports.Company = Company;
+exports.AssetPrice = AssetPrice;
 
-var Price = Bookshelf.Model.extend({
-	tableName: 'price'
+var Predictor = Bookshelf.Model.extend({
+	tableName: 'predictor'
 });
-exports.Price = Price;
-
-var Person = Bookshelf.Model.extend({
-	tableName: 'person'
-});
-exports.Person = Person;
+exports.Predictor = Predictor;
 
 exports.Bookshelf = Bookshelf;

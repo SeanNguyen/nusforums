@@ -6,27 +6,27 @@ var Users = Model.Bookshelf.Collection.extend({
 });
 exports.UserCollection = Users;
 
-var Articles = Model.Bookshelf.Collection.extend({
-  model: Model.Article
+var News = Model.Bookshelf.Collection.extend({
+  model: Model.News
 });
-exports.ArticleCollection = Articles;
+exports.NewsCollection = News;
 
 var Assets = Model.Bookshelf.Collection.extend({
   model: Model.Asset
 });
 exports.AssetCollection = Assets;
 
-var Companies = Model.Bookshelf.Collection.extend({
-  model: Model.Company
+var CheckedNews = Model.Bookshelf.Collection.extend({
+  model: Model.CheckedNews
 });
-exports.CompanyCollection = Companies;
+exports.CheckedNewsCollection = CheckedNews;
 
-var Prices = Model.Bookshelf.Collection.extend({
-  model: Model.Price
+var AssetPrices = Model.Bookshelf.Collection.extend({
+  model: Model.AssetPrice
 });
-exports.PriceCollection = Prices;
+exports.AssetPriceCollection = AssetPrices;
 
-var People = Model.Bookshelf.Collection.extend({
-  model: Model.Person
+var Predictors = Model.Bookshelf.Collection.extend({
+  model: Model.Predictor
 });
-exports.PersonCollection = People;
+exports.PredictorCollection = Predictors;

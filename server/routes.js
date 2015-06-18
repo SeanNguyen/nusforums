@@ -22,11 +22,11 @@ module.exports = function(app) {
   app.delete('/users/:id', controllers.auth.requireUser(), controllers.user.delete);
   
   /* Article */
-  app.get('/api/articles', controllers.article.retrieveAll);
-  app.post('/api/articles', controllers.article.create);
-  app.get('/api/articles/:id', controllers.article.retrieve);
-  app.put('/api/articles/:id', controllers.article.update);
-  app.delete('/api/articles/:id', controllers.article.delete);
+  app.get('/api/news', controllers.news.retrieveAll);
+  app.post('/api/news', controllers.news.create);
+  app.get('/api/news/:id', controllers.news.retrieve);
+  app.put('/api/news/:id', controllers.news.update);
+  app.delete('/api/news/:id', controllers.news.delete);
 
   /* Asset */
   app.get('/api/assets', controllers.asset.retrieveAll);
@@ -36,25 +36,25 @@ module.exports = function(app) {
   app.delete('/api/assets/:id', controllers.asset.delete);
 
   /* Price */
-  app.get('/api/prices', controllers.price.retrieveAll);
-  app.post('/api/prices', controllers.price.create);
-  app.get('/api/prices/:id', controllers.price.retrieve);
-  app.put('/api/prices/:id', controllers.price.update);
-  app.delete('/api/prices/:id', controllers.price.delete);
+  app.get('/api/prices', controllers.assetprice.retrieveAll);
+  app.post('/api/prices', controllers.assetprice.create);
+  app.get('/api/prices/:id', controllers.assetprice.retrieve);
+  app.put('/api/prices/:id', controllers.assetprice.update);
+  app.delete('/api/prices/:id', controllers.assetprice.delete);
 
-  /* Company */
-  app.get('/companies', controllers.company.retrieveAll);
-  app.post('/companies', controllers.company.create);
-  app.get('/companies/:id', controllers.company.retrieve);
-  app.put('/companies/:id', controllers.company.update);
-  app.delete('/companies/:id', controllers.company.delete);
+  /* Predictor */
+  app.get('/api/predictors', controllers.predictor.retrieveAll);
+  app.post('/api/predictors', controllers.predictor.create);
+  app.get('/api/predictors/:id', controllers.predictor.retrieve);
+  app.put('/api/predictors/:id', controllers.predictor.update);
+  app.delete('/api/predictors/:id', controllers.predictor.delete);
 
-  /* People */
-  app.get('/api/people', controllers.person.retrieveAll);
-  app.post('/api/people', controllers.person.create);
-  app.get('/api/people/:id', controllers.person.retrieve);
-  app.put('/api/people/:id', controllers.person.update);
-  app.delete('/api/people/:id', controllers.person.delete);
+  /* Checked News */
+  app.get('/api/checked_news', controllers.news_checked.retrieveAll);
+  app.post('/api/checked_news', controllers.news_checked.create);
+  app.get('/api/checked_news/:id', controllers.news_checked.retrieve);
+  app.put('/api/checked_news/:id', controllers.news_checked.update);
+  app.delete('/api/checked_news/:id', controllers.news_checked.delete);
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
