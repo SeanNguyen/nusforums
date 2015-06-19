@@ -8,8 +8,8 @@
 		    	</span>
 	    </div><!-- /input-group -->
 		</div>
-		<div ng-repeat="topic in showedTopics" class="topicView" ng-click="viewTopic(topic.id)">
-			<h4>{{topic.title}}</h4>
+		<div ng-repeat="topic in showedTopics" class="topicView" ng-click="viewTopic(topic.newsID)">
+			<h4>{{topic.headline}}</h4>
 			<h5>{{getPreview(topic)}}</h5>
 			<div class="actionBar">
 				<button type="button" class="btn btn-default">

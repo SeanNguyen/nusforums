@@ -3,7 +3,7 @@ var app = angular.module('ratingApp');
 
 var STATE = {search: 'search', view: 'view'};
 
-app.controller('TopicsController', function($rootScope, $scope) {
+app.controller('TopicsController', function($rootScope, $scope, $http) {
 	$scope.state = STATE.search;
 	$scope.search = {keyword: ''};
 	$scope.showedTopics = $rootScope.dataController.getTopics();
@@ -30,7 +30,7 @@ app.controller('TopicsController', function($rootScope, $scope) {
 	}
 
 	$scope.getPreview = function(topic) {
-		var thread = topic.thread;
+		var thread = topic.headline;
 		thread = thread.substring(0, 100) + '...';
 		return thread;
 	}
