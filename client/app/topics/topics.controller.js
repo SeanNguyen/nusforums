@@ -15,7 +15,7 @@ app.controller('TopicsController', function($rootScope, $scope, $http) {
 		var topics = $rootScope.dataController.getTopics();
 		$scope.showedTopics = [];
 		for (var i = topics.length - 1; i >= 0; i--) {
-			var predictorName = topics[i].title.toLowerCase();
+			var predictorName = topics[i].headline.toLowerCase();
 			var keyword = $scope.search.keyword.toLowerCase();
 			if(predictorName.includes(keyword)) {
 				$scope.showedTopics.push(topics[i]);

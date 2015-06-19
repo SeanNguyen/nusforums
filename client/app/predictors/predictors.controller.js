@@ -9,7 +9,7 @@ app.controller('PredictorsController', function($rootScope, $scope) {
 		var predictors = $rootScope.dataController.getPredictors();
 		$scope.showedPredictors = [];
 		for (var i = predictors.length - 1; i >= 0; i--) {
-			var predictorName = predictors[i].name.toLowerCase();
+			var predictorName = predictors[i].commonName.toLowerCase();
 			var keyword = $scope.search.keyword.toLowerCase();
 			if(predictorName.includes(keyword)) {
 				$scope.showedPredictors.push(predictors[i]);

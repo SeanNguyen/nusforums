@@ -1,9 +1,9 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-app.controller('statisticController', ['$rootScope', '$scope', '$http', statisticController]);
+app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', statisticController]);
 
-function statisticController($rootScope, $scope, $http) {
+function statisticController($rootScope, $scope, $http, $sta) {
 	$scope.loaded = false;
 	$http.get('/api/prices').
 		success(function(data, status, headers, config) {
