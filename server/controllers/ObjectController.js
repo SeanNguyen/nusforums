@@ -98,7 +98,7 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
   var obj;
 
   switch (objectName) {
-  	case 'Article':
+  	case 'News':
   	  obj = {
   	    headline: req.body.headline,
   	    content: req.body.content,
@@ -108,7 +108,7 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
   	    author: req.body.author
   	  };
   	  break;
-
+      
   	case 'Asset':
   	  obj = {
   	  	flag_stock: req.body.flag_stock,
@@ -119,7 +119,7 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
   	  };
       break;
 
-  	case 'Company':
+  	case 'CheckedNews':
       obj = {
       	name: req.body.name,
       	alias1: req.body.alias1,
@@ -130,14 +130,14 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
       };
       break;
 
-  	case 'Price':
+  	case 'AssetPrice':
       obj = {
       	date: req.body.date,
       	price: req.body.price
       };
       break;
 
-  	case 'Person':
+  	case 'Predictor':
       obj = {
       	first_name: req.body.first_name,
       	last_name: req.body.last_name,
