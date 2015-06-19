@@ -1,3 +1,4 @@
-<div ng-controller="statisticController">
+<div ng-controller="statisticController" id="statistic">
+	<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
 	<div id="priceGraph"></div>
 </div>

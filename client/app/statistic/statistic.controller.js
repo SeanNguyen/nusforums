@@ -4,14 +4,17 @@ var app = angular.module('ratingApp');
 app.controller('statisticController', ['$rootScope', '$scope', '$http', statisticController]);
 
 function statisticController($rootScope, $scope, $http) {
+	$scope.loaded = false;
 	$http.get('/api/prices').
 		success(function(data, status, headers, config) {
 			data = preprocessData(data);
 			render(data);
+			$scope.loaded = true;;
 		}).
 		error(function(data, status, headers, config) {
 			console.log("There is an error when query for prices data");
 			console.log(data);
+			$scope.loaded = true;
 		});
 
 	//private helper methods

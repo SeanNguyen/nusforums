@@ -1,0 +1,10 @@
+#statistic {
+	position: relative;
+	height: 700px;
+	width: 100%;
+}
+
+#statistic #priceGraph {
+	height: 700px;
+	min-width: 100%;
+}
