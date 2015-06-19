@@ -76,12 +76,12 @@ function statisticController($rootScope, $scope, $http) {
 
 	            yAxis: {
 	                title: {
-	                    text: 'Temperature (°C)'
+	                    text: 'Price ($)'
 	                }
 	            },
 
 	            title: {
-	                text: 'Hourly temperatures in Vik i Sogn, Norway, 2004-2010'
+	                text: 'Finance Asset Price Overtime'
 	            },
 
 	            subtitle: {
@@ -89,13 +89,13 @@ function statisticController($rootScope, $scope, $http) {
 	            },
 
 	            series: [{
-	                name: 'Temperature',
+	                name: 'Price',
 	                data: data,
 	                pointStart: Date.UTC(2004, 3, 1),
 	                pointInterval: 3600 * 1000,
 	                tooltip: {
 	                    valueDecimals: 1,
-	                    valueSuffix: '°C'
+	                    valueSuffix: '$'
 	                }
 	            }]
 
