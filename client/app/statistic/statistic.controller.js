@@ -7,9 +7,11 @@ function statisticController($rootScope, $scope, $http) {
 	$scope.loaded = false;
 	$http.get('/api/prices').
 		success(function(data, status, headers, config) {
+
 			data = preprocessData(data);
+			console.log(data[0]);
 			render(data);
-			$scope.loaded = true;;
+			$scope.loaded = true;
 		}).
 		error(function(data, status, headers, config) {
 			console.log("There is an error when query for prices data");
@@ -21,84 +23,92 @@ function statisticController($rootScope, $scope, $http) {
 	function preprocessData(data) {
 		var result = [];
 		for (var i = data.length - 1; i >= 0; i--) {
-			result.push(data[i].close);
+			if(data[i].yahooID !== "^GSPC") {
+				continue;
+			}
+			result.push([
+				convertDateToMillisecond(data[i].date),
+				data[i].open,
+				data[i].high, 
+				data[i].low,
+				data[i].close]);
 		};
 		return result;
 	}
 
 	function render(data) {
 		// Create a timer
-	        var start = +new Date();
+	    data = [].concat(data, [[Date.UTC(2011, 9, 14, 19, 59), null, null, null, null]]);
 
-	        // Create the chart
-	        $('#priceGraph').highcharts('StockChart', {
-	            chart: {
-	                events: {
-	                    load: function () {
-	                        if (!window.isComparing) {
-	                            this.setTitle(null, {
-	                                text: 'Built chart in ' + (new Date() - start) + 'ms'
-	                            });
-	                        }
-	                    }
-	                },
-	                zoomType: 'x'
-	            },
+	     $('#priceGraph').highcharts('StockChart', {
+            chart : {
+                type: 'candlestick',
+                zoomType: 'x'
+            },
 
-	            rangeSelector: {
-	                
-	                buttons: [{
-	                    type: 'day',
-	                    count: 3,
-	                    text: '3d'
-	                }, {
-	                    type: 'week',
-	                    count: 1,
-	                    text: '1w'
-	                }, {
-	                    type: 'month',
-	                    count: 1,
-	                    text: '1m'
-	                }, {
-	                    type: 'month',
-	                    count: 6,
-	                    text: '6m'
-	                }, {
-	                    type: 'year',
-	                    count: 1,
-	                    text: '1y'
-	                }, {
-	                    type: 'all',
-	                    text: 'All'
-	                }],
-	                selected: 3
-	            },
+            navigator : {
+                series : {
+                    data : data
+                }
+            },
 
-	            yAxis: {
-	                title: {
-	                    text: 'Price ($)'
-	                }
-	            },
+            scrollbar: {
+                liveRedraw: true
+            },
 
-	            title: {
-	                text: 'Finance Asset Price Overtime'
-	            },
+            title: {
+                text: 'Asset Cost'
+            },
 
-	            subtitle: {
-	                text: 'Built chart in ...' // dummy text to reserve space for dynamic subtitle
-	            },
+            subtitle: {
+                text: '^GSPC Asset Cost Over Time'
+            },
 
-	            series: [{
-	                name: 'Price',
-	                data: data,
-	                pointStart: Date.UTC(2004, 3, 1),
-	                pointInterval: 3600 * 1000,
-	                tooltip: {
-	                    valueDecimals: 1,
-	                    valueSuffix: '$'
-	                }
-	            }]
+            rangeSelector : {
+                buttons: [
+                {
+                    type: 'day',
+                    count: 1,
+                    text: '1d'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    text: '1m'
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1y'
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }],
+                inputEnabled: false, // it supports only days
+                selected : 3 // year
+            },
 
-	        });
+            xAxis : {
+                minRange: 3600 * 1000 * 24// one day
+            },
+
+            yAxis: {
+                floor: 0
+            },
+
+            series : [{
+                data : data,
+                dataGrouping: {
+                    enabled: false
+                }
+            }]
+        });
+	}
+
+	function convertDateToMillisecond(dateString) {
+		var myDate = new Date(dateString);
+		var offset = myDate.getTimezoneOffset() * 1000;
+
+		var withOffset = myDate.getTime();
+		var withoutOffset = withOffset - offset;
+		return withoutOffset;
 	}
 }
