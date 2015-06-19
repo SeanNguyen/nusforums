@@ -6,14 +6,18 @@ var app = angular.module('ratingApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'angucomplete'
+  'angucomplete',
+  'angular-loading-bar'
 ]);
 
-app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
+
+    // disable the loading spinner of the loading bar
+    cfpLoadingBarProvider.includeSpinner = false;
   });
 
 app.controller('AppController', function($rootScope) {
