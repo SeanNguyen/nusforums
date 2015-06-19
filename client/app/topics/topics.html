@@ -28,8 +28,8 @@
 		<button type="button" class="btn btn-default btn-danger" ng-click="closeTopic()">
 			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Close
 		</button>
-		<h2>{{currentTopic.title}}</h2>
-		<h4>{{currentTopic.thread}}</h4>
+		<h2>{{currentTopic.headline}}</h2>
+		<h4>{{currentTopic.headline}}</h4>
 		<div class="row" id="infoTag">
 			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(currentTopic.predictor)}}</div>
 			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(currentTopic.asset)}}</div>
@@ -48,8 +48,8 @@
 		              pause="50"
 		              selectedobject="inputPost.predictor"
 		              localdata="dataController.getPredictors()"
-		              searchfields="name"
-		              titlefield="name",
+		              searchfields="commonName"
+		              titlefield="commonName",
 		              minlength="1"
 		              inputclass="form-control form-control-small"/>
 				  <!-- <input type="text" class="form-control" placeholder="Predictor" aria-describedby="basic-addon1" ng-model="currentTopic.predictor"> -->
@@ -63,8 +63,8 @@
 		              pause="50"
 		              selectedobject="inputPost.asset"
 		              localdata="dataController.getAssets()"
-		              searchfields="name"
-		              titlefield="name",
+		              searchfields="assetName"
+		              titlefield="assetName",
 		              minlength="1"
 		              inputclass="form-control form-control-small"/>
 				  <!-- <input type="text" class="form-control" placeholder="Asset" aria-describedby="basic-addon1" ng-model="currentTopic.asset"> -->
