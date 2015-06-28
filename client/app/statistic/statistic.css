@@ -1,10 +1,18 @@
-#statistic {
+.statistic {
 	position: relative;
-	height: 700px;
+	height: 500px;
 	width: 100%;
 }
 
-#statistic #priceGraph {
-	height: 700px;
+.statistic #priceGraph {
+	height: 100%;
 	min-width: 100%;
+}
+
+.statistic .loader {
+	position: absolute;
+	top: 50%; bottom: 50%;
+	left: 50%; right: 50%;
+	height: 200px;
+	width: 200px;
 }
