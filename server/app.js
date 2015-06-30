@@ -10,6 +10,8 @@ var express = require('express');
 var config = require('./config/environment');
 var db = require('./db/migrate.js');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
+var jwt = require('jsonwebtoken');
 
 // Setup server
 var app = express();
@@ -17,6 +19,7 @@ var app = express();
 // body-parser middleware for handling request
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
 
 // Setup database
 db.init();

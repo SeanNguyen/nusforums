@@ -81,6 +81,7 @@ var Schema = {
   },
   
   assetprice: {
+    id: {type: 'increments'},
     yahooID: {type: 'string', nullable: false, primary: true},
     date: {type: 'dateTime', nullable: false, primary: true},
     open: {type: 'double', nullable: false},

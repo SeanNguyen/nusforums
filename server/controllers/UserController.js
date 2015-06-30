@@ -81,8 +81,24 @@ UserController.create = function(req, res) {
 
   Collections.UserCollection.forge()
   .create({
-  	name: req.body.name,
+    username: req.body.username,
   	email: req.body.email.toLowerCase(),
+    role: req.body.role,
+    nOfNewsTagged: 0,
+    nOfUpVotes: 0,
+    nOfUpVotesReceived: 0,
+    nOfDownVotesReceived: 0,
+    firstName: req.body.firstName,
+    middleName: req.body.middleName,
+    lastName: req.body.lastName,
+    nickNameOnline: req.body.nickNameOnline,
+    signupDate: req.body.signupDate, // get now
+    photo: req.body.photo,
+    FB1: req.body.FB1,
+    FB2: req.body.FB2,
+    FB3: req.body.FB3,
+    FB4: req.body.FB4,
+    FB5: req.body.FB5,
   	password: hash
   })
   .then(function(result) {
