@@ -102,50 +102,84 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
   	  obj = {
   	    headline: req.body.headline,
   	    content: req.body.content,
-  	    url: req.body.url,
   	    date: req.body.date,
-  	    source: req.body.source,
-  	    author: req.body.author
+  	    author: req.body.author,
+        source: req.body.source,
+        url: req.body.url,
+        BYLINE: req.body.BYLINE,
+        DATELINE: req.body.DATELINE,
+        LENGTH: req.body.LENGTH,
+        PUBLICATION: req.body.PUBLICATION,
+        SECTION: req.body.SECTION,
+        COMPANY: req.body.COMPANY,
+        GEOGRAPHIC: req.body.GEOGRAPHIC,
+        INDUSTRY: req.body.INDUSTRY,
+        ORGANIZATION: req.body.ORGANIZATION,
+        PERSON: req.body.PERSON,
+        SUBJECT: req.body.SUBJECT,
+        TICKER: req.body.TICKER
   	  };
   	  break;
       
   	case 'Asset':
   	  obj = {
-  	  	flag_stock: req.body.flag_stock,
-  	  	flag_bond: req.body.flag_bond,
-  	  	flag_index: req.body.flag_index,
-  	  	flag_currency: req.body.flag_currency,
-  	  	flag_commidities: req.body.flag_commidities
+        assetName: req.body.assetName,
+        assetType: req.body.assetType,
+        assetRegion: req.body.assetRegion,
+        otherID: req.body.otherID,
+        description: req.body.description,
+        displayName: req.body.displayName,
+        ticker1: req.body.ticker1,
+        ticker2: req.body.ticker2,
+        ticker3: req.body.ticker3,
+        ticker4: req.body.ticker4,
+        ticker5: req.body.ticker5
   	  };
       break;
 
   	case 'CheckedNews':
       obj = {
-      	name: req.body.name,
-      	alias1: req.body.alias1,
-      	alias2: req.body.alias2,
-      	wiki_url: req.body.wiki_url,
-      	linkedin_url: req.body.linkedin_url,
-      	stock_sticker: req.body.stock_sticker
+      	newsID: req.body.newsID,
+        predictorID: req.body.predictorID,
+        userID: req.body.userID,
+        assetID: req.body.assetID,
+        upDown: req.body.upDown,
+        time: req.body.time,
+        assetNotAvailable: req.body.assetNotAvailable,
+        CannotTell: req.body.CannotTell,
+        NoPrediction: req.body.NoPrediction,
+        timeStamp: req.body.timeStamp,
+        remarks: req.body.remarks,
+        downVote: req.body.downVote,
+        upVote: req.body.upVote,
+        targetPrice: req.body.targetPrice,
+        original_sentence: req.body.original_sentence
       };
       break;
 
   	case 'AssetPrice':
       obj = {
-      	date: req.body.date,
-      	price: req.body.price
+      	yahooID: req.body.yahooID,
+        date: req.body.date,
+        open: req.body.open,
+        high: req.body.high,
+        low: req.body.low,
+        close: req.body.close,
+        volume: req.body.volume,
+        adjClose: req.body.adjClose
       };
       break;
 
   	case 'Predictor':
       obj = {
-      	first_name: req.body.first_name,
-      	last_name: req.body.last_name,
-      	wiki_url: req.body.wiki_url,
-      	linkedin_url: req.body.linkedin_url,
-      	employer: req.body.employer,
-      	job_title: req.body.job_title,
-      	job_info: req.body.job_info,
+        firstName: req.body.firstName,
+        middleName: req.body.middleName,
+        lastName: req.body.lastName,
+        commonName: req.body.commonName,
+        currentTitle: req.body.currentTitle,
+        description: req.body.description,
+        photo: req.body.photo,
+        wiki_URL: req.body.wiki_URL
       };
       break;
 
