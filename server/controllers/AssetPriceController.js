@@ -12,10 +12,6 @@ AssetPriceController.retrieve = function(req, res) {
   var startDate = query.startDate;
   var endDate = query.endDate;
   
-  console.log('yahooID: ', yahooID);
-  console.log('startDate: ', startDate);
-  console.log('endDate: ', endDate);
-
   if (yahooID && startDate && endDate) {
     Collections.AssetPriceCollection.forge()
     .query(function(qb) {
