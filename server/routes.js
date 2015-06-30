@@ -36,9 +36,8 @@ module.exports = function(app) {
   app.delete('/api/assets/:id', controllers.asset.delete);
 
   /* Price */
-  app.get('/api/prices', controllers.assetprice.retrieveAll);
+  app.get('/api/prices', controllers.assetprice.retrieve);
   app.post('/api/prices', controllers.assetprice.create);
-  //app.get('/api/prices', controllers.assetprice.retrieve);
   app.put('/api/prices/:id', controllers.assetprice.update);
   app.delete('/api/prices/:id', controllers.assetprice.delete);
 
