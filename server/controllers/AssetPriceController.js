@@ -7,15 +7,22 @@ module.exports = AssetPriceController;
 
 // Get all AssetAssetPrices
 AssetPriceController.retrieve = function(req, res) {
+
   var query = req.query;
   var yahooID = query.yahooID;
   var startDate = query.startDate;
   var endDate = query.endDate;
   
+  console.log('startDate', startDate);
+  console.log('endDate', endDate);
+  
   if (yahooID && startDate && endDate) {
     Collections.AssetPriceCollection.forge()
     .query(function(qb) {
-  	  qb.where('yahooID', '=', yahooID).andWhere('date', '>=', startDate).andWhere('date', '<=', endDate);
+  	  qb.where('yahooID', '=', yahooID)
+        .andWhere('date', '>=', startDate)
+        .andWhere('date', '<=', endDate)
+        .orderBy('date', 'ASC');
     })
     .fetch()
     .then(function(prices) {
@@ -39,10 +46,6 @@ AssetPriceController.retrieve = function(req, res) {
 // Create a new AssetAssetPrice
 AssetPriceController.create = function(req, res) {
   ObjectController.create(Collections.AssetPriceCollection, req, res, 'AssetPrice');
-};
-
-// Get a AssetAssetPrice with id
-AssetPriceController.retrieve = function(req, res) {
 };
 
 // Update an AssetAssetPrice
