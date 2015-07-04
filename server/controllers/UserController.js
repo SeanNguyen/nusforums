@@ -76,7 +76,7 @@ UserController.retrieve = function(req, res) {
     } else if (byDownVotes) {
       qb.orderBy('nOfDownVotesReceived', 'DESC').limit(byDownVotes);
     } else {
-      qb;
+      qb.orderBy('nOfUpVotesReceived', 'DESC');
     }
   })
   .fetch()

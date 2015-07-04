@@ -29,6 +29,16 @@ app.run(function ($http, $rootScope) {
 	}).
 	error(function(data, status, headers, config) {
 	});
+
+	$http.get('/api/users')
+	.success(function(data, status, headers, config) {
+      for (var i = 0; i < data.length; i++) {
+      	$rootScope.dataController.addUser(data[i]);
+      }
+	})
+	.error(function(data, status, headers, config) {
+      console.log('Error when getting users');
+	})
 });
 
 function DataController () {
@@ -37,6 +47,8 @@ function DataController () {
 	var topics = [];
 
 	var assets = [];
+
+	var users = [];
 
 	//public methods
 	// PREDICTOR
@@ -121,5 +133,31 @@ function DataController () {
 				break;
 			}
 		};
-	}	
-}
+	}
+
+	// USER
+	this.getUsers = function () {
+		return users;
+	}
+
+	this.getUser = function (id) {
+		for (var i = users.length - 1; i >= 0; i--) {
+			if(users[i].id === id) {
+				return users[i];
+			}
+		};
+	}
+
+	this.addUser = function (model) {
+		users.push(model);
+	}
+
+	this.removeUser = function (id) {
+		for (var i = users.length - 1; i >= 0; i--) {
+			if(users[i].id === id) {
+				users.splice(i, 1);
+				break;
+			}
+		};
+	}
+};

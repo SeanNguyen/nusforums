@@ -1,22 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Leader Board</title>
-</head>
 
-<body ng-app="leaderBoard" ng-controller="leaderBoard.controller">
-  <table>
-    <thead>
-      <tr><th colspan="4">Top users</th></tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="user in usersList">
-        <td>{{$index + 1}}</td>
-        <td>{{user.username}}</td>
-        <td>{{user.nickOnline}}</td>
-        <td>{{user.score}}</td>
-      </tr>
-    </tbody>
-  </table>
-</body>
-</html>
+<table st-table="leaderBoard" class="table table-striped">
+  <thead>
+  <title> Lead Board </title>
+   <tr><th colspan="4">Top users</th></tr>
+  <tr>
+    <th>Rank</th>
+    <th>Username</th>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Email</th>
+    <th>Upvotes</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="user in userList">
+    <td>{{$index + 1}}</td>
+    <td>{{user.username}}</td>
+    <td>{{user.firstName}}</td>
+    <td>{{user.lastName}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.nOfUpVotesReceived}}</td>
+  </tr>
+  </tbody>
+</table>
+
