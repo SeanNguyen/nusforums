@@ -33,7 +33,7 @@ UserController.login = function(req, res) {
   	  	Promise.reject('password-incorrect');
   	  }
   	} else {
-  	  return Promise.reject('user_no_found');
+  	  return Promise.reject('user_not_found');
   	}
   })
   .then(function(user) {
@@ -62,8 +62,23 @@ UserController.logout = function(req, res) {
   });
 };
 
-UserController.retrieveAll = function(req, res) {
+UserController.retrieve = function(req, res) {
+  // get the users by number of upvotes
+  var byUpVotes = req.query.upvotes;
+
+  // get the users by number of downvotes
+  var byDownVotes = req.query.downvotes;
+
   Collections.UserCollection.forge()
+  .query(function(qb) {
+    if (byUpVotes) {
+      qb.orderBy('nOfUpVotesReceived', 'DESC').limit(byUpVotes);
+    } else if (byDownVotes) {
+      qb.orderBy('nOfDownVotesReceived', 'DESC').limit(byDownVotes);
+    } else {
+      qb;
+    }
+  })
   .fetch()
   .then(function(result) {
     result = result.map(removePasswordFromUserData);
@@ -109,7 +124,7 @@ UserController.create = function(req, res) {
   });
 };
 
-UserController.retrieve = function(req, res) {
+UserController.retrieveUser = function(req, res) {
   Collections.UserCollection.forge()
   .query(function(qb) {
   	qb.where('id', '=', req.params.id);

@@ -1,64 +1,22 @@
-<!doctype html>
-<html ng-app = "leaderboardApp">
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <script src="js/controllers.js"></script>
-  </head>
-  <body ng-controller="playersController">
-    <div class="container">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leader Board</title>
+</head>
 
-    <center> 
-      <h1> Top Users </h1>
-    </center>
-
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Username</th>
-          <th>Upvote</th>
-          <th>Downvote</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>congthien1707</td>
-          <td>10</td>
-          <td>0</td>
-          <td>100</td>
-        </tr>
-
-        <tr>
-          <td>2</td>
-          <td>seannguyen</td>
-          <td>9</td>
-          <td>3</td>
-          <td>60</td>
-        </tr>
-
-        <tr>
-          <td>3</td>
-          <td>johndoe</td>
-          <td>0</td>
-          <td>3</td>
-          <td>0</td>
-        </tr>
-
-        <tr>
-          <td>4</td>
-          <td>johndoe1</td>
-          <td>0</td>
-          <td>0</td>
-          <td>0</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  </body>
-
-  </html>
+<body ng-app="leaderBoard" ng-controller="leaderBoard.controller">
+  <table>
+    <thead>
+      <tr><th colspan="4">Top users</th></tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in usersList">
+        <td>{{$index + 1}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.nickOnline}}</td>
+        <td>{{user.score}}</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

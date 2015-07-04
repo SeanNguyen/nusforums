@@ -13,8 +13,8 @@ module.exports = function(app) {
   //app.use('/api/things', require('./api/thing'));
 
   /* User */
-  app.get('/api/users', controllers.user.retrieveAll);
-  app.get('/api/users/:id', controllers.auth.requireUser(), controllers.user.retrieve);
+  app.get('/api/users', controllers.user.retrieve);
+  app.get('/api/users/:id', controllers.auth.requireUser(), controllers.user.retrieveUser);
   app.post('/api/users', controllers.user.create);
   app.post('/api/users/login', controllers.user.login);
   app.post('/api/users/logout', controllers.auth.requireUser(), controllers.user.logout);
