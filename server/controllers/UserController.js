@@ -101,6 +101,7 @@ UserController.create = function(req, res) {
     role: req.body.role,
     nOfNewsTagged: 0,
     nOfUpVotes: 0,
+    nOfDownVotes: 0,
     nOfUpVotesReceived: 0,
     nOfDownVotesReceived: 0,
     firstName: req.body.firstName,
@@ -117,6 +118,7 @@ UserController.create = function(req, res) {
   	password: hash
   })
   .then(function(result) {
+    var result = removePasswordFromUserData(result);
   	res.status(200).json(result);
   })
   .catch(function(err) {

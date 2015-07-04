@@ -1,8 +1,17 @@
 
 #leaderBoardHeader h1 {
-    width: 90%;
+    width: auto;
     text-align: center;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding-top: 20px;
+    padding-bottom: 20px;
     color: #708890;
+}
+
+
+#buttonList {
+     width: auto;
+     text-align: center;
+     padding-top: 10px;
+     padding-bottom: 20px;
+     margin: auto
 }
