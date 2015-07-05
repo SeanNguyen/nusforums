@@ -3,5 +3,10 @@
 }
 
 #login .btn {
-	width: 100%;
+	width: 100px;
+}
+
+#login .container {
+  width: auto;
+  margin: auto;
 }

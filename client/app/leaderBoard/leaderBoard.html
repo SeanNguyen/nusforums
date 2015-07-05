@@ -3,7 +3,7 @@
     <h1>LEADER BOARD</h1>
   </header>
 
-<table st-table="leaderBoard" class="table table-bordered table-striped table-hover" style="width: 60%; margin: auto">
+<table st-table="userLeaderBoard" class="table table-bordered table-striped table-hover" style="width: 60%; margin: auto">
   <title> Lead Board </title>
     <thead>
       <div id="buttonList" class="container">
@@ -27,8 +27,7 @@
     <td>{{user.firstName}}</td>
     <td>{{user.lastName}}</td>
     <td>{{user.email}}</td>
-    <td><a ng-href="{{row.email}}"></a>{{user.nOfUpVotesReceived}}</td>
+    <td>{{user.nOfUpVotesReceived}}</td>
   </tr>
   </tbody>
 </table>
-
