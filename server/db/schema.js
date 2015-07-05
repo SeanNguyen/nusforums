@@ -7,7 +7,7 @@ var Schema = {
     nOfNewsTagged: {type: 'integer', nullable: true},
     nOfUpVotes: {type: 'integer', nullable: true},
     nOfDownVotes: {type: 'integer', nullable: true},
-    nOfUpVotesReceived: {type: 'integer', nullable: true},
+    nOfUpVotesReceived: {type: 'integer', nullable: false},
     nOfDownVotesReceived: {type: 'integer', nullable: false},
     firstName: {type: 'string', nullable: false},
     middleName: {type: 'string', nullable: true},
@@ -81,6 +81,7 @@ var Schema = {
   },
   
   assetprice: {
+    id: {type: 'increments'},
     yahooID: {type: 'string', nullable: false, primary: true},
     date: {type: 'dateTime', nullable: false, primary: true},
     open: {type: 'double', nullable: false},
