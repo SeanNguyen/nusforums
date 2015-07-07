@@ -290,7 +290,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '.tmp/concat',
-          src: '*/**.js',
+          src: ['<%= yeoman.client %>/app/**.js', '<%= yeoman.client %>/app.js'],
           dest: '.tmp/concat'
         }]
       }
