@@ -3,14 +3,14 @@
     <h1>LEADER BOARD</h1>
   </header>
 
-<table st-table="userLeaderBoard" class="table table-bordered table-striped table-hover" style="width: 60%; margin: auto">
-  <title> Lead Board </title>
-    <thead>
-      <div id="buttonList" class="container">
-        <button type="button" class="btn btn-primary" style:"width: 40px"> Top users</button>
-        <button type="button" class="btn btn-primary" style: "width: 40px"> Top predictors</button>
-      </div>
-    </thead>
+<div id="buttonList" class="button-bar" ng-initialtoggle='user'>
+  <button type="button" id="userBtn" class="btn btn-primary" ng-clicked="setSelected(user)"> Top users</button>
+  <button type="button" id="predictorBtn" class="btn btn-primary" ng-clicked="setSelected(predictor)"> Top predictors</button>
+</div>
+
+<table st-table="userLeaderBoard" id="user"
+  class="table table-bordered table-striped table-hover"
+  style="width: auto; margin: auto">
   <tr>
     <th>Rank</th>
     <th>Username</th>
@@ -18,6 +18,29 @@
     <th>Last name</th>
     <th>Email</th>
     <th>Upvotes</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="user in userList">
+    <td>{{$index + 1}}</td>
+    <td>{{user.username}}</td>
+    <td>{{user.firstName}}</td>
+    <td>{{user.lastName}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.nOfUpVotesReceived}}</td>
+  </tr>
+  </tbody>
+</table>
+
+<table st-table="predictorLeaderBoard" id="predictor"
+  class="table table-bordered table-striped table-hover"
+  style="width: auto; margin: auto">
+  <tr>
+    <th>Rank</th>
+    <th>Predictor</th>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Display Name</th>
   </tr>
   </thead>
   <tbody>
