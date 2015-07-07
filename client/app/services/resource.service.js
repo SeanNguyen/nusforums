@@ -7,4 +7,11 @@ app.factory('Asset', ['$resource', function($resource) {
     {
         'update': { method:'PUT' }
     });
-}])
+}]);
+
+app.factory('User', ['$resource', function($resource) {
+	return $resource('/api/user/:id', null,
+    {
+        'update': { method:'PUT' }
+    });
+}]);
