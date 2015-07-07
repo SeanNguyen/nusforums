@@ -1,13 +1,13 @@
 <div class="container login">
 	<md-input-container>
       <label>Email</label>
-      <input type="text">
+      <input type="text" ng-model="input.email">
     </md-input-container>
     <md-input-container>
       <label>Password</label>
-      <input type="password">
+      <input type="password" ng-model="input.password">
     </md-input-container>
-	<button type="submit" class="btn btn-default btn-success btn-main">Log In</button>
+	<button type="submit" class="btn btn-default btn-success btn-main" ng-click="logIn()">Log In</button>
 	<h4>Login using:</h4>
 	<div layout="row" layout-align="start center">
 		<button class="btn btn-default"><i class="fa fa-facebook-square fa-3x"></i></button>
