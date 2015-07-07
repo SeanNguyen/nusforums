@@ -4,13 +4,14 @@
   </header>
 
 <div id="buttonList" class="button-bar" ng-initialtoggle='user'>
-  <button type="button" id="userBtn" class="btn btn-primary" ng-clicked="setSelected(user)"> Top users</button>
-  <button type="button" id="predictorBtn" class="btn btn-primary" ng-clicked="setSelected(predictor)"> Top predictors</button>
+  <button type="button" class="btn btn-success" ng-click="showUser()"> Top users</button>
+  <button type="button" class="btn btn-success" ng-click="showPredictor()"> Top predictors</button>
 </div>
 
 <table st-table="userLeaderBoard" id="user"
   class="table table-bordered table-striped table-hover"
-  style="width: auto; margin: auto">
+  style="width: auto; margin: auto"
+  ng-show="userVisible">
   <tr>
     <th>Rank</th>
     <th>Username</th>
@@ -34,23 +35,25 @@
 
 <table st-table="predictorLeaderBoard" id="predictor"
   class="table table-bordered table-striped table-hover"
-  style="width: auto; margin: auto">
+  style="width: auto; margin: auto"
+  ng-show="predictorVisible">
   <tr>
     <th>Rank</th>
-    <th>Predictor</th>
-    <th>First name</th>
-    <th>Last name</th>
+    <th>First Name</th>
+    <th>Middle Name</th>
+    <th>Last Name</th>
     <th>Display Name</th>
+    <th>Tittle</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="user in userList">
+  <tr ng-repeat="predictor in predictorList">
     <td>{{$index + 1}}</td>
-    <td>{{user.username}}</td>
-    <td>{{user.firstName}}</td>
-    <td>{{user.lastName}}</td>
-    <td>{{user.email}}</td>
-    <td>{{user.nOfUpVotesReceived}}</td>
+    <td>{{predictor.firstName}}</td>
+    <td>{{predictor.middleName}}</td>
+    <td>{{predictor.lastName}}</td>
+    <td>{{predictor.commonName}}</td>
+    <td>{{predictor.currentTitle}}</td>
   </tr>
   </tbody>
 </table>

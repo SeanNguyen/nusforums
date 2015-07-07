@@ -12,10 +12,10 @@
      width: auto;
      text-align: center;
      padding-top: 10px;
-     padding-bottom: 20px;
-     margin: auto
+     padding-bottom: 40px;
+     margin: auto;
 }
 
-#btn {
+.btn {
   width: 120px;
 }
