@@ -1,11 +1,11 @@
-#login .btn {
-	width: 100px;
+.login {
+	max-width: 500px;
 }
 
-#login .container {
-  width: auto;
-  margin: auto;
-=======
+.login {
+	padding-top: 100px;
+}
+
 .login .btn-main {
 	width: 100%;
 }
