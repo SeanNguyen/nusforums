@@ -1,7 +1,3 @@
-#login {
-	padding-top: 100px;
-}
-
 #login .btn {
 	width: 100px;
 }
@@ -9,4 +5,7 @@
 #login .container {
   width: auto;
   margin: auto;
+=======
+.login .btn-main {
+	width: 100%;
 }

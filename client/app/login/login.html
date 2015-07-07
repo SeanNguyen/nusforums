@@ -1,19 +1,16 @@
-<div class="container" id="login">
-    <h2>Login</h2>
-    <form name="form" role="form">
-        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
-            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
-            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
-        </div>
-        <div class="form-actions">
-            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
-            <a href="/register" class="btn btn-link">Register</a>
-        </div>
-    </form>
+<div class="container login">
+	<md-input-container>
+      <label>Email</label>
+      <input type="text">
+    </md-input-container>
+    <md-input-container>
+      <label>Password</label>
+      <input type="password">
+    </md-input-container>
+	<button type="submit" class="btn btn-default btn-success btn-main">Log In</button>
+	<h4>Login using:</h4>
+	<div layout="row" layout-align="start center">
+		<button class="btn btn-default"><i class="fa fa-facebook-square fa-3x"></i></button>
+		<button class="btn btn-default"><i class="fa fa-google-plus-square fa-3x"></i></button>
+	</div>
 </div>
