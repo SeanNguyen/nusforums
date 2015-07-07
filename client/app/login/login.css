@@ -1,7 +1,11 @@
-#login {
+.login {
+	max-width: 500px;
+}
+
+.login {
 	padding-top: 100px;
 }
 
-#login .btn {
+.login .btn-main {
 	width: 100%;
 }

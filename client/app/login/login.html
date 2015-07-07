@@ -1,13 +1,16 @@
-<div class="container" id="login">
-	<form>
-	  <div class="form-group">
-	    <label for="exampleInputEmail1">Email address</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-	  </div>
-	  <div class="form-group">
-	    <label for="exampleInputPassword1">Password</label>
-	    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-	  </div>
-	  <button type="submit" class="btn btn-default btn-success">Log In</button>
-	</form>
+<div class="container login">
+	<md-input-container>
+      <label>Email</label>
+      <input type="text">
+    </md-input-container>
+    <md-input-container>
+      <label>Password</label>
+      <input type="password">
+    </md-input-container>
+	<button type="submit" class="btn btn-default btn-success btn-main">Log In</button>
+	<h4>Login using:</h4>
+	<div layout="row" layout-align="start center">
+		<button class="btn btn-default"><i class="fa fa-facebook-square fa-3x"></i></button>
+		<button class="btn btn-default"><i class="fa fa-google-plus-square fa-3x"></i></button>
+	</div>
 </div>
