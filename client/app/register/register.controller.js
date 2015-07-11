@@ -1,7 +1,12 @@
-'use strict';
+(function() {
+	'use strict';
 
-var app = angular.module('ratingApp');
+	var app = angular.module('ratingApp');
 
-app.controller('RegisterController', function ($scope, $http) {
-	
-});
+	app.controller('RegisterController', ['$scope', '$http', RegisterController]);
+
+	function RegisterController($scope, $http) {
+		$scope.input = {};
+	}
+
+})();

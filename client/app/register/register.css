@@ -1,8 +1,4 @@
-#register .btn {
-  width: 100px;
-}
-
-#register .container {
-	width: auto;
-	margin: auto;
+.registerForm {
+	width: 100%;
+	max-width: 500px;
 }

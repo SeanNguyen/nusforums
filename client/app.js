@@ -8,7 +8,8 @@ var app = angular.module('ratingApp', [
   'ui.bootstrap',
   'angucomplete',
   'angular-loading-bar',
-  'ngMaterial'
+  'ngMaterial',
+  'ngMessages'
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
