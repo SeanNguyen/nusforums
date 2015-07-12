@@ -14,12 +14,13 @@
 		//private methods
 		function login() {
 			GlobalData.startAppLoadingState();
-			User.save(input)
-			.then(function() {
+			console.log(User);
+			User.save($scope.input).$promise
+			.then(function(user) {
 				GlobalData.stopAppLoadingState();
-				
+
 			})
-			.catch(function() {
+			.catch(function(err) {
 				console.log('EER: Cannot login');
 				GlobalData.stopAppLoadingState();
 			});
