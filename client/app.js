@@ -1,27 +1,36 @@
-'use strict';
 
-var app = angular.module('ratingApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'ui.router',
-  'ui.bootstrap',
-  'angucomplete',
-  'angular-loading-bar',
-  'ngMaterial',
-  'ngMessages'
-]);
 
-app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+(function() {
+  'use strict';
 
-    $locationProvider.html5Mode(true);
+  var app = angular.module('ratingApp', [
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ui.router',
+    'ui.bootstrap',
+    'angucomplete',
+    'angular-loading-bar',
+    'ngMaterial',
+    'ngMessages'
+  ]);
 
-    // disable the loading spinner of the loading bar
-    cfpLoadingBarProvider.includeSpinner = false;
-  });
+  app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
+      $urlRouterProvider
+        .otherwise('/');
 
-app.controller('AppController', function($rootScope) {
-	$rootScope.dataController = new DataController();
-});
+      $locationProvider.html5Mode(true);
+
+      // disable the loading spinner of the loading bar
+      cfpLoadingBarProvider.includeSpinner = false;
+    });
+  
+  app.controller('AppController', ['$scope', '$rootScope', 'GlobalData', AppController]);
+
+  function AppController($scope, $rootScope, GlobalData) {
+    $rootScope.appState = {};
+    $rootScope.dataController = new DataController();
+    GlobalData.stopAppLoadingState();
+  }
+
+})();
