@@ -44,7 +44,10 @@
 
     <div ng-include="'app/navbar/navbar.html'"></div>
     <!-- Add your site or application content here -->
-    <div ui-view=""></div>
+    <div class="globalLoader" ng-show="!appState.loaded" layout="row" layout-align="center center">
+      <div ng-include="'components/loader/loader.html'"></div>
+    </div>
+    <div ui-view="" class="appContentView"></div>
     <footer class="footer">
       <div class="container">
         <p>NUS Forums |
