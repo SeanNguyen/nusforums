@@ -15,9 +15,14 @@
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
       </ul>
+
       <ul class="nav navbar-nav navbar-right">
-        <li><a ng-href="/login">Login</a></li>
-        <li><a ng-href="/register">Register</a></li>
+        <li ng-class="{active: isActive('/login')}">
+            <a ng-href="/login">Login</a>
+        </li>
+        <li ng-class="{active: isActive('/register')}">
+            <a ng-href="/register">Register</a>
+        </li>
       </ul>
     </div>
   </div>
