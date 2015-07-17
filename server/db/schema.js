@@ -1,5 +1,6 @@
 var Schema = {
   users: {
+    id: {type: 'increments', nullable: false, primary: true},
   	email: {type: 'string', nullable: false, unique: true},
     role: {type: 'integer', nullable: true},
     nOfNewsTagged: {type: 'integer', nullable: true},
@@ -19,6 +20,7 @@ var Schema = {
     FB4: {type: 'string', nullable: true},
     FB5: {type: 'string', nullable: true},
   	password: {type: 'string', nullable: false},
+    admin: {type: 'boolean', nullable: false},
     token: {type: 'string', nullable: true}
   },
 

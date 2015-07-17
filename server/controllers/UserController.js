@@ -7,31 +7,24 @@ var Promise = require('bluebird');
 var Collections = require('../db/collection.js');
 
 UserController.login = function(req, res) {
-  var password = req.body.password;
+  var password = req.body.password.trim();
 
   Collections.UserCollection.forge()
   .query(function(qb) {
-  	qb.where('email', '=', req.body.email.toLowerCase());
+  	qb.where('email', '=', req.body.email.trim().toLowerCase());
   })
   .fetchOne()
   .then(function(user) {
-
   	if (user) {
-  	  var hash = Bcrypt.hashSync(password, 10);
-      
-  	  if (Bcrypt.compareSync(hash, user.get('password'))) {
+  	  if (Bcrypt.compareSync(password, user.get('password'))) {
+        console.log('Log in successfully!');
+
   	  	// if user has a token
   	  	if (user.get('token')) {
   	  	  return Promise.resolve(user);
   	  	} else {
   	  	  // no token
-  	  	  var randomBytes = Promise.promisify(Crypto.ramdonBytes);
-
-  	  	  return randomBytes(48)
-  	  	    .then(function(buf) {
-  	  	      var aToken = buf.toString('hex');
-  	  	      return user.save({token: aToken});
-  	  	    });
+          return user.save({token: createRandomToken()});
   	  	}
   	  } else {
   	  	Promise.reject('password-incorrect');
@@ -42,6 +35,7 @@ UserController.login = function(req, res) {
   })
   .then(function(user) {
     user = removePasswordFromUserData(user);
+    console.log('User is: ', user);
     res.status(200).json(user);
   })
   .catch(function(err) {
@@ -96,12 +90,11 @@ UserController.retrieve = function(req, res) {
 
 UserController.create = function(req, res) {
   // hash the password
-  var password = req.body.password;
-  var hash = Bcrypt.hashSync(password, 10);
-
+  var password = req.body.password.trim();
+  
   Collections.UserCollection.forge()
   .create({
-  	email: req.body.email.toLowerCase(),
+  	email: req.body.email.trim().toLowerCase(),
     role: req.body.role,
     nOfNewsTagged: 0,
     nOfUpVotes: 0,
@@ -119,9 +112,10 @@ UserController.create = function(req, res) {
     employer1: req.body.employer1,
     employer2: req.body.employer2,
     employer3: req.body.employer3,
-  	password: hash
+  	password: hashPassword(password)
   })
   .then(function(result) {
+
     var result = removePasswordFromUserData(result);
   	res.status(200).json(result);
   })
@@ -207,6 +201,14 @@ var removePasswordFromUserData = function(user) {
   	delete(userObj.password);
   }
   return userObj;
+};
+
+var hashPassword = function(password) {
+  return Bcrypt.hashSync(password, 10);
+};
+
+var createRandomToken = function() {
+  return Crypto.randomBytes(64).toString('hex');
 }
 
 module.exports = UserController;

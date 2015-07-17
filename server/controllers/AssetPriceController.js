@@ -22,7 +22,7 @@ AssetPriceController.retrieve = function(req, res) {
         .orderBy('date', 'ASC')
         .limit(limit);
     } else {
-      qb.limit(100);
+      qb;
     }
   })
   .fetch()
