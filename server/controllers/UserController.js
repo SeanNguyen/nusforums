@@ -112,6 +112,7 @@ UserController.create = function(req, res) {
     employer1: req.body.employer1,
     employer2: req.body.employer2,
     employer3: req.body.employer3,
+    admin: req.body.admin,
   	password: hashPassword(password)
   })
   .then(function(result) {
