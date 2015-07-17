@@ -4,7 +4,7 @@ var app = angular.module('ratingApp');
 app.controller('leaderBoardController', function($rootScope, $scope) {
   $scope.userList = [];
   $scope.predictorList = [];
-  
+
   // by default, all divs are invisible
   $scope.userVisible = false;
   $scope.predictorVisible = false;

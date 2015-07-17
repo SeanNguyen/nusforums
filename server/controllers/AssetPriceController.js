@@ -8,19 +8,21 @@ module.exports = AssetPriceController;
 // Get all AssetAssetPrices
 AssetPriceController.retrieve = function(req, res) {
 
-  var yahooID = req.query.yahooID;
+  var id = req.query.id;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
+  var limit = req.query.limit;
   
   Collections.AssetPriceCollection.forge()
   .query(function(qb) {
-    if (yahooID && startDate && endDate) {
-  	  qb.where('yahooID', '=', yahooID)
+    if (id && startDate && endDate && limit) {
+  	  qb.where('id', '=', id)
         .andWhere('date', '>=', startDate)
         .andWhere('date', '<=', endDate)
-        .orderBy('date', 'ASC');
+        .orderBy('date', 'ASC')
+        .limit(limit);
     } else {
-      qb;
+      qb.limit(100);
     }
   })
   .fetch()

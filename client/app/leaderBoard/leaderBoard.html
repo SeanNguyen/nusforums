@@ -14,7 +14,6 @@
   ng-show="userVisible">
   <tr>
     <th>Rank</th>
-    <th>Username</th>
     <th>First name</th>
     <th>Last name</th>
     <th>Email</th>
@@ -24,7 +23,6 @@
   <tbody>
   <tr ng-repeat="user in userList">
     <td>{{$index + 1}}</td>
-    <td>{{user.username}}</td>
     <td>{{user.firstName}}</td>
     <td>{{user.lastName}}</td>
     <td>{{user.email}}</td>
@@ -40,7 +38,6 @@
   <tr>
     <th>Rank</th>
     <th>First Name</th>
-    <th>Middle Name</th>
     <th>Last Name</th>
     <th>Display Name</th>
     <th>Tittle</th>
@@ -50,7 +47,6 @@
   <tr ng-repeat="predictor in predictorList">
     <td>{{$index + 1}}</td>
     <td>{{predictor.firstName}}</td>
-    <td>{{predictor.middleName}}</td>
     <td>{{predictor.lastName}}</td>
     <td>{{predictor.commonName}}</td>
     <td>{{predictor.currentTitle}}</td>

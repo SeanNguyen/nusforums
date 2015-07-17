@@ -1,7 +1,5 @@
 var Schema = {
   users: {
-  	id: {type: 'increments', nullable: false, primary: true},
-  	username: {type: 'string', nullable: false, unique: true},
   	email: {type: 'string', nullable: false, unique: true},
     role: {type: 'integer', nullable: true},
     nOfNewsTagged: {type: 'integer', nullable: true},
@@ -25,7 +23,7 @@ var Schema = {
   },
 
   news: {
-  	newsID: {type: 'increments', nullable: false, primary: true},
+  	id: {type: 'increments', nullable: false, primary: true},
 	headline: {type: 'string', nullable: false},
 	content: {type: 'string', nullable: true},
 	date: {type: 'dateTime', nullable: false},
@@ -48,7 +46,7 @@ var Schema = {
 
   news_checked: {
     id: {type: 'increments', nullable: false, primary: true},
-    newsID: {type: 'integer', nullable: false, references: 'news.newsID'},
+    newsID: {type: 'integer', nullable: false, references: 'news.id'},
     predictorID: {type: 'integer', nullable: false, references: 'predictor.id'},
     userID: {type: 'integer', nullable: false, references: 'users.id'},
     assetID: {type: 'integer', nullable: true, references: 'asset.id'},

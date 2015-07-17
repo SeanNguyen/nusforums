@@ -7,14 +7,18 @@ var Promise = require('bluebird');
 var Collections = require('../db/collection.js');
 
 UserController.login = function(req, res) {
+  var password = req.body.password;
+
   Collections.UserCollection.forge()
   .query(function(qb) {
   	qb.where('email', '=', req.body.email.toLowerCase());
   })
   .fetchOne()
   .then(function(user) {
+
   	if (user) {
-  	  var hash = Bcrypt.hashSync(req.body.password, 10);
+  	  var hash = Bcrypt.hashSync(password, 10);
+      
   	  if (Bcrypt.compareSync(hash, user.get('password'))) {
   	  	// if user has a token
   	  	if (user.get('token')) {
@@ -76,7 +80,7 @@ UserController.retrieve = function(req, res) {
     } else if (byDownVotes) {
       qb.orderBy('nOfDownVotesReceived', 'DESC').limit(byDownVotes);
     } else {
-      qb.orderBy('nOfUpVotesReceived', 'DESC');
+      qb.orderBy('nOfUpVotesReceived', 'DESC').limit(20);
     }
   })
   .fetch()
@@ -92,11 +96,11 @@ UserController.retrieve = function(req, res) {
 
 UserController.create = function(req, res) {
   // hash the password
-  var hash = Bcrypt.hashSync(req.body.password, 10);
+  var password = req.body.password;
+  var hash = Bcrypt.hashSync(password, 10);
 
   Collections.UserCollection.forge()
   .create({
-    username: req.body.username,
   	email: req.body.email.toLowerCase(),
     role: req.body.role,
     nOfNewsTagged: 0,
@@ -110,11 +114,11 @@ UserController.create = function(req, res) {
     nickNameOnline: req.body.nickNameOnline,
     signupDate: req.body.signupDate, // get now
     photo: req.body.photo,
-    FB1: req.body.FB1,
-    FB2: req.body.FB2,
-    FB3: req.body.FB3,
-    FB4: req.body.FB4,
-    FB5: req.body.FB5,
+    gender: req.body.gender,
+    age: req.body.age,
+    employer1: req.body.employer1,
+    employer2: req.body.employer2,
+    employer3: req.body.employer3,
   	password: hash
   })
   .then(function(result) {
