@@ -23,7 +23,7 @@ app.controller('AssetsController', function($rootScope, $scope, $state) {
 		$rootScope.dataController.removeAsset(predictorId);
 	}
 
-	$scope.showStatistic = function(keyword) {
-		$state.go('statistic', {assetName: keyword});
+	$scope.showStatistic = function(asset) {
+		$state.go('statistic', {asset: asset});
 	}
 });

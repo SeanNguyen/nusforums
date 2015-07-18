@@ -7,7 +7,6 @@ module.exports = AssetPriceController;
 
 // Get all AssetAssetPrices
 AssetPriceController.retrieve = function(req, res) {
-
   var id = req.query.id;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
