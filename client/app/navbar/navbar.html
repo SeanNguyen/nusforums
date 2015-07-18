@@ -16,12 +16,18 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" ng-show="!isLoggedIn()">
         <li ng-class="{active: isActive('/login')}">
-            <a ng-href="/login">Login</a>
+            <a ng-href="/login">Log In</a>
         </li>
         <li ng-class="{active: isActive('/register')}">
             <a ng-href="/register">Register</a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" ng-show="isLoggedIn()">
+        <li>
+            <a ng-click="logout()">Log Out</a>
         </li>
       </ul>
     </div>

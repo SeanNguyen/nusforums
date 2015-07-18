@@ -3,34 +3,40 @@
 
 	var app = angular.module('ratingApp');
 
-	app.factory('UserAuth', ['$http', '$rootScope', userAuth]);
+	app.factory('UserAuth', ['$http', '$rootScope', 'GlobalData', '$q', userAuth]);
 
-	function userAuth($http, $rootScope) {
-		function isLoggedIn() {
-			if($rootScope.session.currentUser)
-				return true;
-			return false;
-		}
-
-		function getCurrentUser() {
-			if(isLoggedIn()) {
-				return $rootScope.session.currentUser;
-			}
-			return null;
-		}
+	function userAuth($http, $rootScope, GlobalData, $q) {
 
 		//return promise
 		function logIn(email, password) {
-			return $http.post('/api/users/login', { email: email, password: password });
+			var deferred = $q.defer();
+			$http.post('/api/users/login', { email: email, password: password })
+			.then(function(response) {
+				GlobalData.setCurrentUser(response.data);
+				deferred.resolve({success: true});
+			})
+			.catch(function(err) {
+				deferred.reject(err);
+			});
+			return deferred.promise;
 		}
 
 		function logOut() {
-			return $http.post('/api/users/logout', { email: email });
+			var currentUser = GlobalData.getCurrentUser();
+
+			var deferred = $q.defer();
+			$http.post('/api/users/logout', currentUser)
+			.then(function(user) {
+				GlobalData.setCurrentUser(null);
+				deferred.resolve({success: true});
+			})
+			.catch(function(err) {
+				deferred.reject(err);
+			});
+			return deferred.promise;
 		}
 
 		return {
-			isLoggedIn: isLoggedIn,
-			getCurrentUser: getCurrentUser,
 			logIn: logIn,
 			logOut: logOut
 		}
