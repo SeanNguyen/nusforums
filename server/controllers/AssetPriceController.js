@@ -10,8 +10,8 @@ AssetPriceController.retrieve = function(req, res) {
   var id = req.query.id;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
-  var limit = req.query.limit;
-  
+  var limit = parseInt(req.query.limit);
+
   Collections.AssetPriceCollection.forge()
   .query(function(qb) {
     if (id && startDate && endDate) {
@@ -26,7 +26,19 @@ AssetPriceController.retrieve = function(req, res) {
   .fetch()
   .then(function(prices) {
     if (prices) {
-  	  res.status(200).json(prices);
+      // if the query has limit
+      if (limit) {
+        var results = [];
+        var priceList = prices.toJSON();
+
+        for (var i = 0; i < priceList.length; i = i + limit) {
+          results.push(priceList[i]);
+        }
+
+        res.status(200).json(results);
+      } else {
+  	    res.status(200).json(prices);
+      }
   	} else {
       console.log('Error: ', err);
       res.status(404).json(err);
