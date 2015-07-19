@@ -11,16 +11,15 @@ AssetPriceController.retrieve = function(req, res) {
   var id = req.query.id;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
-  var limit = req.query.limit;
+  var skip = req.query.skip;
   
   Collections.AssetPriceCollection.forge()
   .query(function(qb) {
-    if (id && startDate && endDate && limit) {
+    if (id && startDate && endDate) {
   	  qb.where('id', '=', id)
         .andWhere('date', '>=', startDate)
         .andWhere('date', '<=', endDate)
-        .orderBy('date', 'ASC')
-        .limit(limit);
+        .orderBy('date', 'ASC');
     } else {
       qb;
     }
@@ -30,7 +29,7 @@ AssetPriceController.retrieve = function(req, res) {
     if (prices) {
   	  res.status(200).json(prices);
   	} else {
-    console.log('Error: ', err);
+      console.log('Error: ', err);
       res.status(404).json(err);
   	}
   })

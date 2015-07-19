@@ -23,7 +23,7 @@ function statisticController($rootScope, $scope, $http, $sta) {
 	function preprocessData(data) {
 		var result = [];
 		for (var i = data.length - 1; i >= 0; i--) {
-			if(data[i].yahooID !== "^GSPC") {
+			if(data[i].id !== "^GSPC") {
 				continue;
 			}
 			result.push([
