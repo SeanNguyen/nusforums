@@ -6,16 +6,17 @@
 	app.controller('RegisterController', ['$scope', '$http', 'User', 'GlobalData', '$state', RegisterController]);
 
 	function RegisterController($scope, $http, User, GlobalData, $state) {
-		$scope.input = {};
+		$scope.input = { 
+			admin: false
+		};
 		$scope.registerForm = { comfirmedPassword: {} };
 
 		//functions
-		$scope.login = login;
+		$scope.register = register;
 
 		//private methods
-		function login() {
+		function register() {
 			GlobalData.startAppLoadingState();
-			console.log(User);
 			User.save($scope.input).$promise
 			.then(function(user) {
 				GlobalData.stopAppLoadingState();

@@ -8,10 +8,21 @@ var Collections = require('../db/collection.js');
 
 UserController.login = function(req, res) {
   var password = req.body.password.trim();
+  var email = req.body.email.trim().toLowerCase();
+  var facebookId = req.body.facebookId.trim();
+  var googleId = req.body.googleId.trim();
 
   Collections.UserCollection.forge()
   .query(function(qb) {
-  	qb.where('email', '=', req.body.email.trim().toLowerCase());
+    if (email && password) {
+  	  qb.where('email', '=', email);
+    } else if (facebookId) {
+      qb.where('facebookId', '=', facebookId);
+    } else if (googleId) {
+      qb.where('googleId', '=', googleId);
+    } else {
+      return Promise.reject('no-authentication');
+    }
   })
   .fetchOne()
   .then(function(user) {
@@ -35,7 +46,6 @@ UserController.login = function(req, res) {
   })
   .then(function(user) {
     user = removePasswordFromUserData(user);
-    console.log('User is: ', user);
     res.status(200).json(user);
   })
   .catch(function(err) {
@@ -112,11 +122,12 @@ UserController.create = function(req, res) {
     employer1: req.body.employer1,
     employer2: req.body.employer2,
     employer3: req.body.employer3,
+    facebookId: req.body.facebookId,
+    googleId: req.body.googleId,
     admin: req.body.admin,
   	password: hashPassword(password)
   })
   .then(function(result) {
-
     var result = removePasswordFromUserData(result);
   	res.status(200).json(result);
   })

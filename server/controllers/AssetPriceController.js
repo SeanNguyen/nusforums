@@ -7,11 +7,10 @@ module.exports = AssetPriceController;
 
 // Get all AssetAssetPrices
 AssetPriceController.retrieve = function(req, res) {
-
   var id = req.query.id;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
-  var skip = req.query.skip;
+  var limit = req.query.limit;
   
   Collections.AssetPriceCollection.forge()
   .query(function(qb) {
@@ -21,7 +20,7 @@ AssetPriceController.retrieve = function(req, res) {
         .andWhere('date', '<=', endDate)
         .orderBy('date', 'ASC');
     } else {
-      qb;
+      qb.orderBy('date', 'ASC');
     }
   })
   .fetch()

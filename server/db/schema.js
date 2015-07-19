@@ -20,6 +20,8 @@ var Schema = {
     FB4: {type: 'string', nullable: true},
     FB5: {type: 'string', nullable: true},
   	password: {type: 'string', nullable: false},
+    facebookId: {type: 'string', nullable: true, unique: true},
+    googleId: {type: 'string', nullable: true, unique: true},
     admin: {type: 'boolean', nullable: false},
     token: {type: 'string', nullable: true}
   },

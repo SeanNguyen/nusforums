@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ratingApp')
-  .controller('NavbarCtrl', function ($scope, $location) {
+  .controller('NavbarCtrl', function ($scope, $location, GlobalData, UserAuth) {
     $scope.menu = [
       {'title': 'Home', 'link': '/'},
       {'title': 'Topics', 'link': '/topics'},
@@ -16,4 +16,20 @@ angular.module('ratingApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
+
+    $scope.isLoggedIn = function() {
+      var currentUser = GlobalData.getCurrentUser();
+      return !!currentUser
+    };
+
+    $scope.logout = function() {
+      UserAuth.logOut()
+      .then(function() {
+
+      })
+      .catch(function(err) {
+        alert('There is an error when logging out!');
+        console.log(err);
+      });
+    }
   });
