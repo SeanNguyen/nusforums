@@ -24,6 +24,7 @@
 			.catch(function(err) {
 				console.log(err);
 				alert("email or password is invalid!");
+				GlobalData.stopAppLoadingState();
 			});
 		}
 	}
