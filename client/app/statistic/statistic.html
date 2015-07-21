@@ -1,4 +1,5 @@
 <div ng-controller="statisticController" class="statistic">
 	<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
 	<div id="priceGraph"></div>
+	<h1 class='noIdError' ng-show='error.nullId'>NO DATA</h1>
 </div>

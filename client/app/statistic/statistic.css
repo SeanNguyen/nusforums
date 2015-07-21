@@ -16,3 +16,11 @@
 	height: 200px;
 	width: 200px;
 }
+
+.statistic .noIdError {
+	position: absolute;
+	margin: auto;
+	top: 0; bottom: 0; right: 0; left: 0;
+	height: 100px;
+	width: 200px;
+}

@@ -6,29 +6,36 @@ app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateP
 function statisticController($rootScope, $scope, $http, $stateParams) {
 	
     $scope.loaded = true;
+    $scope.error = { nullId: false };
 
 	active();
 
     //private helper methods
     function active() {
-        $scope.loaded = false;
-        var id = $stateParams.asset.ticker1;
-        var endDate = moment.utc().format();
-        var startDate = moment.utc('1970-01-01').format();
-        var limit = 100;
+        //check if there is any price ID for this asset
+        if(!$stateParams.asset || !$stateParams.asset.ticker1) {
+            $scope.error.nullId = true;
+            $scope.loaded = true;
+        } else {
+            $scope.loaded = false;
+            var id = $stateParams.asset.ticker1;
+            var endDate = moment.utc().format();
+            var startDate = moment.utc('1970-01-01').format();
+            var limit = 100;
 
-        queryData(id, startDate, endDate, limit).
-        success(function(data, status, headers, config) {
-            data = preprocessData(data);
-            console.log(data[0]);
-            render(data);
-            $scope.loaded = true;
-        }).
-        error(function(data, status, headers, config) {
-            console.log("There is an error when query for prices data");
-            console.log(data);
-            $scope.loaded = true;
-        });
+            queryData(id, startDate, endDate, limit).
+            success(function(data, status, headers, config) {
+                data = preprocessData(data);
+                console.log(data[0]);
+                render(data);
+                $scope.loaded = true;
+            }).
+            error(function(data, status, headers, config) {
+                console.log("There is an error when query for prices data");
+                console.log(data);
+                $scope.loaded = true;
+            });
+        }
     }
 
 	function preprocessData(data) {
