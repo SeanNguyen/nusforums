@@ -21,6 +21,19 @@
 			return deferred.promise;
 		}
 
+		function logInByFacebookId(facebookId) {
+			var deferred = $q.defer();
+			$http.post('/api/users/login', { facebookId: facebookId })
+			.then(function(response) {
+				GlobalData.setCurrentUser(response.data);
+				deferred.resolve({success: true});
+			})
+			.catch(function(err) {
+				deferred.reject(err);
+			});
+			return deferred.promise;
+		}
+
 		function logOut() {
 			var currentUser = GlobalData.getCurrentUser();
 
@@ -38,6 +51,7 @@
 
 		return {
 			logIn: logIn,
+			logInByFacebookId: logInByFacebookId,
 			logOut: logOut
 		}
 	}

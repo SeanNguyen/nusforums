@@ -1,6 +1,6 @@
 var app = angular.module('ratingApp');
 
-app.factory('facebook', ['$q', '$rootScope', 'User', function ($q, $rootScope, User) {
+app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', function ($q, $rootScope, User, GlobalData, UserAuth) {
 
     function init() {
         var deferred = $q.defer();
@@ -49,35 +49,36 @@ app.factory('facebook', ['$q', '$rootScope', 'User', function ($q, $rootScope, U
         var deferred = $q.defer();
         FB.login(function (response) {
             deferred.resolve(response);
-        }, { scope: 'email,user_likes,publish_actions,read_stream,user_friends' });
+        });
         return deferred.promise;
     }
 
     function updateRootUserByFacebookId(facebookId) {
         var deferred = $q.defer();
         //alr connected to facebook, let's check if there is any user in the databse or not
-        User.get({ id: facebookId }).$promise
+        UserAuth.logInByFacebookId(facebookId)
         .then(function (data) {
-            $rootScope.user = data;
+            GlobalData.setCurrentUser(data);
             deferred.resolve();
-        },
-        function (error) {
+        })
+        .catch(function (error) {
             //cant find this fbID, must be new to the town, let's him join
-            if (error.status !== 404) {
-                deferred.resolve();
-                return;
-            }
             $q.all([
                 getUserInfo(facebookId),
                 getAvatar(facebookId)])
             .then(function (data) {
                 var facebookUser = data[0];
                 var avatarUrl = data[1];
-                $rootScope.user = new User();
-                $rootScope.user.facebookId = facebookId;
-                $rootScope.user.name = facebookUser.name;
-                $rootScope.user.avatarUrl = avatarUrl;
-                return $rootScope.user.$save().$promise;
+                var user;
+                user = new User();
+                user.facebookId = facebookId;
+                user.firstName = facebookUser.firstName;
+                user.middleName = facebookUser.middleName;
+                user.lastName = facebookUser.lastName;
+                user.photo = facebookUser.avatarUrl;
+                user.email = facebookUser.email;
+
+                return user.$save().$promise;
             }).then(function () {
                 deferred.resolve();
             });
@@ -93,10 +94,28 @@ app.factory('facebook', ['$q', '$rootScope', 'User', function ($q, $rootScope, U
         return deferred.promise;
     }
 
+    function getAvatar(facebookId) {
+        var deferred = $q.defer();
+        FB.api(
+            "/" + facebookId + "/picture",
+            { height: 200, width: 200 },
+            function (response) {
+                if (response && !response.error) {
+                    deferred.resolve(response.data.url);
+                } else {
+                    console.log("Get facebook avatar fail");
+                    deferred.reject();
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
     return {
         init: init,
         getLoginStatus: getLoginStatus,
         getUserInfo: getUserInfo,
+        getAvatar: getAvatar,
         logIn: logIn,
         updateRootUserByFacebookId: updateRootUserByFacebookId
     };

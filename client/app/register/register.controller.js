@@ -3,9 +3,9 @@
 
 	var app = angular.module('ratingApp');
 
-	app.controller('RegisterController', ['$scope', '$http', 'User', 'GlobalData', '$state', RegisterController]);
+	app.controller('RegisterController', ['$scope', '$http', 'User', 'GlobalData', '$state', 'facebook', RegisterController]);
 
-	function RegisterController($scope, $http, User, GlobalData, $state) {
+	function RegisterController($scope, $http, User, GlobalData, $state, facebook) {
 		$scope.input = { 
 			admin: false
 		};
@@ -13,6 +13,7 @@
 
 		//functions
 		$scope.register = register;
+		$scope.registerByFacebook = registerByFacebook;
 
 		//private methods
 		function register() {
@@ -26,6 +27,37 @@
 				console.log('EER: Cannot login');
 				GlobalData.stopAppLoadingState();
 			});
+		}
+
+		function registerByFacebook() {
+			//start loading state
+			GlobalData.startAppLoadingState();
+
+			facebook.getLoginStatus()
+			.then(function(response) {
+				if (response.status === 'connected') {
+                    facebook.updateRootUserByFacebookId(response.authResponse.userID)
+                    .then(function () {
+                        GlobalData.stopAppLoadingState();
+                    });
+
+                } else if (response.status === 'not_authorized' || response.status === 'unknown') {
+                    facebook.logIn()
+                    .then(function(response) {
+                    	if (response.status === 'connected') {
+		                    facebook.updateRootUserByFacebookId(response.authResponse.userID)
+		                    .then(function () {
+		                        GlobalData.stopAppLoadingState();
+		                    });
+		                }
+                    });
+                }
+			})
+			.catch(function (e) {
+                console.log(e); // "oh, no!"
+                GlobalData.stopAppLoadingState();
+            });
+
 		}
 	}
 

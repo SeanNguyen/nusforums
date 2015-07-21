@@ -115,7 +115,8 @@ UserController.retrieve = function(req, res) {
 
 UserController.create = function(req, res) {
   // hash the password
-  var password = req.body.password.trim();
+  var password = req.body.password || '';
+  password = password.trim();
   
   Collections.UserCollection.forge()
   .create({
