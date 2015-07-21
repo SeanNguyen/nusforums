@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ratingApp')
-  .controller('NavbarCtrl', function ($scope, $location, GlobalData, UserAuth) {
+  .controller('NavbarCtrl', function ($scope, $location, GlobalData, UserAuth, $state) {
     $scope.menu = [
       {'title': 'Home', 'link': '/'},
       {'title': 'Topics', 'link': '/topics'},
@@ -25,7 +25,7 @@ angular.module('ratingApp')
     $scope.logout = function() {
       UserAuth.logOut()
       .then(function() {
-
+        $state.go('main');
       })
       .catch(function(err) {
         alert('There is an error when logging out!');
