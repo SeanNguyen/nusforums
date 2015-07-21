@@ -1,5 +1,3 @@
-
-
 (function() {
   'use strict';
 
@@ -17,14 +15,18 @@
   ]);
 
   app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
-      $urlRouterProvider
-        .otherwise('/');
+    $urlRouterProvider
+      .otherwise('/');
 
-      $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
 
-      // disable the loading spinner of the loading bar
-      cfpLoadingBarProvider.includeSpinner = false;
-    });
+    // disable the loading spinner of the loading bar
+    cfpLoadingBarProvider.includeSpinner = false;
+  });
+
+  app.run(['facebook', function(facebook) {
+    facebook.init();
+  }]);
   
   app.controller('AppController', ['$scope', '$rootScope', 'GlobalData', AppController]);
 
