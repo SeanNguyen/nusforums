@@ -7,10 +7,25 @@ var Promise = require('bluebird');
 var Collections = require('../db/collection.js');
 
 UserController.login = function(req, res) {
-  var password = req.body.password.trim();
-  var email = req.body.email.trim().toLowerCase();
-  var facebookId = req.body.facebookId.trim();
-  var googleId = req.body.googleId.trim();
+  var password = req.body.password;
+  if(req.body.password) {
+    password = password.trim();
+  }
+
+  var email = req.body.email;
+  if(req.body.email) {
+    email = email.trim();
+  }
+
+  var facebookId = req.body.facebookId;
+  if(req.body.facebookId) {
+    facebookId = facebookId.trim();
+  }
+
+  var googleId = req.body.googleId;
+  if(req.body.googleId) {
+    googleId = googleId.trim();
+  }
 
   Collections.UserCollection.forge()
   .query(function(qb) {
