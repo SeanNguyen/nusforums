@@ -3,6 +3,16 @@
 
   <md-content layout-padding class="registerForm">
     <form name="registerForm">
+
+      <br>
+
+      <div layout="row" layout-align="space-around center" class="socialNetworkButtonGroup">
+        <button type="submit" class="btn btn-info" ng-click="register()">Facebook</button>
+        <button type="submit" class="btn btn-danger" ng-click="register()">Google +</button>
+      </div>
+
+      <br>
+
       <md-input-container>
         <label>Email</label>
         <input type="email" required name="email" ng-model="input.email">
@@ -28,7 +38,9 @@
         </div>
       </md-input-container>
 
-      <div layout="row" layout-align="space-around center">
+      <br>
+
+      <div layout="column" layout-align="space-around center" class="registerButtonGroup">
         <button type="submit" ng-disabled="registerForm.$invalid" class="btn btn-success" ng-click="register()">Register</button>
         <a href="/login" class="btn btn-link">Log In</a>
       </div>
