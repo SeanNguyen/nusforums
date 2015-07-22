@@ -19,8 +19,6 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         } else {
             $scope.loaded = false;
             var id = $stateParams.asset.ticker1;
-            var endDate = moment.utc().format();
-            var startDate = moment.utc('1000-01-01').format();
             var limit = 100;
 
             queryData(id, startDate, endDate, limit).
@@ -30,6 +28,9 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
                 priceData = preprocessData(priceData);
                 render(priceData);
                 //render predictions here
+                var startTime = priceData[0].date;
+                var endTime = priceData[priceData.length - 1].date;
+                drawPredictions(predictionData, startTime, endTime);
                 $scope.loaded = true;
             }).
             catch(function(err) {
@@ -189,7 +190,28 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         });
     }
 
-    function draw() {
-        
+    function drawPredictions(predictions, startTime, endTime) {
+        var domContainer = $('#predictorContainer');
+        var canvasHeight = domContainer.height();
+        var canvasWidth = domContainer.width();
+        var renderer = PIXI.autoDetectRenderer(canvasWidth, canvasHeight, { antialias: true, transparent: true });
+        domContainer.append(renderer.view);
+
+        // create the root of the scene graph
+        var stage = new PIXI.Container();
+
+        stage.interactive = true;
+
+        //start drawing
+        var graphics = new PIXI.Graphics();
+
+        // set a fill and a line style again and draw a rectangle
+        graphics.lineStyle(2, 0x0000FF, 1);
+        graphics.beginFill(0xFF700B, 1);
+        graphics.drawRect(50, 250, 120, 120);
+
+        stage.addChild(graphics);
+
+        renderer.render(stage);
     }
 }   
