@@ -14,11 +14,11 @@ var Schema = {
     nickNameOnline: {type: 'string', nullable: true},
     signupDate: {type: 'dateTime', nullable: false},
     photo: {type: 'string', nullable: true},
-    FB1: {type: 'string', nullable: true},
-    FB2: {type: 'string', nullable: true},
-    FB3: {type: 'string', nullable: true},
-    FB4: {type: 'string', nullable: true},
-    FB5: {type: 'string', nullable: true},
+    gender: {type: 'string', nullable: true},
+    age: {type: 'integer', nullable: true},
+    employer1: {type: 'string', nullable: true},
+    employer2: {type: 'string', nullable: true},
+    employer3: {type: 'string', nullable: true},
   	password: {type: 'string', nullable: false},
     facebookId: {type: 'string', nullable: true, unique: true},
     googleId: {type: 'string', nullable: true, unique: true},
@@ -27,7 +27,7 @@ var Schema = {
   },
 
   news: {
-  	id: {type: 'increments', nullable: false, primary: true},
+  	yahooId: {type: 'string', nullable: false, primary: true},
 	headline: {type: 'string', nullable: false},
 	content: {type: 'string', nullable: true},
 	date: {type: 'dateTime', nullable: false},
@@ -83,8 +83,7 @@ var Schema = {
   },
   
   assetprice: {
-    id: {type: 'increments'},
-    yahooID: {type: 'string', nullable: false, primary: true},
+    id: {type: 'string', nullable: false, primary: true},
     date: {type: 'dateTime', nullable: false, primary: true},
     open: {type: 'double', nullable: false},
     high: {type: 'double', nullable: false},

@@ -11,16 +11,21 @@ AssetPriceController.retrieve = function(req, res) {
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
   var limit = parseInt(req.query.limit);
-
+  
+  console.log('Id is: ', id);
+  console.log('startDate: ', startDate);
+  console.log('endDate: ', endDate);
+  console.log('Limit: ', limit);
+  
   Collections.AssetPriceCollection.forge()
   .query(function(qb) {
     if (id && startDate && endDate) {
-  	  qb.where('id', '=', id)
+  	  qb.where('yahooId', '=', id)
         .andWhere('date', '>=', startDate)
         .andWhere('date', '<=', endDate)
         .orderBy('date', 'ASC');
     } else if (id) {
-      qb.where('id', '=', id)
+      qb.where('yahooId', '=', id)
         .orderBy('date', 'ASC');
     } else {
       qb.orderBy('date', 'ASC');

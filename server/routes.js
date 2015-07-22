@@ -49,9 +49,9 @@ module.exports = function(app) {
   app.delete('/api/predictors/:id', controllers.predictor.delete);
 
   /* Checked News */
-  app.get('/api/checked_news', controllers.news_checked.retrieveAll);
+  app.get('/api/checked_news', controllers.news_checked.retrieve);
   app.post('/api/checked_news', controllers.news_checked.create);
-  app.get('/api/checked_news/:id', controllers.news_checked.retrieve);
+  app.get('/api/checked_news/:id', controllers.news_checked.retrieveCheckedNews);
   app.put('/api/checked_news/:id', controllers.news_checked.update);
   app.delete('/api/checked_news/:id', controllers.news_checked.delete);
 
