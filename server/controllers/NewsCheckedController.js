@@ -7,7 +7,34 @@ module.exports = CheckedNewsController;
 
 // Get all CheckedNewss
 CheckedNewsController.retrieveAll = function(req, res) {
-  ObjectController.retrieveAll(Collections.CheckedNewsCollection, req, res);
+  var newsId = req.query.newsId;
+  var startDate = req.query.startDate;
+  var endDate = req.query.endDate;
+
+  Collections.CheckedNewsCollection.forge()
+  .query(function(qb) {
+    if (newsId && startDate && endDate) {
+  	  qb.where('newsId', '=', newsId)
+        .andWhere('timeStamp', '>=', startDate)
+        .andWhere('timeStamp', '<=', endDate)
+        .orderBy('timeStamp', 'ASC');
+    } else {
+      qb.orderBy('timeStamp', 'ASC');
+    }
+  })
+  .fetch()
+  .then(function(prices) {
+    if (prices) {
+  	  res.status(200).json(prices);
+  	} else {
+      console.log('Error: ', err);
+      res.status(404).json(err);
+  	}
+  })
+  .catch(function(err) {
+  	console.log('Error retrieve: ', err);
+  	res.status(500).json(err);
+  });
 };
 
 // Create a new CheckedNews

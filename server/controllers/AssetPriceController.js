@@ -30,8 +30,9 @@ AssetPriceController.retrieve = function(req, res) {
       if (limit) {
         var results = [];
         var priceList = prices.toJSON();
+        var gap = Math.floor(priceList.length / limit);
 
-        for (var i = 0; i < priceList.length; i = i + limit) {
+        for (var i = 0; i < priceList.length; i += gap) {
           results.push(priceList[i]);
         }
 

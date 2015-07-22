@@ -1,9 +1,9 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', statisticController]);
+app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', '$q', statisticController]);
 
-function statisticController($rootScope, $scope, $http, $stateParams) {
+function statisticController($rootScope, $scope, $http, $stateParams, $q) {
 	
     $scope.loaded = true;
     $scope.error = { nullId: false };
@@ -20,17 +20,19 @@ function statisticController($rootScope, $scope, $http, $stateParams) {
             $scope.loaded = false;
             var id = $stateParams.asset.ticker1;
             var endDate = moment.utc().format();
-            var startDate = moment.utc('1970-01-01').format();
+            var startDate = moment.utc('1000-01-01').format();
             var limit = 100;
 
             queryData(id, startDate, endDate, limit).
-            success(function(data, status, headers, config) {
-                data = preprocessData(data);
-                console.log(data[0]);
-                render(data);
+            then(function(responses) {
+                priceData = responses[0].data;
+                predictionData = responses[1].data;
+                priceData = preprocessData(priceData);
+                render(priceData);
+                //render predictions here
                 $scope.loaded = true;
             }).
-            error(function(data, status, headers, config) {
+            catch(function(err) {
                 console.log("There is an error when query for prices data");
                 console.log(data);
                 $scope.loaded = true;
@@ -59,6 +61,22 @@ function statisticController($rootScope, $scope, $http, $stateParams) {
             method: "GET",
             params: { id: id, startDate: startDate, endDate: endDate, limit: limit }
          });
+    }
+
+    function queryData(newsId, startDate, endDate, limit) {
+        var deferred = $q.defer();
+
+        $q.all([
+            $http({ url: '/api/prices', method: "GET", params: { id: newsId, startDate: startDate, endDate: endDate, limit: limit } }),
+            $http({ url: '/api/checked_news', method: "GET", params: { newsId: newsId, startDate: startDate, endDate: endDate } }),
+        ])
+        .then(function(responses) {
+            deferred.resolve(responses);
+        })
+        .catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
     }
 
 	function render(data) {
@@ -155,15 +173,18 @@ function statisticController($rootScope, $scope, $http, $stateParams) {
         var limit = 100;
 
         queryData(id, startDate, endDate, limit)
-        .success(function(data, status, headers, config) {
-            data = preprocessData(data);
-            console.log(data[0]);
-            chart.series[0].setData(data);
+        .then(function(responses) {
+            priceData = responses[0].data;
+            predictionData = responses[1].data;
+            priceData = preprocessData(priceData);
+            chart.series[0].setData(priceData);
             chart.hideLoading();
+            //render predictions here
         })
-        .error(function(data, status, headers, config) {
+        .catch(function(err) {
             console.log("There is an error when query for prices data");
             console.log(data);
+
             chart.hideLoading();
         });
     }
