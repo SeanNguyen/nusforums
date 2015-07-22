@@ -188,4 +188,8 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
             chart.hideLoading();
         });
     }
+
+    function draw() {
+        
+    }
 }   

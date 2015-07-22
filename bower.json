@@ -15,7 +15,7 @@
     "lodash": "~2.4.1",
     "angular-ui-router": "~0.2.10",
     "angucomplete": "*",
-    "pixi.js": "~3.0.6",
+    "pixi.js": "~3.0.7",
     "highstock-release": "~2.1.6",
     "angular-loading-bar": "~0.7.1",
     "angular-smart-table": "~2.1.0",
