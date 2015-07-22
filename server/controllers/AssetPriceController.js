@@ -19,7 +19,10 @@ AssetPriceController.retrieve = function(req, res) {
         .andWhere('date', '>=', startDate)
         .andWhere('date', '<=', endDate)
         .orderBy('date', 'ASC');
-    } else {
+    } if (id) {
+      qb.where('id', '=', id)
+        .orderBy('date', 'ASC');
+    } else {else {
       qb.orderBy('date', 'ASC');
     }
   })
