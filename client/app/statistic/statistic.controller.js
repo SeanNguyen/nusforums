@@ -8,6 +8,11 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
     $scope.loaded = true;
     $scope.error = { nullId: false };
 
+    var canvasHeight = 0;
+    var canvasWidth = 0;
+    var stage = stage;
+    var renderer = renderer;
+
     var resultLimit = 100;
 
 	active();
@@ -31,6 +36,7 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
                 //render predictions here
                 var startTime = moment(priceData[0].date);
                 var endTime = moment(priceData[priceData.length - 1].date);
+                initializeCanvas();
                 drawPredictions(predictionData, startTime, endTime);
                 $scope.loaded = true;
             }).
@@ -169,7 +175,7 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
             priceData = preprocessData(priceData); 
             chart.series[0].setData(priceData);
             chart.hideLoading();
-            drawPredictions(startDate, endDate)
+            drawPredictions(predictionData, startDate, endDate)
         })
         .catch(function(err) {
             console.log("There is an error when query for prices data");
@@ -179,16 +185,24 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         });
     }
 
-    function drawPredictions(predictions, startDate, endDate) {
+    function initializeCanvas() {
         var domContainer = $('#predictorContainer');
-        var canvasHeight = domContainer.height();
-        var canvasWidth = domContainer.width();
-        var renderer = PIXI.autoDetectRenderer(canvasWidth, canvasHeight, { antialias: true, transparent: true });
+        canvasHeight = domContainer.height();
+        canvasWidth = domContainer.width();
+        renderer = PIXI.autoDetectRenderer(canvasWidth, canvasHeight, { antialias: true, transparent: true });
         domContainer.append(renderer.view);
 
         // create the root of the scene graph
-        var stage = new PIXI.Container();
+        stage = new PIXI.Container();
         stage.interactive = true;
+    }
+
+    function drawPredictions(predictions, startDate, endDate) {
+        //clear stage
+        for (var i = stage.children.length - 1; i >= 0; i--) {
+            stage.removeChild(stage.children[i]);
+        };
+
 
         //start drawing all the prediction
         for (var i = predictions.length - 1; i >= 0; i--) {
@@ -206,7 +220,7 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
             graphics.drawRect(absolutePosition, 10, 10, 10);
 
             graphics.mouseover = function(mouseData){
-               console.log("MOUSE OVER!");
+               console.log(mouseData);
             }
 
             stage.addChild(graphics);
