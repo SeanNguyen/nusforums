@@ -5,7 +5,7 @@ var AssetPriceController = {};
 
 module.exports = AssetPriceController;
 
-// Get all AssetAssetPrices
+// Retrieve AssetAssetPrices
 AssetPriceController.retrieve = function(req, res) {
   var id = req.query.id;
   var startDate = req.query.startDate;
@@ -16,7 +16,7 @@ AssetPriceController.retrieve = function(req, res) {
   console.log('startDate: ', startDate);
   console.log('endDate: ', endDate);
   console.log('Limit: ', limit);
-  
+
   Collections.AssetPriceCollection.forge()
   .query(function(qb) {
     if (id && startDate && endDate) {
