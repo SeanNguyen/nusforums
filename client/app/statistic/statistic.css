@@ -32,3 +32,8 @@
 	height: 100px;
 	width: 200px;
 }
+
+.statistic .predictionInfo {
+	margin: 20px;
+	background-color: #FCFCFC;
+}
