@@ -7,19 +7,18 @@ module.exports = CheckedNewsController;
 
 // Get all CheckedNewss
 CheckedNewsController.retrieve = function(req, res) {
-  var id = req.query.id;
+  var assetId = req.query.assetId;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
 
   Collections.CheckedNewsCollection.forge()
   .query(function(qb) {
-    if (id && startDate && endDate) {
-  	  qb.where('id', '=', id)
+    if (assetId && startDate && endDate) {
+  	  qb.where('assetId', '=', assetId)
         .andWhere('timeStamp', '>=', startDate)
         .andWhere('timeStamp', '<=', endDate)
-        .orderBy('timeStamp', 'ASC');
-    } else {
-      qb.orderBy('timeStamp', 'ASC');
+    } else if (assetId) {
+      qb.where('assetId', '=', assetId)
     }
   })
   .fetch()

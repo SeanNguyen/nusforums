@@ -22,7 +22,7 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
             $scope.loaded = false;
             var id = $stateParams.asset.ticker1;
 
-            queryData(id, null, null, resultLimit).
+            queryData(id, null, null, resultLimit, $stateParams.asset.id).
             then(function(responses) {
                 priceData = responses[0].data;
                 predictionData = responses[1].data;
@@ -57,20 +57,12 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
 		return result;
 	}
 
-    function queryData(id, startDate, endDate, limit) {
-        return $http({
-            url: '/api/prices', 
-            method: "GET",
-            params: { id: id, startDate: startDate, endDate: endDate, limit: limit }
-         });
-    }
-
-    function queryData(newsId, startDate, endDate, limit) {
+    function queryData(priceId, startDate, endDate, limit, assetId) {
         var deferred = $q.defer();
 
         $q.all([
-            $http({ url: '/api/prices', method: "GET", params: { id: newsId, startDate: startDate, endDate: endDate, limit: limit } }),
-            $http({ url: '/api/checked_news', method: "GET", params: { newsId: newsId, startDate: startDate, endDate: endDate } }),
+            $http({ url: '/api/prices', method: "GET", params: { id: priceId, startDate: startDate, endDate: endDate, limit: limit } }),
+            $http({ url: '/api/checked_news', method: "GET", params: { assetId: assetId, startDate: startDate, endDate: endDate } }),
         ])
         .then(function(responses) {
             deferred.resolve(responses);
@@ -170,7 +162,7 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         var startDate = moment(e.min).format();
         var endDate = moment(e.max).format();
 
-        queryData(id, startDate, endDate, resultLimit)
+        queryData(id, startDate, endDate, resultLimit, $stateParams.asset.id)
         .then(function(responses) {
             priceData = responses[0].data;
             predictionData = responses[1].data;
