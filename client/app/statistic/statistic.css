@@ -11,9 +11,9 @@
 
 .statistic #predictorContainer {
 	position: absolute;
-	top: 0; bottom: auto; 
+	top: 370px; bottom: auto; 
 	left: 0; right: 0;
-	height: 100%;
+	height: 50px;
 	min-width: 100%;
 }
 

@@ -26,11 +26,11 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
             then(function(responses) {
                 priceData = responses[0].data;
                 predictionData = responses[1].data;
-                priceData = preprocessData(priceData);
-                render(priceData);
+                var processedPriceData = preprocessData(priceData);
+                render(processedPriceData);
                 //render predictions here
-                var startTime = priceData[0].date;
-                var endTime = priceData[priceData.length - 1].date;
+                var startTime = moment(priceData[0].date);
+                var endTime = moment(priceData[priceData.length - 1].date);
                 drawPredictions(predictionData, startTime, endTime);
                 $scope.loaded = true;
             }).
@@ -159,17 +159,17 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         chart.showLoading('Loading data from server...');
         //load data from server
         var id = $stateParams.asset.ticker1;
-        var startDate = moment(e.min).format();
-        var endDate = moment(e.max).format();
+        var startDate = moment(e.min);
+        var endDate = moment(e.max);
 
-        queryData(id, startDate, endDate, resultLimit, $stateParams.asset.id)
+        queryData(id, startDate.format(), endDate.format(), resultLimit, $stateParams.asset.id)
         .then(function(responses) {
             priceData = responses[0].data;
             predictionData = responses[1].data;
-            priceData = preprocessData(priceData);
+            priceData = preprocessData(priceData); 
             chart.series[0].setData(priceData);
             chart.hideLoading();
-            //render predictions here
+            drawPredictions(startDate, endDate)
         })
         .catch(function(err) {
             console.log("There is an error when query for prices data");
@@ -179,7 +179,7 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         });
     }
 
-    function drawPredictions(predictions, startTime, endTime) {
+    function drawPredictions(predictions, startDate, endDate) {
         var domContainer = $('#predictorContainer');
         var canvasHeight = domContainer.height();
         var canvasWidth = domContainer.width();
@@ -188,18 +188,30 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
 
         // create the root of the scene graph
         var stage = new PIXI.Container();
-
         stage.interactive = true;
 
-        //start drawing
-        var graphics = new PIXI.Graphics();
+        //start drawing all the prediction
+        for (var i = predictions.length - 1; i >= 0; i--) {
+            //cal position
+            var predictionDate = moment(predictions[i].timeStamp);
+            var totalDuration = moment.duration(endDate.diff(startDate)).asDays();
+            var predictionDuration = moment.duration(predictionDate.diff(startDate)).asDays();
+            var durationRatio = predictionDuration / totalDuration;
+            var absolutePosition = canvasWidth * durationRatio;
 
-        // set a fill and a line style again and draw a rectangle
-        graphics.lineStyle(2, 0x0000FF, 1);
-        graphics.beginFill(0xFF700B, 1);
-        graphics.drawRect(50, 250, 120, 120);
+            var graphics = new PIXI.Graphics();
+            graphics.interactive = true;
+            // set a fill and a line style again and draw a rectangle
+            graphics.beginFill(0xE91E63, 1);
+            graphics.drawRect(absolutePosition, 10, 10, 10);
 
-        stage.addChild(graphics);
+            graphics.mouseover = function(mouseData){
+               console.log("MOUSE OVER!");
+            }
+
+            stage.addChild(graphics);
+        };
+        
 
         renderer.render(stage);
     }
