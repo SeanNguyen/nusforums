@@ -8,6 +8,8 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
     $scope.loaded = true;
     $scope.error = { nullId: false };
 
+    var resultLimit = 100;
+
 	active();
 
     //private helper methods
@@ -19,9 +21,8 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         } else {
             $scope.loaded = false;
             var id = $stateParams.asset.ticker1;
-            var limit = 100;
 
-            queryData(id, startDate, endDate, limit).
+            queryData(id, null, null, resultLimit).
             then(function(responses) {
                 priceData = responses[0].data;
                 predictionData = responses[1].data;
@@ -152,12 +153,9 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
 	}
 
 	function convertDateToMillisecond(dateString) {
-		var myDate = new Date(dateString);
-		var offset = myDate.getTimezoneOffset() * 1000;
-
-		var withOffset = myDate.getTime();
-		var withoutOffset = withOffset - offset;
-		return withoutOffset;
+        var date = moment(dateString);
+        var unixDuration = date.unix() * 1000;
+		return unixDuration;
 	}
 
     /**
@@ -169,11 +167,10 @@ function statisticController($rootScope, $scope, $http, $stateParams, $q) {
         chart.showLoading('Loading data from server...');
         //load data from server
         var id = $stateParams.asset.ticker1;
-        var startDate = e.min;
-        var endDate = e.max;
-        var limit = 100;
+        var startDate = moment(e.min).format();
+        var endDate = moment(e.max).format();
 
-        queryData(id, startDate, endDate, limit)
+        queryData(id, startDate, endDate, resultLimit)
         .then(function(responses) {
             priceData = responses[0].data;
             predictionData = responses[1].data;
