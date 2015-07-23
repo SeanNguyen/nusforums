@@ -77,7 +77,7 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
                 user.password = 'nopassword';
                 user.admin = false;
 
-                user.$save(function() {
+                user.$save(function(user) {
                     deferred.resolve(user);
                 }, function() {
                     deferred.reject();

@@ -54,7 +54,6 @@
             function loginAfterFacebookLogin(response) {
                 facebook.updateRootUserByFacebookId(response.authResponse.userID)
                 .then(function (localUser) {
-                	GlobalData.setCurrentUser(localUser);
                 	$state.go('main');
                     GlobalData.stopAppLoadingState();
                 })
