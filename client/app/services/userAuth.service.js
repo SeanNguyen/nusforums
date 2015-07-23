@@ -44,7 +44,8 @@
 				deferred.resolve({success: true});
 			})
 			.catch(function(err) {
-				deferred.reject(err);
+				GlobalData.setCurrentUser(null);
+				deferred.resolve({success: true});
 			});
 			return deferred.promise;
 		}
