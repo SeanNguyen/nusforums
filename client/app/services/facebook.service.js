@@ -4,35 +4,24 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
 
     function init() {
         var deferred = $q.defer();
+
         //Facebook Config
-        window.fbAsyncInit = function () {
+        window.fbAsyncInit = function() {
             FB.init({
-                appId: 852449401504638,
-                cookie: true,
-                xfbml: true,
-                version: 'v2.3'
+              appId      : '1618828148360232',
+              xfbml      : true,
+              version    : 'v2.4'
             });
             deferred.resolve();
         };
 
-        (function (d) {
-            // load the Facebook javascript SDK
-            var js,
-            id = 'facebook-jssdk',
-            ref = d.getElementsByTagName('script')[0];
-
-            if (d.getElementById(id)) {
-                return;
-            }
-
-            js = d.createElement('script');
-            js.id = id;
-            js.async = true;
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
             js.src = "//connect.facebook.net/en_US/sdk.js";
-
-            ref.parentNode.insertBefore(js, ref);
-
-        }(document));
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
 
         return deferred.promise;
     }
@@ -41,7 +30,7 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
         var deferred = $q.defer();
         FB.getLoginStatus(function (response) {
             deferred.resolve(response);
-        });
+        }, {scope: 'public_profile,email'});
         return deferred.promise;
     }
 
@@ -49,7 +38,7 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
         var deferred = $q.defer();
         FB.login(function (response) {
             deferred.resolve(response);
-        });
+        }, { scope: 'email,user_friends' });
         return deferred.promise;
     }
 
@@ -76,11 +65,23 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
                 user.middleName = facebookUser.middleName;
                 user.lastName = facebookUser.lastName;
                 user.photo = facebookUser.avatarUrl;
-                user.email = facebookUser.email;
 
-                return user.$save().$promise;
-            }).then(function () {
-                deferred.resolve();
+                //TODO: remove this and fix the bug
+                var text = "";
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                for( var i=0; i < 5; i++ )
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                user.email = text + '@abc.com'//facebookUser.email;
+                user.password = 'nopassword';
+                user.admin = false;
+
+                user.$save(function(user) {
+                    deferred.resolve(user);
+                }, function() {
+                    deferred.reject();
+                });
             });
         });
         return deferred.promise;
@@ -88,7 +89,7 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
 
     function getUserInfo(userId) {
         var deferred = $q.defer();
-        FB.api('/' + userId, function (response) {
+        FB.api('/me', function (response) {
             deferred.resolve(response);
         });
         return deferred.promise;

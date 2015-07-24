@@ -42,19 +42,19 @@ UserController.login = function(req, res) {
   .fetchOne()
   .then(function(user) {
   	if (user) {
-  	  if (Bcrypt.compareSync(password, user.get('password'))) {
-        console.log('Log in successfully!');
+  	  if (password && !Bcrypt.compareSync(password, user.get('password'))) {
+        Promise.reject('password-incorrect');
+      }
 
-  	  	// if user has a token
-  	  	if (user.get('token')) {
-  	  	  return Promise.resolve(user);
-  	  	} else {
-  	  	  // no token
-          return user.save({token: createRandomToken()});
-  	  	}
-  	  } else {
-  	  	Promise.reject('password-incorrect');
-  	  }
+      console.log('Log in successfully!');
+      console.log(user);
+	  	// if user has a token
+	  	if (user.get('token')) {
+	  	  return Promise.resolve(user);
+	  	} else {
+	  	  // no token
+        return user.save({token: createRandomToken()});
+	  	}
   	} else {
   	  return Promise.reject('user_not_found');
   	}

@@ -1,9 +1,13 @@
-<div ng-controller="statisticController" class="statistic">
-	<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
-	<div id="priceGraph"></div>
-	<div id="predictorContainer"></div>
-	<h1 class='noIdError' ng-show='error.nullId'>NO DATA</h1>
-	<md-whiteframe class="md-whiteframe-z2 predictionInfo" layout layout-align="center center">
-	    <h1>{{currentPredictionView.news.headline}}</h1>
+<div ng-controller="statisticController">
+	<div class="statistic">
+		<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
+		<div id="priceGraph"></div>
+		<div id="predictorContainer"></div>
+		<h1 class='noIdError' ng-show='error.nullId'>NO DATA</h1>
+	</div>
+	<md-whiteframe class="md-whiteframe-z2 predictionInfo" layout="column" layout-align="center center" ng-show="currentPredictionView">
+	    <h4>News: {{currentPredictionView.news.headline}}</h4>
+	    <h5>Predictor: {{currentPredictionView.predictor.commonName}}</h5>
+	    <h5>Checked by: {{currentPredictionView.checker.email}}</h5>
 	</md-whiteframe>
 </div>

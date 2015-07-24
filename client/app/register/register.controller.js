@@ -36,20 +36,13 @@
 			facebook.getLoginStatus()
 			.then(function(response) {
 				if (response.status === 'connected') {
-                    facebook.updateRootUserByFacebookId(response.authResponse.userID)
-                    .then(function () {
-                        GlobalData.stopAppLoadingState();
-                    });
-
+                    loginAfterFacebookLogin(response);
                 } else if (response.status === 'not_authorized' || response.status === 'unknown') {
                     facebook.logIn()
                     .then(function(response) {
-                    	if (response.status === 'connected') {
-		                    facebook.updateRootUserByFacebookId(response.authResponse.userID)
-		                    .then(function () {
-		                        GlobalData.stopAppLoadingState();
-		                    });
-		                }
+            			if (response.status === 'connected') {
+                    		loginAfterFacebookLogin(response);
+                    	}
                     });
                 }
 			})
@@ -57,6 +50,18 @@
                 console.log(e); // "oh, no!"
                 GlobalData.stopAppLoadingState();
             });
+
+            function loginAfterFacebookLogin(response) {
+                facebook.updateRootUserByFacebookId(response.authResponse.userID)
+                .then(function (localUser) {
+                	$state.go('main');
+                    GlobalData.stopAppLoadingState();
+                })
+                .catch(function(err) {
+                	alert("There is an error when process your request");
+                	GlobalData.stopAppLoadingState();
+                });
+            }
 
 		}
 	}

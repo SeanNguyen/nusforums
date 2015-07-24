@@ -11,7 +11,7 @@
         $scope.checker = {};
         $scope.news = {};
         $scope.predictor = {};
-        $scope.currentPredictionView = {};
+        $scope.currentPredictionView = null;
 
         var canvasHeight = 0;
         var canvasWidth = 0;
@@ -238,6 +238,7 @@
                 graphics.prediction = predictions[i];
                 graphics.click = function(mouseData) {
                     setCurrentPredictionView(this.prediction);
+                    $scope.$apply();
                 }
 
                 stage.addChild(graphics);
@@ -248,6 +249,7 @@
         }
 
         function setCurrentPredictionView(prediction) {
+            $scope.currentPredictionView = {};
             $scope.currentPredictionView.checker = $scope.checker[prediction.userID];
             $scope.currentPredictionView.news = $scope.news[prediction.newsID];
             $scope.currentPredictionView.predictor = $scope.predictor[prediction.predictorID];
