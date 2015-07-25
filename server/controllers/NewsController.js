@@ -9,7 +9,6 @@ module.exports = NewsController;
 // Get all Newss
 NewsController.retrieveAll = function(req, res) {
   var keyword = '%' + req.query.keyword + '%';
-  console.log(keyword);
   
   Collections.NewsCollection.forge()
   .query(function(qb) {
@@ -17,7 +16,6 @@ NewsController.retrieveAll = function(req, res) {
   })
   .fetch()
   .then(function(news) {
-  	console.log(news);
     if (news) {
   		res.status(200).json(news);
   	} else {
