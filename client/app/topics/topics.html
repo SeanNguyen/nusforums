@@ -1,7 +1,7 @@
 <div class="container" id="topics">
 	<div class="searchBox">
 		<div class="input-group input-group-lg">
-	    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword">
+	    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword" ng-model-options="{ debounce: 300 }" ng-change="onSearch(search.keyword)">
 		    <span class="input-group-btn" ng-click="onSearch(search.keyword)">
 	        	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search </button>
 	    	</span>
