@@ -8,7 +8,27 @@ module.exports = NewsController;
 
 // Get all Newss
 NewsController.retrieveAll = function(req, res) {
-  ObjectController.retrieveAll(Collections.NewsCollection, req, res);
+  var keyword = '%' + req.query.keyword + '%';
+  console.log(keyword);
+  
+  Collections.NewsCollection.forge()
+  .query(function(qb) {
+    qb.where('headline', 'like', keyword)
+  })
+  .fetch()
+  .then(function(news) {
+  	console.log(news);
+    if (news) {
+  		res.status(200).json(news);
+  	} else {
+    	console.log('Error: ', err);
+    	res.status(404).json(err);
+  	}
+  })
+  .catch(function(err) {
+  	console.log('Error retrieve: ', err);
+  	res.status(500).json(err);
+  });
 };
 
 // Create a new News

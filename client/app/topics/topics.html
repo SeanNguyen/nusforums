@@ -1,101 +1,27 @@
-<div ng-controller="TopicsController" class="container" id="topics">
-	<div>
-		<div class="searchBox">
-			<div class="input-group input-group-lg">
-		    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword" ng-change="onSearch()">
-			    <span class="input-group-btn" ng-click="onSearch()">
-		        	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search </button>
-		    	</span>
-	    </div><!-- /input-group -->
-		</div>
-		<div ng-repeat="topic in showedTopics" class="topicView" ng-click="viewTopic(topic.newsID)">
-			<h4>{{topic.headline}}</h4>
-			<h5>{{getPreview(topic)}}</h5>
-			<div class="actionBar">
-				<button type="button" class="btn btn-default">
-					<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Star
-				</button>
-				<button type="button" class="btn btn-default btn-warning">
-					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Report
-				</button>
-				<button type="button" class="btn btn-default btn-danger" ng-click="removeTopic($index)">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-				</button>
-			</div>
+<div class="container" id="topics">
+	<div class="searchBox">
+		<div class="input-group input-group-lg">
+	    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword">
+		    <span class="input-group-btn" ng-click="onSearch(search.keyword)">
+	        	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search </button>
+	    	</span>
+    </div><!-- /input-group -->
+	</div>
+	<div ng-repeat="topic in topics" class="topicView">
+		<h4>{{topic.headline}}</h4>
+		<h5>{{getPreview(topic)}}</h5>
+		<div class="actionBar">
+			<button type="button" class="btn btn-default">
+				<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Star
+			</button>
+			<button type="button" class="btn btn-default btn-warning">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Report
+			</button>
+			<button type="button" class="btn btn-default btn-danger" ng-click="removeTopic($index)">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+			</button>
 		</div>
 	</div>
-	<div ng-show="state === 'view'" class="container topicContentView">
-		<button type="button" class="btn btn-default btn-danger" ng-click="closeTopic()">
-			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Close
-		</button>
-		<h2>{{currentTopic.headline}}</h2>
-		<h4>{{currentTopic.headline}}</h4>
-		<div class="row" id="infoTag">
-			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(currentTopic.predictor)}}</div>
-			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(currentTopic.asset)}}</div>
-			<div class="col-xs-12 col-sm-4">Other info: </div>
-			<div class="col-xs-12">Prediction: {{currentTopic.prediction}}</div>
-			<div class="col-xs-12">Validated By: </div>
-		</div>
 
-		<div class="row" id="inputSection">
-			<h5>Add your validation</h5>
-			<div class="col-xs-12 col-sm-6">
-				<div class="input-group">
-				  <span class="input-group-addon" id="basic-addon1">Predictor</span>
-				  <angucomplete id="ex1"
-		              placeholder="name"
-		              pause="50"
-		              selectedobject="inputPost.predictor"
-		              localdata="dataController.getPredictors()"
-		              searchfields="commonName"
-		              titlefield="commonName",
-		              minlength="1"
-		              inputclass="form-control form-control-small"/>
-				  <!-- <input type="text" class="form-control" placeholder="Predictor" aria-describedby="basic-addon1" ng-model="currentTopic.predictor"> -->
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-6">
-				<div class="input-group">
-				  <span class="input-group-addon" id="basic-addon1">Asset</span>
-				  <angucomplete id="ex1"
-		              placeholder="asset"
-		              pause="50"
-		              selectedobject="inputPost.asset"
-		              localdata="dataController.getAssets()"
-		              searchfields="assetName"
-		              titlefield="assetName",
-		              minlength="1"
-		              inputclass="form-control form-control-small"/>
-				  <!-- <input type="text" class="form-control" placeholder="Asset" aria-describedby="basic-addon1" ng-model="currentTopic.asset"> -->
-				</div>
-			</div>
-			<div class="col-xs-12">
-				<div class="input-group">
-				  <span class="input-group-addon" id="basic-addon1">Prediction</span>
-				  <input type="text" class="form-control" placeholder="Prediction" aria-describedby="basic-addon1" ng-model="inputPost.prediction">
-				</div>
-				<button type="button" class="btn btn-default btn-success col-xs-12" ng-click="addPost(inputPost)">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
-				</button>
-			</div>
-			
-		</div>
-
-		<div class="row validation" ng-repeat="post in currentTopic.posts">
-			<div class="col-xs-12 col-sm-4">Predictor: {{getPredictorName(post.predictor)}}</div>
-			<div class="col-xs-12 col-sm-4">Asset: {{getAssetName(post.asset)}}</div>
-			<div class="col-xs-12 col-sm-4">Other info: </div>
-			<div class="col-xs-12">Prediction: {{post.prediction}}</div>
-			<div class="col-xs-12">Validated By: </div>
-			<div class="row voteButtonGroup">
-				<button type="button" class="btn btn-default">
-						<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Agree
-				</button>
-				<button type="button" class="btn btn-default">
-						<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Disagree
-				</button>
-			</div>
-		</div>
-	</div>
+	<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
 </div>
