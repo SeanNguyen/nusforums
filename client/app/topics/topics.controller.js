@@ -1,8 +1,6 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-var STATE = {search: 'search', view: 'view'};
-
 app.controller('TopicsController', ['News', '$rootScope', '$scope', TopicsController]);
 
 
