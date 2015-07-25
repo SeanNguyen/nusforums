@@ -64,5 +64,14 @@
             }
 
 		}
+
+		function registerByGoogle() {
+		  // start loading state
+		  GlobalData.startAppLoadingState();
+
+		  // check if user is logged in
+		  
+
+		}
 	}
 })();

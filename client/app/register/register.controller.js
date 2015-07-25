@@ -62,7 +62,6 @@
                 	GlobalData.stopAppLoadingState();
                 });
             }
-
 		}
 	}
 
