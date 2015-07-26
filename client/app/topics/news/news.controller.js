@@ -1,3 +1,14 @@
+'use-strict';
+var app = angular.module('ratingApp');
+
+app.controller('NewsController', ['News', '$rootScope', '$scope', NewsController]);
+
+
+function NewsController(News, $rootScope, $scope) {
+    
+}
+
+
 // //OLD
 
 // 	$scope.removeTopic = function(index) {
