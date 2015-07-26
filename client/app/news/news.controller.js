@@ -43,12 +43,12 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
 
     function upVote(review) {
     	review.upVote++;
-    	review.$save();
+    	review.$update();
     }
 
     function downVote(review) {
     	review.downVote++;
-    	review.$save();	
+    	review.$update();	
     }
 }
 
