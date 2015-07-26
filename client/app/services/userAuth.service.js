@@ -33,6 +33,20 @@
 			});
 			return deferred.promise;
 		}
+        
+		function logInByGoogleId(googleId) {
+          var deferred = $q.defer();
+          $http.post('/api/users/login', {googleId: googleId})
+            .then(function(res) {
+            	GlobalData.setCurrentUser(res.data);
+            	deferred.resolve({success: true});
+            })
+            .catch(function(err) {
+            	deferred.reject(err);
+            });
+
+            return deferred.promise;
+		};
 
 		function logOut() {
 			var currentUser = GlobalData.getCurrentUser();
@@ -53,6 +67,7 @@
 		return {
 			logIn: logIn,
 			logInByFacebookId: logInByFacebookId,
+			logInByGoogleId: logInByGoogleId,
 			logOut: logOut
 		}
 	}

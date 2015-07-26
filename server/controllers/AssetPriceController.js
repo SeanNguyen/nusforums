@@ -5,17 +5,12 @@ var AssetPriceController = {};
 
 module.exports = AssetPriceController;
 
-// Get all AssetAssetPrices
+// Retrieve AssetAssetPrices
 AssetPriceController.retrieve = function(req, res) {
   var id = req.query.id;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
   var limit = parseInt(req.query.limit);
-  
-  console.log('Id is: ', id);
-  console.log('startDate: ', startDate);
-  console.log('endDate: ', endDate);
-  console.log('Limit: ', limit);
   
   Collections.AssetPriceCollection.forge()
   .query(function(qb) {
