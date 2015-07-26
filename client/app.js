@@ -27,6 +27,10 @@
   app.run(['facebook', function(facebook) {
     facebook.init();
   }]);
+
+  app.run(['google', function(google) {
+    google.init();
+  }])
   
   app.controller('AppController', ['$scope', '$rootScope', 'GlobalData', AppController]);
 

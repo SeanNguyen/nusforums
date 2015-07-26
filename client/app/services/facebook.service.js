@@ -8,7 +8,7 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
         //Facebook Config
         window.fbAsyncInit = function() {
             FB.init({
-              appId      : '1618828148360232',
+              appId      : '852449401504638',
               xfbml      : true,
               version    : 'v2.4'
             });

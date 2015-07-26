@@ -65,7 +65,6 @@
 		}
 
 		function registerByGoogle() {
-			console.log('Click register by google');
 		  //start loading state
 		  GlobalData.startAppLoadingState();
 
