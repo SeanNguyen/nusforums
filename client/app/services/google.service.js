@@ -1,6 +1,4 @@
-'use strict';
-
-var app = angular.model('ratingApp');
+var app = angular.module('ratingApp');
 
 app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', function ($q, $rootScope, User, GlobalData, UserAuth) {
   function init() {
@@ -87,5 +85,13 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', fun
     });
 
     return deferred.promise;
+  };
+
+  return {
+    init: init,
+    getLoginStatus: getLoginStatus,
+    getUserProfile: getUserProfile,
+    logIn: logIn,
+    updateRootUserByGoogleId: updateRootUserByGoogleId
   };
 }]);
