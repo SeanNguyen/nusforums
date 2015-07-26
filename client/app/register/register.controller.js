@@ -3,9 +3,9 @@
 
 	var app = angular.module('ratingApp');
 
-	app.controller('RegisterController', ['$scope', '$http', 'User', 'GlobalData', '$state', 'facebook', RegisterController]);
+	app.controller('RegisterController', ['$scope', '$http', 'User', 'GlobalData', '$state', 'facebook', 'google', RegisterController]);
 
-	function RegisterController($scope, $http, User, GlobalData, $state, facebook) {
+	function RegisterController($scope, $http, User, GlobalData, $state, facebook, google) {
 		$scope.input = { 
 			admin: false
 		};
@@ -63,6 +63,43 @@
                 });
             }
 		}
-	}
+
+		function registerByGoogle() {
+			console.log('Click register by google');
+		  //start loading state
+		  GlobalData.startAppLoadingState();
+
+		  google.getLoginStatus()
+		    .then(function(logged_in) {
+		      if (logged_in) {
+		      	google.getUserProfile()
+		      	  .then(function(resp) {
+                    logInAfterGoogleLogin(resp.id);
+		      	  });
+		      } else {
+		      	google.logIn()
+		      	  .then(function(resp) {
+		      	  	logInAfterGoogleLogin(resp.id);
+		      	  });
+		      }
+		    })
+		    .catch(function(err) {
+		      console.log(err);
+		      GlobalData.stopAppLoadingState();
+		    });
+
+		    function logInAfterGoogleLogin(googleId) {
+              google.updateRootUserByGoogleId(googleId)
+                .then(function (localUser) {
+                  $state.go('main');
+                  GlobalData.stopAppLoadingState();
+                })
+                .catch(function(err) {
+                  alert("There is an error when process your request");
+                  GlobalData.stopAppLoadingState();
+                });
+		    };
+		};
+	};
 
 })();
