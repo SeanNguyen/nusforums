@@ -22,3 +22,17 @@ app.factory('Predictor', ['$resource', function($resource) {
         'update': { method:'PUT' }
     });
 }]);
+
+app.factory('Review', ['$resource', function($resource) {
+    return $resource('/api/checked_news/:id', null,
+    {
+        'update': { method:'PUT' }
+    });
+}]);
+
+app.factory('Asset', ['$resource', function($resource) {
+    return $resource('/api/assets/:id', null,
+    {
+        'update': { method:'PUT' }
+    });
+}]);

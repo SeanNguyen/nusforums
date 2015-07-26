@@ -1,3 +1,44 @@
+<div class="news">
+	<!-- news content -->
+	<div class="newsContent">
+		<h2 ng-bind='news.headline'></h2>
+		<h4 ng-bind='news.content'></h4>
+		<div class="row">
+			<div class="col col-xs-12 col-sm-6">
+				<h6>Date: {{news.date}}</h6>
+			</div>
+			<div class="col col-xs-12 col-sm-6">
+				<h6>Author: {{news.author}}</h6>
+			</div>
+		</div>
+	</div>
+
+	<div class="reviewList">
+		<div ng-repeat='review in reviews' class="review">
+			<div class="row">
+				<h4 class="col col-xs-12">Predictor: {{review.predictor.commonName}}</h4>
+				<h4 class="col col-xs-12">Asset: {{review.asset.assetName}}</h4>
+				
+				<h5 class="col col-xs-12 col-sm-6">Prediction: {{getPrediction(review)}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Duration: {{review.time}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Target Price: {{review.targetPrice}}</h5>
+
+				<h5 class="col col-xs-12">Remarks: {{review.remarks}}</h5>
+
+				<h5 class="col col-xs-12 col-sm-6">Reviewer: {{review.user.email}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Time: {{review.timeStamp | date}}</h5>
+			</div>
+
+			<button type="button" class="btn btn-default" ng-click='upVote(review)'>
+					<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Agree: {{review.upVote}}
+			</button>
+			<button type="button" class="btn btn-default" ng-click='downVote(review)'>
+					<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Disagree: {{review.downVote}}
+			</button>
+		</div>
+	</div>
+</div>
+
 <div ng-show="state === 'view'" class="container topicContentView">
 	<button type="button" class="btn btn-default btn-danger" ng-click="closeTopic()">
 		<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Close
