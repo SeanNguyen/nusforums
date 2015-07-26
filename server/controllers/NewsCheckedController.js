@@ -8,6 +8,7 @@ module.exports = CheckedNewsController;
 // Get all CheckedNewss
 CheckedNewsController.retrieve = function(req, res) {
   var assetId = req.query.assetId;
+  var newsId = req.query.newsId;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
 
@@ -19,6 +20,8 @@ CheckedNewsController.retrieve = function(req, res) {
         .andWhere('timeStamp', '<=', endDate)
     } else if (assetId) {
       qb.where('assetId', '=', assetId)
+    } else if (newsId) {
+      qb.where('newsId', '=', newsId);
     }
   })
   .fetch()

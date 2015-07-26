@@ -8,7 +8,7 @@
     </div><!-- /input-group -->
 	</div>
 	<div ng-repeat="topic in topics" class="topicView">
-		<h4>{{topic.headline}}</h4>
+		<h4><a href="/news/{{topic.id}}">{{topic.headline}}</a></h4>
 		<h5>{{getPreview(topic)}}</h5>
 		<div class="actionBar">
 			<button type="button" class="btn btn-default">

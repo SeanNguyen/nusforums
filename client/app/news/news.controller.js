@@ -1,3 +1,59 @@
+'use-strict';
+var app = angular.module('ratingApp');
+
+app.controller('NewsController', ['News', '$rootScope', '$scope', 'news', 'Review', 'User', 'Predictor', 'Asset', NewsController]);
+
+
+function NewsController(News, $rootScope, $scope, news, Review, User, Predictor, Asset) {
+    $scope.news = news;
+    $scope.reviews = [];
+    $scope.upVote = upVote;
+    $scope.downVote = downVote;
+    $scope.input = { review: {} };
+
+    //functions
+    $scope.getPrediction = getPrediction;
+
+    active();
+    //private helper methods
+    function active() {
+    	Review.query({newsId: news.id}).$promise
+    	.then(function(data) {
+    		$scope.reviews = data;
+
+    		//then for each review, get the info about the user
+    		for (var i = $scope.reviews.length - 1; i >= 0; i--) {
+    			var review = $scope.reviews[i];
+
+	    		review.user = User.get({ id: review.userID });	
+	    		review.predictor = Predictor.get({ id: review.predictorID });	
+	    		review.asset = Asset.get({ id: review.assetID });	
+    		};
+    	});
+    }
+
+    function getPrediction(review) {
+    	if(review.CannotTell === 1) {
+    		return 'Cannot Tell';
+    	} else if (review.NoPrediction === 1) {
+    		return 'No Prediction';
+    	} else {
+    		return review.upDown;
+    	}
+    }
+
+    function upVote(review) {
+    	review.upVote++;
+    	review.$update();
+    }
+
+    function downVote(review) {
+    	review.downVote++;
+    	review.$update();	
+    }
+}
+
+
 // //OLD
 
 // 	$scope.removeTopic = function(index) {

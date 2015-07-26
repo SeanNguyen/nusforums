@@ -1,0 +1,16 @@
+.news .newsContent {
+	margin: 20px;
+	border-bottom: solid #03A9F4 2px;
+}
+
+.news .reviewInput {
+	margin: 20px;
+	padding: 10px;
+	border: 1px solid #E91E63;
+}
+
+.reviewList .review {
+	margin: 20px;
+	padding: 10px;
+	border: 1px solid #03A9F4;
+}

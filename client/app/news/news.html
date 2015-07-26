@@ -1,0 +1,115 @@
+<div class="news">
+	<!-- news content -->
+	<div class="newsContent">
+		<h2 ng-bind='news.headline'></h2>
+		<h4 ng-bind='news.content'></h4>
+		<div class="row">
+			<div class="col col-xs-12 col-sm-6">
+				<h6>Date: {{news.date}}</h6>
+			</div>
+			<div class="col col-xs-12 col-sm-6">
+				<h6>Author: {{news.author}}</h6>
+			</div>
+		</div>
+	</div>
+
+	<div class="reviewInput row">
+		<h5>Add your validation</h5>
+		<!-- Predictor -->
+		<div class="col-xs-12 col-sm-6">
+			<div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Predictor</span>
+			  <angucomplete id="ex1"
+	              placeholder="name"
+	              pause="50"
+	              selectedobject="input.review.predictor"
+	              localdata="dataController.getPredictors()"
+	              searchfields="commonName"
+	              titlefield="commonName",
+	              minlength="1"
+	              inputclass="form-control form-control-small"/>
+			</div>
+		</div>
+		<!-- Asset -->
+		<div class="col-xs-12 col-sm-6">
+			<div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Asset</span>
+			  <angucomplete id="ex1"
+	              placeholder="asset"
+	              pause="50"
+	              selectedobject="input.review.asset"
+	              localdata="dataController.getAssets()"
+	              searchfields="assetName"
+	              titlefield="assetName",
+	              minlength="1"
+	              inputclass="form-control form-control-small"/>
+			</div>
+
+			<h6><input type="checkbox" ng-model='input.review.assetNotAvailable'> Asset Not Available</h6>
+		</div>
+		<!-- Prediction -->
+		<div class="col-xs-12 col-sm-6">
+			<label>Prediction</label>
+			<select class="form-control">
+			  <option>Up</option>
+			  <option>Down</option>
+			</select>
+			<h6><input type="checkbox" ng-model='input.review.CannotTell'> Cannot Tell</h6>
+			<h6><input type="checkbox" ng-model='input.review.NoPrediction'> No Prediction</h6>
+		</div>
+		<!-- Duration -->
+		<div class="col-xs-12 col-sm-6">
+			<label>Time</label>
+			<select class="form-control" ng-model='time'>
+			  <option>Short-Term</option>
+			  <option>Long-Term</option>
+			  <option>Already Bought</option>
+			  <option>1 Year</option>
+			  <option>2 Years</option>
+			  <option>3 Years</option>
+			  <option>4 Years</option>
+			  <option>5 Years</option>
+			  <option>6 Years</option>
+			  <option>7 Years</option>
+			  <option>8 Years</option>
+			  <option>9 Years</option>
+			  <option>10 Years</option>
+			</select>
+		</div>
+		<!-- Target Price -->
+		<div class="col-xs-12 col-sm-6">
+			<label>Target Price</label>
+			<input type="number" class="form-control" placeholder="0.0" ng-model='targetPrice'>
+		</div>
+		<!-- Remarks -->
+		<div class="col-xs-12">
+			<label>Remarks</label>
+			<textarea class="form-control" rows="2" ng-model='remarks'></textarea>
+		</div>
+	</div>
+
+	<div class="reviewList">
+		<div ng-repeat='review in reviews' class="review">
+			<div class="row">
+				<h4 class="col col-xs-12">Predictor: {{review.predictor.commonName}}</h4>
+				<h4 class="col col-xs-12">Asset: {{review.asset.assetName}}</h4>
+				
+				<h5 class="col col-xs-12 col-sm-6">Prediction: {{getPrediction(review)}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Duration: {{review.time}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Target Price: {{review.targetPrice}}</h5>
+
+				<h5 class="col col-xs-12">Remarks: {{review.remarks}}</h5>
+
+				<h5 class="col col-xs-12 col-sm-6">Reviewer: {{review.user.email}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Time: {{review.timeStamp | date}}</h5>
+			</div>
+
+			<button type="button" class="btn btn-default" ng-click='upVote(review)'>
+					<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Agree: {{review.upVote}}
+			</button>
+			<button type="button" class="btn btn-default" ng-click='downVote(review)'>
+					<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Disagree: {{review.downVote}}
+			</button>
+		</div>
+	</div>
+</div>
