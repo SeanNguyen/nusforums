@@ -9,6 +9,7 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     $scope.reviews = [];
     $scope.upVote = upVote;
     $scope.downVote = downVote;
+    $scope.input = { review: {} };
 
     //functions
     $scope.getPrediction = getPrediction;

@@ -22,13 +22,12 @@
 			  <angucomplete id="ex1"
 	              placeholder="name"
 	              pause="50"
-	              selectedobject="inputPost.predictor"
+	              selectedobject="input.review.predictor"
 	              localdata="dataController.getPredictors()"
 	              searchfields="commonName"
 	              titlefield="commonName",
 	              minlength="1"
 	              inputclass="form-control form-control-small"/>
-			  <!-- <input type="text" class="form-control" placeholder="Predictor" aria-describedby="basic-addon1" ng-model="currentTopic.predictor"> -->
 			</div>
 		</div>
 		<!-- Asset -->
@@ -38,16 +37,15 @@
 			  <angucomplete id="ex1"
 	              placeholder="asset"
 	              pause="50"
-	              selectedobject="inputPost.asset"
+	              selectedobject="input.review.asset"
 	              localdata="dataController.getAssets()"
 	              searchfields="assetName"
 	              titlefield="assetName",
 	              minlength="1"
 	              inputclass="form-control form-control-small"/>
-			  <!-- <input type="text" class="form-control" placeholder="Asset" aria-describedby="basic-addon1" ng-model="currentTopic.asset"> -->
 			</div>
 
-			<h6><input type="checkbox"> Asset Not Available</h6>
+			<h6><input type="checkbox" ng-model='input.review.assetNotAvailable'> Asset Not Available</h6>
 		</div>
 		<!-- Prediction -->
 		<div class="col-xs-12 col-sm-6">
@@ -56,12 +54,13 @@
 			  <option>Up</option>
 			  <option>Down</option>
 			</select>
-			<h6><input type="checkbox"> Cannot Tell</h6>
+			<h6><input type="checkbox" ng-model='input.review.CannotTell'> Cannot Tell</h6>
+			<h6><input type="checkbox" ng-model='input.review.NoPrediction'> No Prediction</h6>
 		</div>
 		<!-- Duration -->
 		<div class="col-xs-12 col-sm-6">
 			<label>Time</label>
-			<select class="form-control">
+			<select class="form-control" ng-model='time'>
 			  <option>Short-Term</option>
 			  <option>Long-Term</option>
 			  <option>Already Bought</option>
@@ -80,12 +79,12 @@
 		<!-- Target Price -->
 		<div class="col-xs-12 col-sm-6">
 			<label>Target Price</label>
-			<input type="number" class="form-control" placeholder="0.0">
+			<input type="number" class="form-control" placeholder="0.0" ng-model='targetPrice'>
 		</div>
 		<!-- Remarks -->
 		<div class="col-xs-12">
 			<label>Remarks</label>
-			<textarea class="form-control" rows="2"></textarea>
+			<textarea class="form-control" rows="2" ng-model='remarks'></textarea>
 		</div>
 	</div>
 
