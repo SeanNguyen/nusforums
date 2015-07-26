@@ -18,15 +18,19 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', fun
   };
   // check if user is logged in
   function getLoginStatus() {
+    var deferred = $q.defer();
+
     // this is retrieve from: http://stackoverflow.com/questions/20922163/google-javascript-api-how-to-detect-user-sign-in-status
     gapi.auth.checkSessionState({session_state: null}, function(isLoggedIn) {
-      return isLoggedIn;
+      deferred.resolve(isLoggedIn);
     });
+
+    return deferred.promise;
   };
 
   function logIn() {
     var deferred = $q.defer();
-    var scope = var scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
+    var scope = scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
     
     gapi.auth.authorize({
       client_id: '575364699605-rhs7mbqvveirn6aiohm81qb2v347rn6d.apps.googleusercontent.com',

@@ -14,6 +14,7 @@
 		//functions
 		$scope.register = register;
 		$scope.registerByFacebook = registerByFacebook;
+		$scope.registerByGoogle = registerByGoogle;
 
 		//private methods
 		function register() {
@@ -70,6 +71,7 @@
 
 		  google.getLoginStatus()
 		    .then(function(logged_in) {
+
 		      if (logged_in) {
 		      	google.getUserProfile()
 		      	  .then(function(resp) {

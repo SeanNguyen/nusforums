@@ -14,7 +14,7 @@
     'ngStorage'
   ]);
 
-  app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
+  app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider, $logProvider) {
     $urlRouterProvider
       .otherwise('/');
 
@@ -22,10 +22,17 @@
 
     // disable the loading spinner of the loading bar
     cfpLoadingBarProvider.includeSpinner = false;
+
+    // enable $log.debug
+    $logProvider.debugEnabled(true);
   });
 
   app.run(['facebook', function(facebook) {
     facebook.init();
+  }]);
+  
+  app.run(['google',  function(google) {
+    google.init();
   }]);
   
   app.controller('AppController', ['$scope', '$rootScope', 'GlobalData', AppController]);
