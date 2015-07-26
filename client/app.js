@@ -27,11 +27,9 @@
     $logProvider.debugEnabled(true);
   });
 
-  app.run(['facebook', function(facebook) {
+  app.run(['facebook', 'google', function(facebook, google) {
+    // load google and facebook SDK async
     facebook.init();
-  }]);
-  
-  app.run(['google',  function(google) {
     google.init();
   }]);
   
