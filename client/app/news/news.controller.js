@@ -74,6 +74,7 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     	review.predictorID = $scope.input.predictor.originalObject.id;
     	review.assetID = $scope.input.asset.originalObject.id;
     	review.userID = GlobalData.getCurrentUser().id;
+        review.timeStamp = moment.utc().format("YY-MM-DD HH:MM:ss");
 
     	review.$save(function() {
     		//add to ui
