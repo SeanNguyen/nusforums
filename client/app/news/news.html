@@ -1,4 +1,4 @@
-<div class="news">
+<div class="news container">
 	<!-- news content -->
 	<div class="newsContent">
 		<h2 ng-bind='news.headline'></h2>
@@ -14,7 +14,7 @@
 	</div>
 
 	<div class="reviewInput row">
-		<h5>Add your validation</h5>
+		<h4>Add your validation</h4>
 		<!-- Predictor -->
 		<div class="col-xs-12 col-sm-6">
 			<div class="input-group">
@@ -22,12 +22,12 @@
 			  <angucomplete id="ex1"
 	              placeholder="name"
 	              pause="50"
-	              selectedobject="input.review.predictor"
-	              localdata="dataController.getPredictors()"
+	              selectedobject="input.predictor"
+	              localdata="cache.predictors"
 	              searchfields="commonName"
 	              titlefield="commonName",
 	              minlength="1"
-	              inputclass="form-control form-control-small"/>
+	              inputclass="form-control form-control-small" required/>
 			</div>
 		</div>
 		<!-- Asset -->
@@ -37,8 +37,8 @@
 			  <angucomplete id="ex1"
 	              placeholder="asset"
 	              pause="50"
-	              selectedobject="input.review.asset"
-	              localdata="dataController.getAssets()"
+	              selectedobject="input.asset"
+	              localdata="cache.assets"
 	              searchfields="assetName"
 	              titlefield="assetName",
 	              minlength="1"
@@ -50,7 +50,7 @@
 		<!-- Prediction -->
 		<div class="col-xs-12 col-sm-6">
 			<label>Prediction</label>
-			<select class="form-control">
+			<select class="form-control" ng-model='input.review.upDown'>
 			  <option>Up</option>
 			  <option>Down</option>
 			</select>
@@ -60,7 +60,7 @@
 		<!-- Duration -->
 		<div class="col-xs-12 col-sm-6">
 			<label>Time</label>
-			<select class="form-control" ng-model='time'>
+			<select class="form-control" ng-model='input.review.time'>
 			  <option>Short-Term</option>
 			  <option>Long-Term</option>
 			  <option>Already Bought</option>
@@ -79,12 +79,17 @@
 		<!-- Target Price -->
 		<div class="col-xs-12 col-sm-6">
 			<label>Target Price</label>
-			<input type="number" class="form-control" placeholder="0.0" ng-model='targetPrice'>
+			<input type="number" class="form-control" placeholder="0.0" ng-model='input.review.targetPrice'>
 		</div>
 		<!-- Remarks -->
 		<div class="col-xs-12">
 			<label>Remarks</label>
-			<textarea class="form-control" rows="2" ng-model='remarks'></textarea>
+			<textarea class="form-control" rows="2" ng-model='input.review.remarks'></textarea>
+		</div>
+
+		<!-- Submit Button -->
+		<div class="col col-xs-12">
+			<button class="btn btn-success" ng-click='addReview(input)'>Add Review</button>
 		</div>
 	</div>
 

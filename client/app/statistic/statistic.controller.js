@@ -10,8 +10,15 @@
         $scope.error = { nullId: false };
         $scope.checker = {};
         $scope.news = {};
-        $scope.predictor = {};
+        $scope.predictors = {};
         $scope.currentPredictionView = null;
+        $scope.startDate;
+        $scope.endDate;
+        $scope.predictionData;
+
+        //functions
+        $scope.onSelectPredictor = onSelectPredictor;
+
 
         var canvasHeight = 0;
         var canvasWidth = 0;
@@ -26,6 +33,12 @@
 
     	active();
 
+        //events
+        function onSelectPredictor(predictor) {
+            predictor.showing = !predictor.showing;
+            drawPredictions($scope.predictionData, $scope.startDate, $scope.endDate);
+        }
+
         //private helper methods
         function active() {
             //check if there is any price ID for this asset
@@ -39,14 +52,16 @@
                 queryData(id, null, null, resultLimit, $stateParams.asset.id).
                 then(function(responses) {
                     priceData = responses[0].data;
-                    predictionData = responses[1].data;
+                    $scope.predictionData = responses[1].data;
                     var processedPriceData = preprocessData(priceData);
                     render(processedPriceData);
                     //render predictions here
-                    var startTime = moment(priceData[0].date);
-                    var endTime = moment(priceData[priceData.length - 1].date);
+                    $scope.startDate = moment(priceData[0].date);
+                    $scope.endDate = moment(priceData[priceData.length - 1].date);
+
+
                     initializeCanvas();
-                    drawPredictions(predictionData, startTime, endTime);
+                    drawPredictions($scope.predictionData, $scope.startDate, $scope.endDate);
                     $scope.loaded = true;
                 }).
                 catch(function(err) {
@@ -82,10 +97,13 @@
                 //query info for the predictions as well
                 var predictions = responses[1].data;
                 for (var i = predictions.length - 1; i >= 0; i--) {
-                    predictions[i]
                     $scope.checker[predictions[i].userID] = User.get({ id: predictions[i].userID });
                     $scope.news[predictions[i].newsID] = News.get({ id: predictions[i].newsID });
-                    $scope.predictor[predictions[i].predictorID] = Predictor.get({ id: predictions[i].predictorID });
+                    $scope.predictors[predictions[i].predictorID] = Predictor.get({ id: predictions[i].predictorID }, 
+                        function(data) {
+                            data.showing = true;
+                        });
+                    $scope.predictors[predictions[i].predictorID].showing = true;
                 };
                 deferred.resolve(responses);
             })
@@ -181,17 +199,17 @@
             chart.showLoading('Loading data from server...');
             //load data from server
             var id = $stateParams.asset.ticker1;
-            var startDate = moment(e.min);
-            var endDate = moment(e.max);
+            $scope.startDate = moment(e.min);
+            $scope.endDate = moment(e.max);
 
             queryData(id, startDate.format(), endDate.format(), resultLimit, $stateParams.asset.id)
             .then(function(responses) {
                 priceData = responses[0].data;
-                predictionData = responses[1].data;
+                $scope.predictionData = responses[1].data;
                 priceData = preprocessData(priceData); 
                 chart.series[0].setData(priceData);
                 chart.hideLoading();
-                drawPredictions(predictionData, startDate, endDate)
+                drawPredictions($scope.predictionData, $scope.startDate, $scope.endDate)
             })
             .catch(function(err) {
                 console.log("There is an error when query for prices data");
@@ -222,6 +240,11 @@
 
             //start drawing all the prediction
             for (var i = predictions.length - 1; i >= 0; i--) {
+                //check if showing
+                var predictor = $scope.predictors[predictions[i].predictorID];
+                if(predictor && !predictor.showing) {
+                    continue;
+                }
                 //cal position
                 var predictionDate = moment(predictions[i].timeStamp);
                 var totalDuration = moment.duration(endDate.diff(startDate)).asDays();
@@ -252,7 +275,7 @@
             $scope.currentPredictionView = {};
             $scope.currentPredictionView.checker = $scope.checker[prediction.userID];
             $scope.currentPredictionView.news = $scope.news[prediction.newsID];
-            $scope.currentPredictionView.predictor = $scope.predictor[prediction.predictorID];
+            $scope.currentPredictionView.predictor = $scope.predictors[prediction.predictorID];
         }
     }
 })();
