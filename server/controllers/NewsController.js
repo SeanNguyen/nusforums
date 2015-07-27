@@ -27,7 +27,7 @@ NewsController.retrieveAll = function(req, res) {
           var promise = q.defer();
           isNewsChecked(newsList[i].id)
           .then(function(isChecked) {
-            if(isChecked === isFresh) {
+            if(isChecked !== isFresh) {
               results.push(newsList[i]);
             }
             promise.resolve();
@@ -40,6 +40,8 @@ NewsController.retrieveAll = function(req, res) {
           res.status(200).json(results);
         });
       }
+      
+      res.status(200).json(news);
       
   	} else {
     	console.log('Error: ', err);

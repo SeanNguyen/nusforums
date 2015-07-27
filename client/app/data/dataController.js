@@ -12,15 +12,6 @@ app.run(function ($http, $rootScope) {
 	error(function(data, status, headers, config) {
 	});
 
-	$http.get('/api/news').
-	success(function(data, status, headers, config) {
-		for (var i = data.length - 1; i >= 0; i--) {
-			$rootScope.dataController.addTopic(data[i]);	
-		};
-	}).
-	error(function(data, status, headers, config) {
-	});
-
 	$http.get('/api/assets').
 	success(function(data, status, headers, config) {
 		for (var i = data.length - 1; i >= 0; i--) {
