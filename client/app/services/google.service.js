@@ -1,6 +1,6 @@
 var app = angular.module('ratingApp');
 
-app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', function ($q, $rootScope, User, GlobalData, UserAuth) {
+app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$log', function ($q, $rootScope, User, GlobalData, UserAuth, $log) {
   function init() {
     var deferred = $q.defer();
 
@@ -54,6 +54,8 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', fun
       .catch(function(err) {
       	$q.all([getUserProfile])
       	  .then(function(data) {
+
+            $log.debug('User: ', data);
       	  	var user = new User();
       	  	user.googleId = data[0].id;
       	  	user.firstName = data[0].given_name;

@@ -1,6 +1,6 @@
 var app = angular.module('ratingApp');
 
-app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', function ($q, $rootScope, User, GlobalData, UserAuth) {
+app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$log', function ($q, $rootScope, User, GlobalData, UserAuth,$log) {
 
     function init() {
         var deferred = $q.defer();
@@ -76,6 +76,8 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', f
                 user.email = text + '@abc.com'//facebookUser.email;
                 user.password = 'nopassword';
                 user.admin = false;
+
+                $log.debug(user);
 
                 user.$save(function(user) {
                     deferred.resolve(user);

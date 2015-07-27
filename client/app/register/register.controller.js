@@ -3,9 +3,9 @@
 
 	var app = angular.module('ratingApp');
 
-	app.controller('RegisterController', ['$scope', '$http', 'User', 'GlobalData', '$state', 'facebook', 'google', RegisterController]);
+	app.controller('RegisterController', ['$scope', '$http', 'User', 'GlobalData', '$state', 'facebook', 'google', '$log', RegisterController]);
 
-	function RegisterController($scope, $http, User, GlobalData, $state, facebook, google) {
+	function RegisterController($scope, $http, User, GlobalData, $state, facebook, google, $log) {
 		$scope.input = { 
 			admin: false
 		};
@@ -75,6 +75,7 @@
 		      if (logged_in) {
 		      	google.getUserProfile()
 		      	  .then(function(resp) {
+		      	  	$log.debug('Response profile: ', resp);
                     logInAfterGoogleLogin(resp.id);
 		      	  });
 		      } else {
