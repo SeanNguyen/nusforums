@@ -21,11 +21,14 @@ UserController.login = function(req, res) {
   if(req.body.facebookId) {
     facebookId = facebookId.trim();
   }
+  console.log('Facebook id: ', facebookId);
 
   var googleId = req.body.googleId;
   if(req.body.googleId) {
     googleId = googleId.trim();
   }
+
+  console.log('Google id: ', googleId);
 
   Collections.UserCollection.forge()
   .query(function(qb) {
@@ -46,8 +49,6 @@ UserController.login = function(req, res) {
         Promise.reject('password-incorrect');
       }
 
-      console.log('Log in successfully!');
-      console.log(user);
 	  	// if user has a token
 	  	if (user.get('token')) {
 	  	  return Promise.resolve(user);
