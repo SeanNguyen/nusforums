@@ -1,6 +1,5 @@
 #topics {
 	position: relative;
-	padding-top: 5em;
 }
 
 #topics .actionBar {
@@ -16,6 +15,10 @@
 	border-bottom-style: solid;
 	border-bottom-color: #0288D1;
 	border-bottom-width: 0.1em;
+}
+
+#topics .searchBox {
+	margin: 20px;
 }
 
 #topics .topicContentView {

@@ -12,19 +12,19 @@ function TopicsController(News, $rootScope, $scope) {
     active();
 
     function active() {
-        getNews('');
+        getNews('', true);
     }
 
 	//public methods
-	$scope.onSearch = function(keyword) {
-        getNews(keyword);
+	$scope.onSearch = function(keyword, isFresh) {
+        getNews(keyword, isFresh);
 	}
 
     //private helper methods
-    function getNews(keyword) {
+    function getNews(keyword, isFresh) {
         $scope.topics = [];
         $scope.loaded = false;
-        News.query({keyword: keyword}).$promise
+        News.query({keyword: keyword, isFresh: isFresh}).$promise
         .then(function (data) {
             $scope.topics = data;
             $scope.loaded = true;

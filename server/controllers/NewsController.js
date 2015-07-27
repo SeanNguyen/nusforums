@@ -1,4 +1,5 @@
 'use strict';
+var q = require('q');
 
 var Collections = require('../db/collection.js'); 
 var ObjectController = require('./ObjectController.js');
@@ -17,7 +18,29 @@ NewsController.retrieveAll = function(req, res) {
   .fetch()
   .then(function(news) {
     if (news) {
-  		res.status(200).json(news);
+      var newsList = news.models;
+      var isFresh = req.query.isFresh;
+      if(isFresh) {
+        var results = [];
+        var promises = [];
+        for (var i = newsList.length - 1; i >= 0; i--) {
+          var promise = q.defer();
+          isNewsChecked(newsList[i].id)
+          .then(function(isChecked) {
+            if(isChecked === isFresh) {
+              results.push(newsList[i]);
+            }
+            promise.resolve();
+          });
+          promises.push(promise);
+        };
+        q.all(promises)
+        .then(function (data) {
+          console.log(results);
+          res.status(200).json(results);
+        });
+      }
+      
   	} else {
     	console.log('Error: ', err);
     	res.status(404).json(err);
@@ -48,3 +71,24 @@ NewsController.update = function(req, res) {
 NewsController.delete = function(req, res) {
   ObjectController.delete(Collections.NewsCollection, req, res);
 };
+
+//private helper methods
+function isNewsChecked(newsId) {
+  return Collections.CheckedNewsCollection
+    .forge()
+    .query(function(qb) {
+        qb.where('newsId', '=', newsId);
+    })
+    .fetchOne()
+    .then(function(checkedNews) {
+      if (checkedNews) {
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .catch(function(err) {
+      console.log('Error retrieve: ', err);
+      return false;
+    });
+}
