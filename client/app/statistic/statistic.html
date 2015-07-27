@@ -5,9 +5,26 @@
 		<div id="predictorContainer"></div>
 		<h1 class='noIdError' ng-show='error.nullId'>NO DATA</h1>
 	</div>
-	<md-whiteframe class="md-whiteframe-z2 predictionInfo" layout="column" layout-align="center center" ng-show="currentPredictionView">
-	    <h4>News: {{currentPredictionView.news.headline}}</h4>
-	    <h5>Predictor: {{currentPredictionView.predictor.commonName}}</h5>
-	    <h5>Checked by: {{currentPredictionView.checker.email}}</h5>
-	</md-whiteframe>
+	<div class="container" ng-show='!error.nullId'>
+		<div class="row">
+			<div class="col- col-xs-12 col-sm-6">
+				<!-- predictor selector -->
+				<h4>Showing predictions by:</h4>
+				<div>
+					<div ng-repeat='predictor in predictors'>
+						<md-checkbox ng-checked='predictor.showing' aria-label="predictor" ng-click='onSelectPredictor(predictor)'>
+							{{predictor.commonName}}
+						</md-checkbox>
+					</div>
+				</div>
+			</div>
+			<div class="col- col-xs-12 col-sm-6">
+				<md-whiteframe class="md-whiteframe-z2 predictionInfo" layout="column" layout-align="center center" ng-show="currentPredictionView">
+				    <h4>News: {{currentPredictionView.news.headline}}</h4>
+				    <h5>Predictor: {{currentPredictionView.predictor.commonName}}</h5>
+				    <h5>Checked by: {{currentPredictionView.checker.email}}</h5>
+				</md-whiteframe>
+			</div>
+		</div>
+	</div>
 </div>
