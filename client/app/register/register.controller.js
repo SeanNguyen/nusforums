@@ -75,13 +75,11 @@
 		      if (logged_in) {
 		      	google.getUserProfile()
 		      	  .then(function(resp) {
-		      	  	$log.debug('Response profile: ', resp);
                     logInAfterGoogleLogin(resp.id);
 		      	  });
 		      } else {
 		        $q.all([google.logIn(), google.getUserProfile()])
 		          .then(function(data) {
-		          	console.log('Profile: ', JSON.stringify(data[1]));
                     var profile = data[1];
                     logInAfterGoogleLogin(profile.id);
 		          });
@@ -105,5 +103,4 @@
 		    };
 		};
 	};
-
 })();

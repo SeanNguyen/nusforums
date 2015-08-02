@@ -56,15 +56,18 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$l
       	getUserProfile()
       	  .then(function(profile) {
 
+            $log.debug('Profile: ', JSON.stringify(profile));
+
       	  	var user;
             user = new User();
       	  	user.googleId = profile.id;
-      	  	user.firstName = profile.givenName;
-      	  	user.lastName = profile.familyName;
+      	  	user.firstName = profile.name.givenName;
+      	  	user.lastName = profile.name.familyName;
+            user.nickNameOnline = profile.nickname;
       	  	user.photo = profile.image.url;
       	  	user.email = profile.emails[0].value;
+            user.gender = profile.gender;
       	  	user.password = 'nopassword';
-            user.signUpdate = Date.now();
       	  	user.admin = false;
 
             user.$save(function(user) {

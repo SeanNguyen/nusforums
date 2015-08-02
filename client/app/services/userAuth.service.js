@@ -47,7 +47,8 @@
 
             return deferred.promise;
 		};
-
+        
+        // add function to log out
 		function logOut() {
 			var currentUser = GlobalData.getCurrentUser();
 

@@ -8,6 +8,21 @@ module.exports = AuthController;
 AuthController.requireUser = function() {
   return function(req, res, next) {
   	var token;
+    var facebookId;
+    var googleId;
+
+    // authenticate by googleId/ facebookId
+    if (req.body.facebookId) {
+      facebookId = req.body.facebookId;
+    };
+
+    if (req.body.googleId) {
+      googleId = req.body.googleId;
+    };
+
+    console.log('Google id: ', googleId);
+    console.log('Facebook id: ', facebookId);
+
   	var token_method = 'NONE';
   	if (req.body.token) {
   	  token = req.body.token;
@@ -23,10 +38,16 @@ AuthController.requireUser = function() {
   	token_method += '_TOKEN';
   	console.log('Auth method: ' + token_method + '-' + req.url);
 
-  	if (token) {
+  	if (token || facebookId || googleId) {
   	  Collections.UserCollection.forge()
   	  .query(function(qb) {
-  	  	qb.where('token', '=', token);
+        if (token) {
+  	  	  qb.where('token', '=', token);
+        } else if (facebookId) {
+          qb.where('facebookId', '=', facebookId);
+        } else if (googleId) {
+          qb.where('googleId', '=', googleId);
+        }
   	  })
   	  .fetchOne()
   	  .then(function(user) {
@@ -41,8 +62,8 @@ AuthController.requireUser = function() {
   	  .catch(function(err) {
   	  	res.status(500).json({error: err.message});
   	  });
-  	} else {
-  	  res.status(400).json({error: 'require_token'});
+    } else {
+  	  res.status(400).json({error: 'require_token or googleId/facebookId'});
   	}
   };
 };

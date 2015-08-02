@@ -3,14 +3,14 @@
 
 	var app = angular.module('ratingApp');
 
-	app.controller('logInController', ['$scope', '$http', 'UserAuth', '$state', 'GlobalData', 'facebook', 'google', logInController]);
+	app.controller('logInController', ['$q','$scope', '$http', 'UserAuth', '$state', 'GlobalData', 'facebook', 'google', logInController]);
 
-	function logInController($scope, $http, UserAuth, $state, GlobalData, facebook, google) {
+	function logInController($q, $scope, $http, UserAuth, $state, GlobalData, facebook, google) {
 		$scope.input = {};
 
 		$scope.logIn = logIn;
-		$scope.registerByFacebook = registerByFacebook;
-		$scope.registerByGoogle = registerByGoogle;
+		$scope.logInByFacebook = logInByFacebook;
+		$scope.logInByGoogle = logInByGoogle;
 
 		function logIn() {
 			GlobalData.startAppLoadingState();
@@ -30,7 +30,7 @@
 			});
 		}
 
-		function registerByFacebook() {
+		function logInByFacebook() {
 			//start loading state
 			GlobalData.startAppLoadingState();
 
@@ -66,7 +66,7 @@
 
 		}
 
-		function registerByGoogle() {
+		function logInByGoogle() {
 		  //start loading state
 		  GlobalData.startAppLoadingState();
 
@@ -79,10 +79,11 @@
                     logInAfterGoogleLogin(resp.id);
 		      	  });
 		      } else {
-		      	google.logIn()
-		      	  .then(function(resp) {
-		      	  	logInAfterGoogleLogin(resp.id);
-		      	  });
+                $q.all([google.logIn(), google.getUserProfile()])
+		          .then(function(data) {
+                    var profile = data[1];
+                    logInAfterGoogleLogin(profile.id);
+		          });
 		      }
 		    })
 		    .catch(function(err) {
