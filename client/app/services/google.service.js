@@ -37,6 +37,7 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$l
       scope: scope,
       immediate: false
     }, function(res) {
+
       // received token
       deferred.resolve(res);
     });
@@ -52,24 +53,25 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$l
       	deferred.resolve();
       })
       .catch(function(err) {
-      	$q.all([getUserProfile])
-      	  .then(function(data) {
+      	getUserProfile()
+      	  .then(function(profile) {
 
-            $log.debug('User: ', data);
-      	  	var user = new User();
-      	  	user.googleId = data[0].id;
-      	  	user.firstName = data[0].given_name;
-      	  	user.lastName = data[0].family_name;
-      	  	user.photo = data[0].image.url;
-      	  	user.email = data[0].email;
-      	  	user.password = '';
+      	  	var user;
+            user = new User();
+      	  	user.googleId = profile.id;
+      	  	user.firstName = profile.givenName;
+      	  	user.lastName = profile.familyName;
+      	  	user.photo = profile.image.url;
+      	  	user.email = profile.emails[0].value;
+      	  	user.password = 'nopassword';
+            user.signUpdate = Date.now();
       	  	user.admin = false;
-      	  });
 
-      	  user.$save(function(user) {
-      	  	deferred.resolve(user);
-      	  }, function() {
-      	  	deferred.reject();
+            user.$save(function(user) {
+              deferred.resolve(user);
+            }, function() {
+              deferred.reject();
+            });
       	  });
       });
 
