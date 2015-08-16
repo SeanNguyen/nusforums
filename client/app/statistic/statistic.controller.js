@@ -10,7 +10,7 @@
         $scope.error = { nullId: false };
         $scope.checker = {};
         $scope.news = {};
-        $scope.predictors = {};
+        $scope.predictors = [];
         $scope.currentPredictionView = null;
         $scope.startDate;
         $scope.endDate;
@@ -59,6 +59,7 @@
                 }
 
                 $scope.asset = asset;
+                initializeCanvas();
                 queryData($scope.asset.ticker1, null, null, resultLimit, $scope.asset.id).
                 then(function(responses) {
                     priceData = responses[0].data;
@@ -69,9 +70,6 @@
                     $scope.startDate = moment(priceData[0].date);
                     $scope.endDate = moment(priceData[priceData.length - 1].date);
 
-
-                    initializeCanvas();
-                    drawPredictions($scope.predictionData, $scope.startDate, $scope.endDate);
                     $scope.loaded = true;
                 }).
                 catch(function(err) {
@@ -110,15 +108,28 @@
             .then(function(responses) {
                 //query info for the predictions as well
                 var predictions = responses[1].data;
+                var newsPromises = [];
                 for (var i = predictions.length - 1; i >= 0; i--) {
+                    
+                    var news = News.get({ id: predictions[i].newsID });
+                    newsPromises.push(news.promise);
+                    $scope.news[predictions[i].newsID] = news;
+
                     $scope.checker[predictions[i].userID] = User.get({ id: predictions[i].userID });
-                    $scope.news[predictions[i].newsID] = News.get({ id: predictions[i].newsID });
+
                     $scope.predictors[predictions[i].predictorID] = Predictor.get({ id: predictions[i].predictorID }, 
                         function(data) {
                             data.showing = true;
                         });
                     $scope.predictors[predictions[i].predictorID].showing = true;
                 };
+
+                //wait for all the news to be retrieved then render the predictions on the graph
+                $q.all(newsPromises)
+                .then(function(responses) {
+                    drawPredictions(predictions, $scope.startDate, $scope.endDate);
+                });
+
                 deferred.resolve(responses);
             })
             .catch(function(err) {
@@ -223,7 +234,6 @@
                 priceData = preprocessData(priceData); 
                 chart.series[0].setData(priceData);
                 chart.hideLoading();
-                drawPredictions($scope.predictionData, $scope.startDate, $scope.endDate)
             })
             .catch(function(err) {
                 console.log("There is an error when query for prices data");
@@ -260,7 +270,8 @@
                     continue;
                 }
                 //cal position
-                var predictionDate = moment(predictions[i].timeStamp);
+                var news = $scope.news[predictions[i].newsID];
+                var predictionDate = moment(news.date);
                 var totalDuration = moment.duration(endDate.diff(startDate)).asDays();
                 var predictionDuration = moment.duration(predictionDate.diff(startDate)).asDays();
                 var durationRatio = predictionDuration / totalDuration;
