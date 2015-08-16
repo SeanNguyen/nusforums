@@ -10,9 +10,11 @@
 			<div class="col- col-xs-12 col-sm-6">
 				<!-- predictor selector -->
 				<h4>Showing predictions by:</h4>
+			    <input type="text" class="form-control" placeholder="search predictor name..." ng-model='input.searchPredictoName'>
+
 				<div>
 					<div ng-repeat='predictor in predictors'>
-						<md-checkbox ng-checked='predictor.showing' aria-label="predictor" ng-click='onSelectPredictor(predictor)'>
+						<md-checkbox ng-checked='predictor.showing' aria-label="predictor" ng-click='onSelectPredictor(predictor)' ng-show='isPredictorNameShown(predictor.commonName)'>
 							{{predictor.commonName}}
 						</md-checkbox>
 					</div>

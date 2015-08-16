@@ -10,15 +10,17 @@
         $scope.error = { nullId: false };
         $scope.checker = {};
         $scope.news = {};
-        $scope.predictors = [];
+        $scope.predictors = {};
         $scope.currentPredictionView = null;
         $scope.startDate;
         $scope.endDate;
         $scope.predictionData;
         $scope.asset = null;
+        $scope.input = {searchPredictoName: ''};
 
         //functions
         $scope.onSelectPredictor = onSelectPredictor;
+        $scope.isPredictorNameShown = isPredictorNameShown;
 
 
         var canvasHeight = 0;
@@ -29,15 +31,26 @@
         var resultLimit = 200;
 
         this.showPredictionInfo = function() {
-
         }
 
     	active();
 
-        //events
+        //functions
         function onSelectPredictor(predictor) {
             predictor.showing = !predictor.showing;
             drawPredictions($scope.predictionData, $scope.startDate, $scope.endDate);
+        }
+
+        function isPredictorNameShown(name) {
+            if(!$scope.input.searchPredictoName) {
+                return true;
+            }
+
+            name = name.toLowerCase();
+            if(name.indexOf($scope.input.searchPredictoName) > -1) {
+                return true;
+            }
+            return false;
         }
 
         //private helper methods
@@ -112,7 +125,7 @@
                 for (var i = predictions.length - 1; i >= 0; i--) {
                     
                     var news = News.get({ id: predictions[i].newsID });
-                    newsPromises.push(news.promise);
+                    newsPromises.push(news.$promise);
                     $scope.news[predictions[i].newsID] = news;
 
                     $scope.checker[predictions[i].userID] = User.get({ id: predictions[i].userID });
@@ -281,6 +294,7 @@
                 graphics.interactive = true;
                 // set a fill and a line style again and draw a rectangle
                 graphics.beginFill(0xE91E63, 1);
+                graphics.lineStyle(1, 0x000000);
                 graphics.drawRect(absolutePosition, 10, 10, 10);
 
                 graphics.prediction = predictions[i];
