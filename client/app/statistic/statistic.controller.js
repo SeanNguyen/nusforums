@@ -202,7 +202,7 @@
             $scope.startDate = moment(e.min);
             $scope.endDate = moment(e.max);
 
-            queryData(id, startDate.format(), endDate.format(), resultLimit, $stateParams.asset.id)
+            queryData(id, $scope.startDate.format(), $scope.endDate.format(), resultLimit, $stateParams.asset.id)
             .then(function(responses) {
                 priceData = responses[0].data;
                 $scope.predictionData = responses[1].data;
