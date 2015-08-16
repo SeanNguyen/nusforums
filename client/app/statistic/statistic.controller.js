@@ -2,9 +2,9 @@
     'use-strict';
     var app = angular.module('ratingApp');
 
-    app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', '$q', 'User', 'News', 'Predictor', statisticController]);
+    app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', '$q', 'User', 'News', 'Predictor', 'Asset', statisticController]);
 
-    function statisticController($rootScope, $scope, $http, $stateParams, $q, User, News, Predictor) {
+    function statisticController($rootScope, $scope, $http, $stateParams, $q, User, News, Predictor, Asset) {
     	
         $scope.loaded = true;
         $scope.error = { nullId: false };
@@ -15,6 +15,7 @@
         $scope.startDate;
         $scope.endDate;
         $scope.predictionData;
+        $scope.asset = null;
 
         //functions
         $scope.onSelectPredictor = onSelectPredictor;
@@ -25,7 +26,7 @@
         var stage = stage;
         var renderer = renderer;
 
-        var resultLimit = 100;
+        var resultLimit = 200;
 
         this.showPredictionInfo = function() {
 
@@ -42,14 +43,23 @@
         //private helper methods
         function active() {
             //check if there is any price ID for this asset
-            if(!$stateParams.asset || !$stateParams.asset.ticker1) {
-                $scope.error.nullId = true;
-                $scope.loaded = true;
-            } else {
-                $scope.loaded = false;
-                var id = $stateParams.asset.ticker1;
+            if(!$stateParams.assetId) {
+                alertError();
+                return;
+            }
 
-                queryData(id, null, null, resultLimit, $stateParams.asset.id).
+            //start processing order
+            $scope.loaded = false;
+            //get the asset
+            Asset.get({ id: $stateParams.assetId }).$promise
+            .then(function(asset) {
+                if(!asset) {
+                    alertError();
+                    return;
+                }
+
+                $scope.asset = asset;
+                queryData($scope.asset.ticker1, null, null, resultLimit, $scope.asset.id).
                 then(function(responses) {
                     priceData = responses[0].data;
                     $scope.predictionData = responses[1].data;
@@ -68,7 +78,11 @@
                     console.log("There is an error when query for prices data");
                     $scope.loaded = true;
                 });
-            }
+            })
+            .catch(function(err) {
+                alertError();
+                $scope.loaded = true;
+            });
         }
 
     	function preprocessData(data) {
@@ -136,11 +150,11 @@
                 },
 
                 title: {
-                    text: $stateParams.asset.displayName
+                    text: $scope.asset.displayName
                 },
 
                 subtitle: {
-                    text: $stateParams.asset.displayName
+                    text: $scope.asset.displayName
                 },
 
                 rangeSelector : {
@@ -198,11 +212,11 @@
 
             chart.showLoading('Loading data from server...');
             //load data from server
-            var id = $stateParams.asset.ticker1;
+            var id = $scope.asset.ticker1;
             $scope.startDate = moment(e.min);
             $scope.endDate = moment(e.max);
 
-            queryData(id, $scope.startDate.format(), $scope.endDate.format(), resultLimit, $stateParams.asset.id)
+            queryData(id, $scope.startDate.format(), $scope.endDate.format(), resultLimit, $scope.asset.id)
             .then(function(responses) {
                 priceData = responses[0].data;
                 $scope.predictionData = responses[1].data;
@@ -276,6 +290,11 @@
             $scope.currentPredictionView.checker = $scope.checker[prediction.userID];
             $scope.currentPredictionView.news = $scope.news[prediction.newsID];
             $scope.currentPredictionView.predictor = $scope.predictors[prediction.predictorID];
+        }
+
+        function alertError() {
+            $scope.error.nullId = true;
+            $scope.loaded = true;
         }
     }
 })();

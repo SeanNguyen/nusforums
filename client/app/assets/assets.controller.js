@@ -24,6 +24,6 @@ app.controller('AssetsController', function($rootScope, $scope, $state) {
 	}
 
 	$scope.showStatistic = function(asset) {
-		$state.go('statistic', {asset: asset});
+		$state.go('statistic', {assetId: asset.id});
 	}
 });
