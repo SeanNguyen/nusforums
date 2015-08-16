@@ -1,58 +1,45 @@
 <div class="container" id="topics">
-	<md-tabs md-border-bottom md-stretch-tabs='always'>
-    	<md-tab label="Fresh">
-    		<div class="searchBox">
-				<div class="input-group input-group-lg">
-			    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword" ng-model-options="{ debounce: 300 }" ng-change="onSearch(search.keyword, true)">
-				    <span class="input-group-btn" ng-click="onSearch(search.keyword, true)">
-			        	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search </button>
-			    	</span>
-			    </div><!-- /input-group -->
-			</div>
-			<div ng-repeat="topic in topics" class="topicView">
-				<h4><a href="/news/{{topic.id}}">{{topic.headline}}</a></h4>
-				<h5>{{getPreview(topic)}}</h5>
-				<div class="actionBar">
-					<button type="button" class="btn btn-default">
-						<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Star
-					</button>
-					<button type="button" class="btn btn-default btn-warning">
-						<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Report
-					</button>
-					<button type="button" class="btn btn-default btn-danger" ng-click="removeTopic($index)">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-					</button>
+	<md-content class="md-padding">
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab label="Fresh">
+				<md-content class="md-padding">
+					<div class="searchBox">
+					<div class="input-group input-group-lg">
+							<input type="text" class="form-control" placeholder="Search for topics..." 
+								ng-model="search.keyword" ng-model-options="{ debounce: 300 }" 
+								ng-change="onSearch(search.keyword, true)">
+							<span class="input-group-btn" ng-click="onSearch(search.keyword, true)">
+									<button class="btn btn-default" type="button">
+										<span class="glyphicon glyphicon-search"></span> Search 
+									</button>
+							</span>
+						</div>
 				</div>
-			</div>
-    	</md-tab>
-
-    	<md-tab label='Checked'>
-    		<div class="searchBox">
-				<div class="input-group input-group-lg">
-			    	<input type="text" class="form-control" placeholder="Search for topics..." ng-model="search.keyword" ng-model-options="{ debounce: 300 }" ng-change="onSearch(search.keyword, false)">
-				    <span class="input-group-btn" ng-click="onSearch(search.keyword, false)">
-			        	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search </button>
-			    	</span>
-			    </div><!-- /input-group -->
-			</div>
-			<div ng-repeat="topic in topics" class="topicView">
-				<h4><a href="/news/{{topic.id}}">{{topic.headline}}</a></h4>
-				<h5>{{getPreview(topic)}}</h5>
-				<div class="actionBar">
-					<button type="button" class="btn btn-default">
-						<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Star
-					</button>
-					<button type="button" class="btn btn-default btn-warning">
-						<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Report
-					</button>
-					<button type="button" class="btn btn-default btn-danger" ng-click="removeTopic($index)">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-					</button>
+				<div ng-repeat="topic in topics" class="topicView">
+					<h4><a href="/news/{{topic.id}}">{{topic.headline}}</a></h4>
+					<h5>{{getPreview(topic)}}</h5>
+					<div class="actionBar">
+						<button type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Star
+						</button>
+						<button type="button" class="btn btn-default btn-warning">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Report
+						</button>
+						<button type="button" class="btn btn-default btn-danger" ng-click="removeTopic($index)">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+						</button>
+					</div>
 				</div>
-			</div>
-    	</md-tab>
-   	</md-tabs>
+				</md-content>
+			</md-tab>
+			<md-tab label="Checked">
+				<md-content class="md-padding">
+					
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</md-content>
 
-   	<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
+		<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
 	
 </div>
