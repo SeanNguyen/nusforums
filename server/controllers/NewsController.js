@@ -34,15 +34,12 @@ NewsController.retrieveAll = function(req, res) {
           });
           promises.push(promise);
         };
-        q.all(promises)
+        console.log(results);
+        q.allSettled(promises)
         .then(function (data) {
-          console.log(results);
           res.status(200).json(results);
         });
       }
-      
-      res.status(200).json(news);
-      
   	} else {
     	console.log('Error: ', err);
     	res.status(404).json(err);
