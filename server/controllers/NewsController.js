@@ -11,39 +11,47 @@ module.exports = NewsController;
 NewsController.retrieveAll = function(req, res) {
   var keyword = '%' + req.query.keyword + '%';
   
+  //get news by keywords
   Collections.NewsCollection.forge()
   .query(function(qb) {
     qb.where('headline', 'like', keyword)
   })
   .fetch()
   .then(function(news) {
-    if (news) {
-      var newsList = news.models;
-      var isFresh = req.query.isFresh;
-      if(isFresh) {
-        var results = [];
-        var promises = [];
-        for (var i = newsList.length - 1; i >= 0; i--) {
-          var promise = q.defer();
-          isNewsChecked(newsList[i].id)
-          .then(function(isChecked) {
-            if(isChecked !== isFresh) {
-              results.push(newsList[i]);
-            }
-            promise.resolve();
-          });
-          promises.push(promise);
-        };
-        console.log(results);
-        q.allSettled(promises)
-        .then(function (data) {
-          res.status(200).json(results);
-        });
+    //if result empty then return
+    if (!news) {
+      console.log('Error: ', err);
+      res.status(404).json(err);
+      return;
+    }
+      
+    var newsList = news.models;
+    //if there is no isFresh parameter then return all the thing
+    if(req.query.isFresh === null) {
+      res.status(200).json(newsList);
+      return;
+    }
+
+    //filter all the fresh or not-fresh news to return
+    var promises = [];
+    for (var i = newsList.length - 1; i >= 0; i--) {
+      var promise = isNewsChecked(newsList[i].id);
+      promises.push(promise);
+    };
+
+    q.all(promises)
+    .then(function (data) {
+      //assume that the number of returned result is still the same as the number of news
+      var results = [];
+      for(var i = newsList.length - 1; i >= 0; i--) {
+        var isFresh = !data[i];
+        if(isFresh === req.query.isFresh) {
+          results.push(newsList[i]);
+        }
       }
-  	} else {
-    	console.log('Error: ', err);
-    	res.status(404).json(err);
-  	}
+      console.log(results);
+      res.status(200).json(results);
+    });
   })
   .catch(function(err) {
   	console.log('Error retrieve: ', err);
