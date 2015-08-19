@@ -1,0 +1,8 @@
+.predictorDetailDialog {
+	min-width: 50%;
+}
+
+.predictorDetailDialog .assetLabel {
+	width: 100%;
+	border-top: solid 1px #0288D1;
+}

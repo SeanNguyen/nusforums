@@ -1,7 +1,7 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-app.controller('PredictorsController', function($rootScope, $scope) {
+app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
 	$scope.search = {name: '', title: ''};
 	$scope.showedPredictors = $rootScope.dataController.getPredictors();
 
@@ -23,5 +23,18 @@ app.controller('PredictorsController', function($rootScope, $scope) {
 		var predictorId = $scope.showedPredictors[index].id;
 		$scope.showedPredictors.splice(index, 1);
 		$rootScope.dataController.removePredictor(predictorId);
+	}
+
+	$scope.showPredictorDetail = function(event, predictor) {
+	    $mdDialog.show({
+	      controller: 'PredictorDetailDialogController',
+	      templateUrl: 'app/predictors/predictorDetailDialog.html',
+	      parent: angular.element(document.body),
+	      targetEvent: event,
+	      clickOutsideToClose:true,
+	      locals: {
+        	predictor: predictor
+        	},
+	    });
 	}
 });
