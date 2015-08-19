@@ -90,7 +90,7 @@ function isNewsChecked(newsId) {
   })
   .fetch()
   .then(function(checkedNews) {
-    if (checkedNews) {
+    if (checkedNews.length > 0) {
       return true;
     } else {
       return false;

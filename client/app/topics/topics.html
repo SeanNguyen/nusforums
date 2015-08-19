@@ -16,8 +16,8 @@
 						</div>
 					</div>
 					<div ng-repeat="topic in freshTopics" class="topicView">
-						<h4><a href="/news/{{topic.id}}">{{topic.headline}}</a></h4>
-						<h5>{{getPreview(topic)}}</h5>
+						<label><a href="/news/{{topic.id}}">{{topic.headline}}</a></label>
+						<p>{{getPreview(topic)}}</p>
 						<div class="actionBar">
 							<button type="button" class="btn btn-default">
 								<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Star
