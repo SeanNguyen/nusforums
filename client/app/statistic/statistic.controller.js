@@ -66,7 +66,7 @@
             //get the asset
             Asset.get({ id: $stateParams.assetId }).$promise
             .then(function(asset) {
-                if(!asset) {
+                if(!asset || !asset.ticker1) {
                     alertError();
                     return;
                 }
