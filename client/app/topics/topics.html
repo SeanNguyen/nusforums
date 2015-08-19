@@ -15,6 +15,7 @@
 							</span>
 						</div>
 					</div>
+					<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
 					<div ng-repeat="topic in freshTopics" class="topicView">
 						<label><a href="/news/{{topic.id}}">{{topic.headline}}</a></label>
 						<p>{{getPreview(topic)}}</p>
