@@ -3,9 +3,22 @@
 }
 
 .login {
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 .login .btn-main {
 	width: 100%;
+}
+
+.login .loginForm {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.login .socialNetworkButtonGroup button {
+	width: 45%;
+}
+
+.login .socialNetworkButtonGroup {
+	margin: 20px;
 }

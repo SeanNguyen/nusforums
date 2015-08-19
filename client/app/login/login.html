@@ -1,5 +1,6 @@
 <div class="container login">
-	<form name="logInForm">
+	<h4>Login:</h4>
+	<form name="logInForm" class="loginForm">
 		<md-input-container>
 	      <label>Email</label>
 	      <input type="email" ng-model="input.email" required>
@@ -9,11 +10,12 @@
 	      <input type="password" ng-model="input.password" required>
 	    </md-input-container>
     
-		<button type="submit" class="btn btn-default btn-success btn-main" ng-click="logIn()" ng-disabled="logInForm.$invalid">Log In</button>
-		<h4>Login using:</h4>
-		<div layout="row" layout-align="start center">
-			<button class="btn btn-default" ng-click="logInByFacebook()"><i class="fa fa-facebook-square fa-3x"></i></button>
-			<button class="btn btn-default" ng-click="logInByGoogle()"><i class="fa fa-google-plus-square fa-3x"></i></button>
-		</div>
+		<button type="submit" class="btn btn-default btn-success btn-main" ng-click="logIn()" ng-disabled="logInForm.$invalid">Log In</button>		
 	</form>
+
+	<h4>Login using:</h4>
+	<div layout="row" layout-align="space-around center" class="socialNetworkButtonGroup">
+      <button type="submit" class="btn btn-info" ng-click="logInByFacebook()">Facebook</button>
+      <button type="submit" class="btn btn-danger" ng-click="logInByGoogle()">Google +</button>
+    </div>
 </div>
