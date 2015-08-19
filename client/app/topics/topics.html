@@ -15,7 +15,7 @@
 							</span>
 						</div>
 					</div>
-					<div ng-repeat="topic in topics" class="topicView">
+					<div ng-repeat="topic in freshTopics" class="topicView">
 						<h4><a href="/news/{{topic.id}}">{{topic.headline}}</a></h4>
 						<h5>{{getPreview(topic)}}</h5>
 						<div class="actionBar">
@@ -46,7 +46,7 @@
 							</span>
 						</div>
 					</div>
-					<div ng-repeat="topic in topics" class="topicView">
+					<div ng-repeat="topic in checkedTopics" class="topicView">
 						<h4><a href="/news/{{topic.id}}">{{topic.headline}}</a></h4>
 						<h5>{{getPreview(topic)}}</h5>
 						<div class="actionBar">

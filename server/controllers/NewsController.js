@@ -27,7 +27,7 @@ NewsController.retrieveAll = function(req, res) {
       
     var newsList = news.models;
     //if there is no isFresh parameter then return all the thing
-    if(req.query.isFresh === null) {
+    if(!req.query.isFresh) {
       res.status(200).json(newsList);
       return;
     }
@@ -43,13 +43,16 @@ NewsController.retrieveAll = function(req, res) {
     .then(function (data) {
       //assume that the number of returned result is still the same as the number of news
       var results = [];
+      var needFreshNews = false;
+      if(req.query.isFresh === 'true') {
+        needFreshNews = true;
+      }
       for(var i = newsList.length - 1; i >= 0; i--) {
         var isFresh = !data[i];
-        if(isFresh === req.query.isFresh) {
+        if(isFresh === needFreshNews) {
           results.push(newsList[i]);
         }
       }
-      console.log(results);
       res.status(200).json(results);
     });
   })
@@ -81,21 +84,20 @@ NewsController.delete = function(req, res) {
 
 //private helper methods
 function isNewsChecked(newsId) {
-  return Collections.CheckedNewsCollection
-    .forge()
-    .query(function(qb) {
-        qb.where('newsId', '=', newsId);
-    })
-    .fetchOne()
-    .then(function(checkedNews) {
-      if (checkedNews) {
-        return false;
-      } else {
-        return true;
-      }
-    })
-    .catch(function(err) {
-      console.log('Error retrieve: ', err);
+  return Collections.CheckedNewsCollection.forge()
+  .query(function(qb) {
+    qb.where('newsId', '=', newsId);
+  })
+  .fetch()
+  .then(function(checkedNews) {
+    if (checkedNews) {
+      return true;
+    } else {
       return false;
-    });
+    }
+  })
+  .catch(function(err) {
+    console.log('Error retrieve: ', err);
+    return false;
+  });
 }
