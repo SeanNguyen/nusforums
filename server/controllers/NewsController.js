@@ -7,6 +7,12 @@ var NewsController = {};
 
 module.exports = NewsController;
 
+//query parameters
+//keyword: search keywords
+//isFresh: is there any check for this news
+//asset: asset name query
+//predictor: predictor name query
+
 // Get all Newss
 NewsController.retrieveAll = function(req, res) {
   var keyword = '%' + req.query.keyword + '%';
@@ -34,7 +40,7 @@ NewsController.retrieveAll = function(req, res) {
 
     //filter all the fresh or not-fresh news to return
     var promises = [];
-    for (var i = newsList.length - 1; i >= 0; i--) {
+    for (var i = 0; i < newsList.length; i++) {
       var promise = isNewsChecked(newsList[i].id);
       promises.push(promise);
     };
@@ -47,7 +53,7 @@ NewsController.retrieveAll = function(req, res) {
       if(req.query.isFresh === 'true') {
         needFreshNews = true;
       }
-      for(var i = newsList.length - 1; i >= 0; i--) {
+      for(var i = 0; i < newsList.length; i++) {
         var isFresh = !data[i];
         if(isFresh === needFreshNews) {
           results.push(newsList[i]);
