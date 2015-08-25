@@ -3,15 +3,15 @@
     <h1>LEADER BOARD</h1>
   </header>
 
-<div id="buttonList" class="button-bar" ng-initialtoggle='user'>
+<!-- <div id="buttonList" class="button-bar" ng-initialtoggle='user'>
   <button type="button" class="btn btn-success" ng-click="showUser()"> Top users</button>
   <button type="button" class="btn btn-success" ng-click="showPredictor()"> Top predictors</button>
-</div>
+</div> -->
 
 <table st-table="userLeaderBoard" id="user"
   class="table table-bordered table-striped table-hover"
   style="width: auto; margin: auto"
-  ng-show="userVisible">
+  ng-show="true">
   <tr>
     <th>Rank</th>
     <th>First name</th>
@@ -34,7 +34,7 @@
 <table st-table="predictorLeaderBoard" id="predictor"
   class="table table-bordered table-striped table-hover"
   style="width: auto; margin: auto"
-  ng-show="predictorVisible">
+  ng-show="false">
   <tr>
     <th>Rank</th>
     <th>First Name</th>

@@ -9,6 +9,12 @@ app.controller('leaderBoardController', function($rootScope, $scope) {
   $scope.userVisible = false;
   $scope.predictorVisible = false;
 
+  
+  // refresh the list when button clicked
+  $scope.userList = $rootScope.dataController.getUsers();
+  $scope.userVisible = true;
+  $scope.predictorVisible = false;  
+
   $scope.showUser = function() {
   	// refresh the list when button clicked
   	$scope.userList = $rootScope.dataController.getUsers();
