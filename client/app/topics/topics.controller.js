@@ -3,12 +3,18 @@ var app = angular.module('ratingApp');
 
 app.controller('TopicsController', ['News', '$rootScope', '$scope', TopicsController]);
 
+var minVisibleRange = 50;
 
 function TopicsController(News, $rootScope, $scope) {
     $scope.loaded = false;
 	$scope.search = {keyword: ''};
     $scope.freshTopics = [];
     $scope.checkedTopics = [];
+    $scope.visibleRange = minVisibleRange;
+
+    // functions
+    $scope.showMore = showMore;
+    $scope.onTabSelect = onTabSelect;
     
     active();
 
@@ -20,7 +26,16 @@ function TopicsController(News, $rootScope, $scope) {
 	//public methods
 	$scope.onSearch = function(keyword, isFresh) {
         getNews(keyword, isFresh);
+        resetVisibleRange();
 	}
+
+    function onTabSelect () {
+        resetVisibleRange();
+    }
+
+    function showMore() {
+        $scope.visibleRange += minVisibleRange;
+    }
 
     //private helper methods
     function getNews(keyword, isFresh) {
@@ -50,5 +65,9 @@ function TopicsController(News, $rootScope, $scope) {
             });    
 
         }
+    }
+
+    function resetVisibleRange() {
+        $scope.visibleRange = minVisibleRange;
     }
 }

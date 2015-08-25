@@ -1,7 +1,7 @@
 <div class="container" id="topics">
 	<md-content class="md-padding">
 		<md-tabs md-dynamic-height md-border-bottom>
-			<md-tab label="Fresh">
+			<md-tab label="Fresh" md-on-select='onTabSelect()'>
 				<md-content class="md-padding">
 					<div class="searchBox">
 					<div class="input-group input-group-lg">
@@ -31,9 +31,11 @@
 							</button>
 						</div>
 					</div>
+					<md-button class='topic-showMoreButton' ng-click='showMore()'
+						ng-show='visibleRange < freshTopics.length'>Show more</md-button>
 					</md-content>
 			</md-tab>
-			<md-tab label="Checked">
+			<md-tab label="Checked" md-on-select='onTabSelect()'>
 				<md-content class="md-padding" layout="row" layout-align="start start">
 					<!-- Filter section -->
 					<div class="searchBox">
@@ -55,7 +57,7 @@
 
 					<div>
 						<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>
-						<div ng-repeat="topic in checkedTopics" class="topicView">
+						<div ng-repeat="topic in checkedTopics | limitTo: visibleRange" class="topicView">
 							<label><a href="/news/{{topic.id}}">{{topic.headline}}</a></label>
 							<p>{{getPreview(topic)}}</p>
 							<div class="actionBar">
@@ -70,6 +72,8 @@
 								</button>
 							</div>
 						</div>
+						<md-button class='topic-showMoreButton' ng-click='showMore()'
+							ng-show='visibleRange < checkedTopics.length'>Show more</md-button>
 					</div>
 					</md-content>
 				</md-content>
