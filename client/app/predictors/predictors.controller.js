@@ -2,8 +2,11 @@
 var app = angular.module('ratingApp');
 
 app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
+	var minVisibleRange = 50;
+
 	$scope.search = {name: '', title: ''};
 	$scope.showedPredictors = $rootScope.dataController.getPredictors();
+	$scope.visibleRange = minVisibleRange;
 
 	$scope.onSearch = function(name, title) {
 		var predictors = $rootScope.dataController.getPredictors();
@@ -17,6 +20,9 @@ app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
 				$scope.showedPredictors.push(predictors[i]);
 			}
 		}
+
+		//reset visibleRange
+		visibleRange = minVisibleRange;
 	}
 
 	$scope.removePredictor = function(index) {
@@ -36,5 +42,9 @@ app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
         	predictor: predictor
         	},
 	    });
+	}
+
+	$scope.showMore = function showMore () {
+		$scope.visibleRange += minVisibleRange;
 	}
 });

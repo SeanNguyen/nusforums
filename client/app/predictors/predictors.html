@@ -15,7 +15,7 @@
 			<button class="btn btn-default" type="button" ng-click="onSearch(search.name, search.title)"><span class="glyphicon glyphicon-search"></span> Search </button>
 		</span>
 	</div>
-	<div ng-repeat="predictor in showedPredictors" class="predictorView">
+	<div ng-repeat="predictor in showedPredictors | limitTo : visibleRange" class="predictorView">
 		<h4>{{predictor.commonName}}</h4>
 		<h5>{{predictor.description}}</h5>
 		<div class="actionBar">
@@ -30,4 +30,7 @@
 			</button>
 		</div>
 	</div>
+	<md-button class='predictor-showMore' ng-click='showMore()'
+		ng-show='visibleRange < showedPredictors.length'>Show More</md-button>
+
 </div>

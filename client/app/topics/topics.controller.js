@@ -3,9 +3,9 @@ var app = angular.module('ratingApp');
 
 app.controller('TopicsController', ['News', '$rootScope', '$scope', TopicsController]);
 
-var minVisibleRange = 50;
-
 function TopicsController(News, $rootScope, $scope) {
+    var minVisibleRange = 50;
+
     $scope.loaded = false;
 	$scope.search = {keyword: ''};
     $scope.freshTopics = [];
