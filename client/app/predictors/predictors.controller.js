@@ -4,7 +4,10 @@ var app = angular.module('ratingApp');
 app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
 	var minVisibleRange = 25;
 
-	$scope.search = {name: '', title: ''};
+	$scope.titles = ['All',
+					'Investment Guru', 
+					'Investment Guru 2'];
+	$scope.search = {name: '', title: 'All'};
 	$scope.showedPredictors = $rootScope.dataController.getPredictors();
 	$scope.visibleRange = minVisibleRange;
 
@@ -16,7 +19,7 @@ app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
 		for (var i = predictors.length - 1; i >= 0; i--) {
 			var predictorName = predictors[i].commonName.toLowerCase();
 			var predictorTitle = predictors[i].currentTitle.toLowerCase();
-			if(predictorName.includes(name) && predictorTitle.includes(title)) {
+			if(predictorName.includes(name) && (title === 'all' || predictorTitle === title)) {
 				$scope.showedPredictors.push(predictors[i]);
 			}
 		}

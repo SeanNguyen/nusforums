@@ -7,9 +7,12 @@
 		</md-input-container>
 		<!-- Title -->
 		<md-input-container>
-			<label>Title</label>
-			<input ng-model="search.title">
-		</md-input-container>
+        	<label>Title</label>
+        	<md-select ng-model="search.title">
+          		<md-option ng-repeat="title in titles" value="{{title}}">{{title}}</md-option>
+        	</md-select>
+      	</md-input-container>
+
 		<!-- Search button -->
 		<span class="input-group-btn">
 			<button class="btn btn-default" type="button" ng-click="onSearch(search.name, search.title)"><span class="glyphicon glyphicon-search"></span> Search </button>
