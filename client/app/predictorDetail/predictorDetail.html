@@ -1,0 +1,15 @@
+<div class="container predictorDetail">
+	<!-- LOADER -->
+	<div layout="row" layout-align="center center" class="predictorDetail-loader">
+		<div ng-include="'components/loader/loader.html'" ng-show="!loaded"></div>	
+	</div>
+	
+	<!-- PREDICTOR PERSONAL INFO -->
+	<div>
+		<label class="predictorName">{{predictor.commonName}}</label> 
+		<a href="{{predictor.wiki_url}}">(Wiki)</a>
+		<h5>Current Title: {{predictor.currentTitle}}</h5>
+		<p>{{predictor.description}}</p>
+
+	</div>
+</div>
