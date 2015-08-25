@@ -2,7 +2,7 @@
 var app = angular.module('ratingApp');
 
 app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
-	var minVisibleRange = 50;
+	var minVisibleRange = 25;
 
 	$scope.search = {name: '', title: ''};
 	$scope.showedPredictors = $rootScope.dataController.getPredictors();

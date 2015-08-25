@@ -7,7 +7,7 @@
 	    	</span>
     </div><!-- /input-group -->
 	</div>
-	<div ng-repeat="asset in showedAssets" class="assetView">
+	<div ng-repeat="asset in showedAssets | limitTo : visibleRange" class="assetView">
 		<h4>{{asset.assetName}}</h4>
 		<h5>{{asset.displayName}}</h5>
 		<div class="actionBar">
@@ -31,4 +31,6 @@
 			</button>
 		</div>
 	</div>
+
+	<md-button ng-click='showMore()' ng-show='visibleRange < showedAssets.length' class='asset-showMoreButton'>Show More</md-button>
 </div>

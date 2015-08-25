@@ -2,8 +2,11 @@
 var app = angular.module('ratingApp');
 
 app.controller('AssetsController', function($rootScope, $scope, $state) {
+	var minVisibleRange = 25;
+
 	$scope.search = {keyword: ''};
 	$scope.showedAssets = $rootScope.dataController.getAssets();
+	$scope.visibleRange = minVisibleRange;
 
 	$scope.onSearch = function() {
 		var assets = $rootScope.dataController.getAssets();
@@ -15,6 +18,9 @@ app.controller('AssetsController', function($rootScope, $scope, $state) {
 				$scope.showedAssets.push(assets[i]);
 			}
 		}
+
+		//reset visible range
+		$scope.visibleRange = minVisibleRange;
 	}
 
 	$scope.removeAsset = function(index) {
@@ -25,5 +31,9 @@ app.controller('AssetsController', function($rootScope, $scope, $state) {
 
 	$scope.showStatistic = function(asset) {
 		$state.go('statistic', {assetId: asset.id});
+	}
+
+	$scope.showMore = function showMore () {
+		$scope.visibleRange += minVisibleRange;
 	}
 });
