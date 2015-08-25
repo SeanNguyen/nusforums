@@ -1,7 +1,7 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
+app.controller('PredictorsController', function($rootScope, $scope, $mdDialog, $state) {
 	var minVisibleRange = 25;
 
 	$scope.titles = ['All',
@@ -35,16 +35,16 @@ app.controller('PredictorsController', function($rootScope, $scope, $mdDialog) {
 	}
 
 	$scope.showPredictorDetail = function(event, predictor) {
-	    $mdDialog.show({
-	      controller: 'PredictorDetailDialogController',
-	      templateUrl: 'app/predictors/predictorDetailDialog.html',
-	      parent: angular.element(document.body),
-	      targetEvent: event,
-	      clickOutsideToClose:true,
-	      locals: {
-        	predictor: predictor
-        	},
-	    });
+	    // $mdDialog.show({
+	    //   controller: 'PredictorDetailDialogController',
+	    //   templateUrl: 'app/predictors/predictorDetailDialog.html',
+	    //   parent: angular.element(document.body),
+	    //   targetEvent: event,
+	    //   clickOutsideToClose:true,
+	    //   locals: {
+     //    	predictor: predictor
+     //    	},
+	    // });
 	}
 
 	$scope.showMore = function showMore () {

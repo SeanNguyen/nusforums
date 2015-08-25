@@ -22,9 +22,9 @@
 		<h4>{{predictor.commonName}}</h4>
 		<h5>{{predictor.description}}</h5>
 		<div class="actionBar">
-			<button type="button" class="btn btn-default btn-info" ng-click='showPredictorDetail($event, predictor)'>
+			<a href="predictor/{{predictor.id}}" class="btn btn-default btn-info">
 				<span class="glyphicon glyphicon-book" aria-hidden="true"></span> Detail
-			</button>
+			</a>
 			<button type="button" class="btn btn-default btn-warning">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Report
 			</button>
