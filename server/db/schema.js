@@ -105,7 +105,7 @@ var Schema = {
     wiki_URL: {type: 'string', nullable: true}
   },
 
-  vote: {
+  votes: {
     id: {type: 'increments', nullable: false, primary: true},
     userId: {type: 'integer', nullable: false, primary: false},
     newsCheckId: {type: 'integer', nullable: false, primary: false},
