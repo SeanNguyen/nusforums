@@ -109,10 +109,10 @@
 				<h5 class="col col-xs-12 col-sm-6">Time: {{review.timeStamp | date}}</h5>
 			</div>
 
-			<button type="button" class="btn btn-default" ng-class='{ picked: review.localVoteStatus === 1}' ng-click='upVote(review)'>
+			<button type="button" class="btn btn-default" ng-class='{ picked: localVoteStatuses[review.id] === 1}' ng-click='upVote(review)'>
 					<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Agree: {{review.upVote}}
 			</button>
-			<button type="button" class="btn btn-default" ng-class='{ picked: review.localVoteStatus === -1}' ng-click='downVote(review)'>
+			<button type="button" class="btn btn-default" ng-class='{ picked: localVoteStatuses[review.id] === -1}' ng-click='downVote(review)'>
 					<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Disagree: {{review.downVote}}
 			</button>
 		</div>

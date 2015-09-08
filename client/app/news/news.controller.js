@@ -11,6 +11,7 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     $scope.reviews = [];
     $scope.input = { review: {} };
     $scope.cache = { predictors: [], assets: [] };
+    $scope.localVoteStatuses = {};
 
     //functions
     $scope.getPrediction = getPrediction;
@@ -37,7 +38,7 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
                 if(currentUser) {
                     VoteService.getVoteStatus(currentUser.id, review.id)
                     .then(function(voteStatus) {
-                        review.localVoteStatus = voteStatus;
+                        $scope.localVoteStatuses[review.id] = voteStatus;
                     });
                 }
     		};
@@ -64,9 +65,21 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
             alert('You Must Log In to Vote');
             return;
         }
+
+        //if alr upvoted, then devote
+        if($scope.localVoteStatuses[review.id] === 1) {
+            VoteService.devote(currentUser.id, review.id)
+            .then(function(res) {
+                $scope.localVoteStatuses[review.id] = VOTE_STATUS.none;
+                review.upVote--;
+                review.$update();
+            });
+            return;
+        }
+
         VoteService.vote(currentUser.id, review.id, true)
         .then(function(res) {
-            review.localVoteStatus = VOTE_STATUS.upVote;
+            $scope.localVoteStatuses[review.id] = VOTE_STATUS.upVote;
 
             //set the upvote, down vote count
             var previousVoteState = res.previousVoteState | 0;
@@ -86,15 +99,27 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
             alert('You Must Log In to Vote');
             return;
         }
+
+        //if alr downvote, then devote
+        if($scope.localVoteStatuses[review.id] === -1) {
+            VoteService.devote(currentUser.id, review.id)
+            .then(function(res) {
+                $scope.localVoteStatuses[review.id] = VOTE_STATUS.none;
+                review.downVote--;
+                review.$update();
+            });
+            return;
+        }
+
         VoteService.vote(currentUser.id, review.id, false)
         .then(function(res) {
-            review.localVoteStatus = VOTE_STATUS.downVote;
+            $scope.localVoteStatuses[review.id] = VOTE_STATUS.downVote;
 
             //set the upvote, down vote count
             var previousVoteState = res.previousVoteState | 0;
             if(previousVoteState === 0) {
                 review.downVote++;    
-            } else if(previousVoteState === -1) {
+            } else if(previousVoteState === 1) {
                 review.downVote++;
                 review.upVote--;
             }

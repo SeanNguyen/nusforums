@@ -28,7 +28,7 @@ app.factory('VoteService', ['$q', '$resource', 'VoteModel', function ($q, $resou
 		.then(function(votes) {
 			if(votes.length > 0) {
 				var vote = votes[0];
-				if(vote.isUpVote) {
+				if(vote.isUpVote == true) {
 					defer.resolve(1);	
 				} else {
 					defer.resolve(-1);
@@ -52,10 +52,10 @@ app.factory('VoteService', ['$q', '$resource', 'VoteModel', function ($q, $resou
 			if(votes.length > 0) {
 				var vote = votes[0];
 				var previousVoteState = 1;
-				if(vote.isUpVote === false) {
+				if(vote.isUpVote == false) {
 					previousVoteState = -1;
 				}
-				if(vote.isUpVote === isUpVote) {
+				if(vote.isUpVote == isUpVote) {
 					defer.resolve({ previousVoteState: previousVoteState });
 				} else {
 					vote.isUpVote = isUpVote;
@@ -93,15 +93,16 @@ app.factory('VoteService', ['$q', '$resource', 'VoteModel', function ($q, $resou
 	function devote (userId, newsCheckId) {
 		var defer = $q.defer();
 
-		VoteModel.query({ userId: userId, newsCheckId: newsCheckId })
+		VoteModel.query({ userId: userId, newsCheckId: newsCheckId }).$promise
 		.then(function(votes) {
 			if(votes.length > 0) {
+				var vote = votes[0];
 				var previousVoteState = 1;
-				if(vote.isUpVote === false) {
+				if(vote.isUpVote == false) {
 					previousVoteState = -1;
 				}
 				var vote = votes[0];
-				vote.delete()
+				vote.$delete()
 				.then(function() {
 					defer.resolve({previousVoteState: previousVoteState});
 				}).catch(function(err) {
