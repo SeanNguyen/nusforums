@@ -13,3 +13,8 @@
 	padding: 10px;
 	border: 1px solid #03A9F4;
 }
+
+.reviewList .picked {
+	background-color: #E91E63;
+	color: #FCFCFC;
+}

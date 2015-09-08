@@ -1,5 +1,7 @@
 'use strict';
 
+var moment = require('moment');
+
 var ObjectController = {};
 
 ObjectController.retrieveAll = function(objectCollection, req, res) {
@@ -16,7 +18,7 @@ ObjectController.retrieveAll = function(objectCollection, req, res) {
 
 ObjectController.create = function(objectCollection, req, res, objectName) {
   objectCollection.forge()
-  .create(req.body)
+  .create(ObjectController.getObjectFromRequest(req, objectName))
   .then(function(result) {
   	res.status(200).json(result);
   })
@@ -148,7 +150,7 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
         assetNotAvailable: req.body.assetNotAvailable,
         CannotTell: req.body.CannotTell,
         NoPrediction: req.body.NoPrediction,
-        timeStamp: req.body.timeStamp,
+        // timeStamp: moment(req.body.timeStamp).format("YY-MM-DD HH:MM:ss"),
         remarks: req.body.remarks,
         downVote: req.body.downVote,
         upVote: req.body.upVote,
@@ -180,6 +182,14 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
         description: req.body.description,
         photo: req.body.photo,
         wiki_URL: req.body.wiki_URL
+      };
+      break;
+
+    case 'Vote':
+      obj = {
+        userId: req.body.userId,
+        newsCheckId: req.body.newsCheckId,
+        isUpVote: req.body.isUpVote
       };
       break;
 

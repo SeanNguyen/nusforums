@@ -1,6 +1,7 @@
 'use strict';
 var Collections = require('../db/collection.js'); 
 var ObjectController = require('./ObjectController.js');
+var moment = require('moment');
 var CheckedNewsController = {};
 
 module.exports = CheckedNewsController;
@@ -41,6 +42,7 @@ CheckedNewsController.retrieve = function(req, res) {
 
 // Create a new CheckedNews
 CheckedNewsController.create = function(req, res) {
+  req.body.timeStamp = moment().format("YY-MM-DD HH:MM:ss");
   ObjectController.create(Collections.CheckedNewsCollection, req, res, 'CheckedNews');
 };
 

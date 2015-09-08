@@ -109,7 +109,6 @@ var Schema = {
     id: {type: 'increments', nullable: false, primary: true},
     userId: {type: 'integer', nullable: false, primary: false},
     newsCheckId: {type: 'integer', nullable: false, primary: false},
-    timeStamp: {type: 'dateTime', nullable: true, primary: false},
     isUpVote: {type: 'boolean', nullable: false, primary: false}
   }
 }

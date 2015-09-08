@@ -1,20 +1,22 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-app.controller('NewsController', ['News', '$rootScope', '$scope', 'news', 'Review', 'User', 'Predictor', 'Asset', 'GlobalData', '$http', NewsController]);
+app.controller('NewsController', ['News', '$rootScope', '$scope', 'news', 'Review', 'User', 'Predictor', 'Asset', 
+    'GlobalData', '$http', 'VoteService', NewsController]);
 
+VOTE_STATUS = {none: 0, upVote: 1, downVote: -1};
 
-function NewsController(News, $rootScope, $scope, news, Review, User, Predictor, Asset, GlobalData, $http) {
+function NewsController(News, $rootScope, $scope, news, Review, User, Predictor, Asset, GlobalData, $http, VoteService) {
     $scope.news = news;
     $scope.reviews = [];
-    $scope.upVote = upVote;
-    $scope.downVote = downVote;
     $scope.input = { review: {} };
     $scope.cache = { predictors: [], assets: [] };
 
     //functions
     $scope.getPrediction = getPrediction;
     $scope.addReview = addReview;
+    $scope.upVote = upVote;
+    $scope.downVote = downVote;
 
     active();
     //private helper methods
@@ -23,13 +25,21 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     	.then(function(data) {
     		$scope.reviews = data;
 
-    		//then for each review, get the info about the user
+    		//then for each review, get the info about the user, predictor, asset, upvote Status
     		for (var i = $scope.reviews.length - 1; i >= 0; i--) {
     			var review = $scope.reviews[i];
 
 	    		review.user = User.get({ id: review.userID });	
 	    		review.predictor = Predictor.get({ id: review.predictorID });	
-	    		review.asset = Asset.get({ id: review.assetID });	
+	    		review.asset = Asset.get({ id: review.assetID });
+
+                var currentUser = GlobalData.getCurrentUser();
+                if(currentUser) {
+                    VoteService.getVoteStatus(currentUser.id, review.id)
+                    .then(function(voteStatus) {
+                        review.localVoteStatus = voteStatus;
+                    });
+                }
     		};
     	});
 
@@ -49,13 +59,47 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     }
 
     function upVote(review) {
-    	review.upVote++;
-    	review.$update();
+        var currentUser = GlobalData.getCurrentUser();
+        if(!currentUser) {
+            alert('You Must Log In to Vote');
+            return;
+        }
+        VoteService.vote(currentUser.id, review.id, true)
+        .then(function(res) {
+            review.localVoteStatus = VOTE_STATUS.upVote;
+
+            //set the upvote, down vote count
+            var previousVoteState = res.previousVoteState | 0;
+            if(previousVoteState === 0) {
+                review.upVote++;    
+            } else if(previousVoteState === -1) {
+                review.downVote--;
+                review.upVote++;
+            }
+            review.$update();
+        });
     }
 
     function downVote(review) {
-    	review.downVote++;
-    	review.$update();	
+    	var currentUser = GlobalData.getCurrentUser();
+        if(!currentUser) {
+            alert('You Must Log In to Vote');
+            return;
+        }
+        VoteService.vote(currentUser.id, review.id, false)
+        .then(function(res) {
+            review.localVoteStatus = VOTE_STATUS.downVote;
+
+            //set the upvote, down vote count
+            var previousVoteState = res.previousVoteState | 0;
+            if(previousVoteState === 0) {
+                review.downVote++;    
+            } else if(previousVoteState === -1) {
+                review.downVote++;
+                review.upVote--;
+            }
+            review.$update();
+        });
     }
 
     function addReview(input) {
@@ -69,18 +113,17 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
 			alert('Please submit a valid review');
     		return;
     	}
-    	var review = new Review(input.review);;
+    	var review = new Review(input.review);
     	review.newsID = $scope.news.id;
     	review.predictorID = $scope.input.predictor.originalObject.id;
     	review.assetID = $scope.input.asset.originalObject.id;
     	review.userID = GlobalData.getCurrentUser().id;
-        review.timeStamp = moment.utc().format("YY-MM-DD HH:MM:ss");
 
     	review.$save(function() {
     		//add to ui
 	    	review.user = User.get({ id: review.userID });	
     		review.predictor = Predictor.get({ id: review.predictorID });	
-    		review.asset = Asset.get({ id: review.assetID });	
+    		review.asset = Asset.get({ id: review.assetID });
     	});
 
     	$scope.reviews.push(review);
