@@ -78,9 +78,8 @@
                     logInAfterGoogleLogin(resp.id);
 		      	  });
 		      } else {
-		        $q.all([google.logIn(), google.getUserProfile()])
-		          .then(function(data) {
-                    var profile = data[1];
+		        google.logIn()
+		          .then(function(profile) {
                     logInAfterGoogleLogin(profile.id);
 		          });
 		      }

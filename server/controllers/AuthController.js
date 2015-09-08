@@ -20,9 +20,6 @@ AuthController.requireUser = function() {
       googleId = req.body.googleId;
     };
 
-    console.log('Google id: ', googleId);
-    console.log('Facebook id: ', facebookId);
-
   	var token_method = 'NONE';
   	if (req.body.token) {
   	  token = req.body.token;

@@ -36,10 +36,16 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$l
       client_id: '575364699605-rhs7mbqvveirn6aiohm81qb2v347rn6d.apps.googleusercontent.com',
       scope: scope,
       immediate: false
-    }, function(res) {
-
-      // received token
-      deferred.resolve(res);
+      // receive token
+    }, function(token) {
+      gapi.client.load('plus', 'v1', function() {
+        var request = gapi.client.plus.people.get({
+          userId: 'me'
+        });
+        request.execute(function(profile) {
+          deferred.resolve(profile);
+        })
+      });
     });
     return deferred.promise;
   };
@@ -55,8 +61,6 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$l
       .catch(function(err) {
       	getUserProfile()
       	  .then(function(profile) {
-
-            $log.debug('Profile: ', JSON.stringify(profile));
 
       	  	var user;
             user = new User();
@@ -83,18 +87,14 @@ app.factory('google', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$l
 
   function getUserProfile() {
     var deferred = $q.defer();
-
-    gapi.client.load('plus', 'v1', function() {
-      var request = gapi.client.plus.people.get({
+    var request = gapi.client.plus.people.get({
     	userId: 'me'
-      });
-
-      // retrieved profile with id and image_url
-      request.execute(function(resp) {
-        deferred.resolve(resp);
-      });
     });
 
+    // retrieved profile with id and image_url
+    request.execute(function(profile) {
+      deferred.resolve(profile);
+    });
     return deferred.promise;
   };
 
