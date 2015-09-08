@@ -30,3 +30,8 @@ var Predictors = Model.Bookshelf.Collection.extend({
   model: Model.Predictor
 });
 exports.PredictorCollection = Predictors;
+
+var Vote = Model.Bookshelf.Collection.extend({
+  model: Model.Vote
+});
+exports.VoteCollection = Vote;

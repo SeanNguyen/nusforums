@@ -6,6 +6,7 @@ var controllers = {
 	news_checked: require('./NewsCheckedController'),
 	predictor: require('./PredictorController'),
 	user: require('./UserController'),
+	vote: require('./VoteController'),
 	auth: require('./AuthController')
 };
 

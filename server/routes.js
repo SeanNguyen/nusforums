@@ -52,6 +52,13 @@ module.exports = function(app) {
   app.get('/api/checked_news/:id', controllers.news_checked.retrieveCheckedNews);
   app.put('/api/checked_news/:id', controllers.news_checked.update);
   app.delete('/api/checked_news/:id', controllers.news_checked.delete);
+  
+  /* Votes */
+  app.get('/api/votes', controllers.vote.retrieveAll);
+  app.post('/api/votes', controllers.vote.create);
+  app.get('/api/votes/:id', controllers.vote.retrieve);
+  app.put('/api/votes/:id', controllers.vote.update);
+  app.delete('/api/votes/:id', controllers.vote.delete);
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')

@@ -5,7 +5,7 @@
 		<h4 ng-bind='news.content'></h4>
 		<div class="row">
 			<div class="col col-xs-12 col-sm-6">
-				<h6>Date: {{news.date}}</h6>
+				<h6>Date: {{news.date | date: 'medium'}}</h6>
 			</div>
 			<div class="col col-xs-12 col-sm-6">
 				<h6>Author: {{news.author}}</h6>

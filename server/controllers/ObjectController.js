@@ -16,7 +16,7 @@ ObjectController.retrieveAll = function(objectCollection, req, res) {
 
 ObjectController.create = function(objectCollection, req, res, objectName) {
   objectCollection.forge()
-  .create(ObjectController.getObjectFromRequest(req, objectName))
+  .create(req.body)
   .then(function(result) {
   	res.status(200).json(result);
   })

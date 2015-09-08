@@ -35,4 +35,10 @@ var Predictor = Bookshelf.Model.extend({
 });
 exports.Predictor = Predictor;
 
+var Vote = Bookshelf.Model.extend({
+	tableName: 'votes'
+});
+exports.Vote = Vote;
+
+
 exports.Bookshelf = Bookshelf;
