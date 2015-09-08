@@ -37,8 +37,8 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
                 var currentUser = GlobalData.getCurrentUser();
                 if(currentUser) {
                     VoteService.getVoteStatus(currentUser.id, review.id)
-                    .then(function(voteStatus) {
-                        $scope.localVoteStatuses[review.id] = voteStatus;
+                    .then(function(res) {
+                        $scope.localVoteStatuses[res.newsCheckId] = res.status;
                     });
                 }
     		};

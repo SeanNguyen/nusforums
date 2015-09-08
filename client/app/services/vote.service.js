@@ -29,12 +29,12 @@ app.factory('VoteService', ['$q', '$resource', 'VoteModel', function ($q, $resou
 			if(votes.length > 0) {
 				var vote = votes[0];
 				if(vote.isUpVote == true) {
-					defer.resolve(1);	
+					defer.resolve({ status: 1, newsCheckId: newsCheckId, userId: userId });	
 				} else {
-					defer.resolve(-1);
+					defer.resolve({ status: -1, newsCheckId: newsCheckId, userId: userId });	
 				}
 			} else {
-				defer.resolve(0);
+				defer.resolve({ status: 0, newsCheckId: newsCheckId, userId: userId });	
 			}
 		})
 		.catch(function(err) {
