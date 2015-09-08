@@ -36,3 +36,10 @@ app.factory('Asset', ['$resource', function($resource) {
         'update': { method:'PUT' }
     });
 }]);
+
+app.factory('VoteModel', ['$resource', function($resource) {
+    return $resource('/api/votes/:id', null,
+    {
+        'update': { method:'PUT' }
+    });
+}]);
