@@ -8,7 +8,7 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '
         //Facebook Config
         window.fbAsyncInit = function() {
             FB.init({
-              appId      : '852449401504638',
+              appId      : '432828713591059',
               xfbml      : true,
               version    : 'v2.4'
             });
@@ -58,31 +58,32 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '
             .then(function (data) {
                 var facebookUser = data[0];
                 var avatarUrl = data[1];
-                var user;
-                user = new User();
+                
+                //create an user by facebook data
+                var user = new User();
+                
                 user.facebookId = facebookId;
-                user.firstName = facebookUser.firstName;
-                user.middleName = facebookUser.middleName;
-                user.lastName = facebookUser.lastName;
-                user.photo = facebookUser.avatarUrl;
-
-                //TODO: remove this and fix the bug
-                var text = "";
-                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-                for( var i=0; i < 5; i++ )
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-                user.email = text + '@abc.com'//facebookUser.email;
+                user.email = facebookUser.email;
                 user.password = 'nopassword';
+                
+                user.role = 1; //this has no meaning
                 user.admin = false;
 
-                $log.debug(user);
 
+                user.firstName = facebookUser.first_name;
+                user.middleName = facebookUser.middle_name;
+                user.lastName = facebookUser.last_name;
+                
+                user.gender = facebookUser.gender;
+                user.photo = avatarUrl;
+
+                user.signupDate = moment().format("YY-MM-DD HH:MM:ss");
+
+                //then save it
                 user.$save(function(user) {
                     deferred.resolve(user);
-                }, function() {
-                    deferred.reject();
+                }, function(err) {
+                    deferred.reject(err);
                 });
             });
         });
@@ -91,7 +92,8 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '
 
     function getUserInfo(userId) {
         var deferred = $q.defer();
-        FB.api('/me', function (response) {
+        var fields = 'id,name,first_name,middle_name,last_name,email,gender,age_range'
+        FB.api('/' + userId + '?fields=' + fields, function (response) {
             deferred.resolve(response);
         });
         return deferred.promise;

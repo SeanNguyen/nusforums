@@ -26,7 +26,7 @@
 			$http.post('/api/users/login', { facebookId: facebookId })
 			.then(function(response) {
 				GlobalData.setCurrentUser(response.data);
-				deferred.resolve({success: true});
+				deferred.resolve(response.data);
 			})
 			.catch(function(err) {
 				deferred.reject(err);
@@ -39,7 +39,7 @@
           $http.post('/api/users/login', {googleId: googleId})
             .then(function(res) {
             	GlobalData.setCurrentUser(res.data);
-            	deferred.resolve({success: true});
+            	deferred.resolve(res.data);
             })
             .catch(function(err) {
             	deferred.reject(err);

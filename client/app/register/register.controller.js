@@ -16,7 +16,7 @@
 		$scope.registerByFacebook = registerByFacebook;
 		$scope.registerByGoogle = registerByGoogle;
 
-		//private methods
+		//public methods
 		function register() {
 			GlobalData.startAppLoadingState();
 			User.save($scope.input).$promise
@@ -51,18 +51,6 @@
                 console.log(e); // "oh, no!"
                 GlobalData.stopAppLoadingState();
             });
-
-            function loginAfterFacebookLogin(response) {
-                facebook.updateRootUserByFacebookId(response.authResponse.userID)
-                .then(function (localUser) {
-                	$state.go('main');
-                    GlobalData.stopAppLoadingState();
-                })
-                .catch(function(err) {
-                	alert("There is an error when process your request");
-                	GlobalData.stopAppLoadingState();
-                });
-            }
 		}
 
 		function registerByGoogle() {
@@ -89,18 +77,31 @@
 		      console.log(err);
 		      GlobalData.stopAppLoadingState();
 		    });
-
-		    function logInAfterGoogleLogin(googleId) {
-              google.updateRootUserByGoogleId(googleId)
-                .then(function (localUser) {
-                  $state.go('main');
-                  GlobalData.stopAppLoadingState();
-                })
-                .catch(function(err) {
-                  alert("There is an error when process your request");
-                  GlobalData.stopAppLoadingState();
-                });
-		    };
 		};
+
+		//private methods
+		function loginAfterFacebookLogin(response) {
+            facebook.updateRootUserByFacebookId(response.authResponse.userID)
+            .then(function (localUser) {
+            	$state.go('main');
+                GlobalData.stopAppLoadingState();
+            })
+            .catch(function(err) {
+            	alert("There is an error when process your request");
+            	GlobalData.stopAppLoadingState();
+            });
+        }
+
+        function logInAfterGoogleLogin(googleId) {
+			google.updateRootUserByGoogleId(googleId)
+			.then(function (localUser) {
+				$state.go('main');
+				GlobalData.stopAppLoadingState();
+			})
+			.catch(function(err) {
+				allert("There is an error when process your request");
+				GlobalData.stopAppLoadingState();
+			});
+	    };
 	};
 })();
