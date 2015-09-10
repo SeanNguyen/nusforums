@@ -53,6 +53,8 @@ CheckedNewsController.retrieveCheckedNews = function(req, res) {
 
 // Update an CheckedNews
 CheckedNewsController.update = function(req, res) {
+  req.body.timeStamp = moment(req.body.timeStamp, ['', 'YY-MM-DD HH:MM:ss'])
+                        .format("YY-MM-DD HH:MM:ss");
   ObjectController.update(Collections.CheckedNewsCollection, req, res, 'CheckedNews');
 };
 

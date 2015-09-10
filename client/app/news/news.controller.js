@@ -144,6 +144,12 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     	review.assetID = $scope.input.asset.originalObject.id;
     	review.userID = GlobalData.getCurrentUser().id;
 
+        //set some default fields
+        review.assetNotAvailabe = review.assetNotAvailabe || 0;
+        review.upVote = review.upVote || 0;
+        review.downVote = review.downVote || 0;
+        review.CannotTell = review.CannotTell || 0;
+
     	review.$save(function() {
     		//add to ui
 	    	review.user = User.get({ id: review.userID });	
@@ -162,7 +168,7 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     	if(!input.review.assetNotAvailabe && (!input.asset || !input.asset.originalObject.id)) {
     		return false;
     	}
-    	if((!input.review.CannotTell || !input.review.NoPrediction) && !input.review.upDown) {
+    	if(!input.review.CannotTell && !input.review.NoPrediction && !input.review.upDown) {
     		return false;
     	}
     	return true;

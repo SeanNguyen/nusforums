@@ -150,7 +150,7 @@ ObjectController.getObjectFromRequest = function(req, objectName) {
         assetNotAvailable: req.body.assetNotAvailable,
         CannotTell: req.body.CannotTell,
         NoPrediction: req.body.NoPrediction,
-        // timeStamp: moment(req.body.timeStamp).format("YY-MM-DD HH:MM:ss"),
+        timeStamp: req.body.timeStamp,
         remarks: req.body.remarks,
         downVote: req.body.downVote,
         upVote: req.body.upVote,
