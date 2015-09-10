@@ -2,7 +2,7 @@ var app = angular.module('ratingApp');
 
 app.factory('statistic', ['$q', '$rootScope', '$resource', function ($q, $rootScope, $resource) {
   
-  function getReturnRate(startDate, endDate, assetId) {
+  function getReturnRate(assetId, startDate, endDate) {
     var startPrice = $resource('prices/', {}, {
       query: {method: 'GET', params: {id: assetId, date: startDate}, isArray: true}
     });
@@ -14,7 +14,17 @@ app.factory('statistic', ['$q', '$rootScope', '$resource', function ($q, $rootSc
     return endPrice/startPrice -1;
   };
 
+  function getReturnRateByAssetAndPredictor(assetId, predictorId, startDate, endDate) {
+
+  };
+
+  function getReturnRateByPredictor(predictorId, startDate, endDate) {
+
+  };
+
   return {
-    getReturnRate: getReturnRate
+    getReturnRate: getReturnRate,
+    getReturnRateByAssetAndPredictor: getReturnRateByAssetAndPredictor,
+    getReturnRateByPredictor: getReturnRateByPredictor
   };
 }]);
