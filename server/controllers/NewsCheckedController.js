@@ -12,6 +12,7 @@ CheckedNewsController.retrieve = function(req, res) {
   var newsId = req.query.newsId;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
+  var predictorId = req.query.predictorId;
 
   Collections.CheckedNewsCollection.forge()
   .query(function(qb) {
@@ -23,6 +24,8 @@ CheckedNewsController.retrieve = function(req, res) {
       qb.where('assetId', '=', assetId)
     } else if (newsId) {
       qb.where('newsId', '=', newsId);
+    } else if (predictorId) {
+      qb.where('predictorID', '=', predictorId);
     }
   })
   .fetch()
