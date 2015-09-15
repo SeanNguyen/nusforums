@@ -170,30 +170,51 @@ UserController.retrieveUser = function(req, res) {
 UserController.update = function(req, res) {
   Collections.UserCollection.forge()
   .query(function(qb) {
-  	qb.where('id', '=', req.params.id);
+    qb.where('id', '=', req.params.id);
   })
-  .fetchOne(function(user) {
-  	if (user) {
-  	  user.save({
-  	  	name: req.body.name || user.get('name'),
-  	  	email: req.body.email || user.get('email')
-  	  })
-  	  .then(function(result) {
-  	  	result = removePasswordFromUserData(result)
-  	  	res.status(200).json(result);
-  	  })
-  	  .catch(function(err) {
-  	  	console.log('Error update user: ', err);
-  	  	res.status(500).json(err);
-  	  })
-  	} else {
-  	  res.status(404).json({});
-  	}
+  .fetchOne()
+  .then(function(user) {
+    if (user) {
+      req.body.signupDate = null;
+      user.save(req.body)
+       .then(function(result) {
+         result = removePasswordFromUserData(result)
+         res.status(200).json(result);
+       })
+       .catch(function(err) {
+         console.log('Error update user: ', err);
+         res.status(500).json(err);
+       });
+    } else {
+      res.status(400).json({});
+    }
   })
-  .catch(function(err) {
-  	console.log('Error update user: ', err);
-  	res.status(500).json(err);
-  })
+
+  // Collections.UserCollection.forge()
+  // .query(function(qb) {
+  //   console.log(req.params.id);
+  // 	qb.where('id', '=', req.params.id);
+  // })
+  // .fetchOne(function(user) {
+  //   console.log(user);    
+  // 	if (user) {
+  // 	  user.save(req.body)
+  // 	  .then(function(result) {
+  // 	  	result = removePasswordFromUserData(result)
+  // 	  	res.status(200).json(result);
+  // 	  })
+  // 	  .catch(function(err) {
+  // 	  	console.log('Error update user: ', err);
+  // 	  	res.status(500).json(err);
+  // 	  })
+  // 	} else {
+  // 	  res.status(404).json({});
+  // 	}
+  // })
+  // .catch(function(err) {
+  // 	console.log('Error update user: ', err);
+  // 	res.status(500).json(err);
+  // })
 };
 
 UserController.delete = function(req, res) {

@@ -16,7 +16,8 @@ module.exports = function(app) {
   app.post('/api/users', controllers.user.create);
   app.post('/api/users/login', controllers.user.login);
   app.post('/api/users/logout', controllers.auth.requireUser(), controllers.user.logout);
-  app.put('/api/users/:id', controllers.auth.requireUser(), controllers.user.update);
+  // app.put('/api/users/:id', controllers.auth.requireUser(), controllers.user.update);
+  app.put('/api/users/:id', controllers.user.update);
   app.delete('/users/:id', controllers.auth.requireUser(), controllers.user.delete);
   
   /* Article */

@@ -1,0 +1,103 @@
+<div class="container profile">
+  <md-content layout-padding>
+  	<!-- <p>Sign up date: {{user.signupDate | date: 'medium'}}</p> -->
+  	<p>Number of Up Votes: {{user.nOfUpVotes}}</p>
+  	<p>Number of Down Votes: {{user.nOfDownVotes}}</p>
+
+    <form name="profileForm">
+      <!-- photo -->
+      <div layout="row" layout-align="center center">
+      	<img ng-src="{{user.photo}}" class="img-rounded">
+      </div>
+      <md-input-container>
+        <label>Avata Url</label>
+        <input md-maxlength="500" required name="avatarUrl" ng-model="user.photo">
+        <div ng-messages="profileForm.avatarUrl.$error">
+          <div ng-message="md-maxlength">The name has to be less than 500 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <!-- firstName -->
+      <md-input-container>
+        <label>First Name</label>
+        <input md-maxlength="100" required name="firstName" ng-model="user.firstName">
+        <div ng-messages="profileForm.firstName.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <!-- middle Name -->
+      <md-input-container>
+        <label>Middle Name</label>
+        <input md-maxlength="100" name="middleName" ng-model="user.middleName">
+        <div ng-messages="profileForm.middleName.$error">
+          <div ng-message="md-maxlength">The name has to be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <!-- middle Name -->
+      <md-input-container>
+        <label>Last Name</label>
+        <input md-maxlength="100" required name="lastName" ng-model="user.lastName">
+        <div ng-messages="profileForm.lastName.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <!-- nick name online -->
+      <md-input-container>
+        <label>Nick Name</label>
+        <input md-maxlength="100" name="nickName" ng-model="user.nickNameOnline">
+        <div ng-messages="profileForm.nickName.$error">
+          <div ng-message="md-maxlength">The name has to be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <!-- gender -->
+      <md-input-container>
+        <label>Gender</label>
+        <md-select ng-model="user.gender">
+          <md-option ng-repeat="gender in genders" value="{{gender}}">{{gender}}</md-option>
+        </md-select>
+      </md-input-container>
+
+      <!-- age -->
+      <md-input-container>
+        <label>Age</label>
+        <input ng-model="user.age" type='number'>
+      </md-input-container>
+
+      <!-- Employer 1 -->
+      <md-input-container>
+        <label>Employer 1</label>
+        <input md-maxlength="100" name="e1" ng-model="user.employer1">
+        <div ng-messages="profileForm.e1.$error">
+          <div ng-message="md-maxlength">The name has to be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <!-- Employer 2 -->
+      <md-input-container>
+        <label>Employer 2</label>
+        <input md-maxlength="100" name="e2" ng-model="user.employer2">
+        <div ng-messages="profileForm.e2.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <!-- Employer 3 -->
+      <md-input-container>
+        <label>Employer 3</label>
+        <input md-maxlength="100" name="e3" ng-model="user.employer3">
+        <div ng-messages="profileForm.e3.$error">
+          <div ng-message="md-maxlength">The name has to be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+    </form>
+
+    <md-button class="md-raised md-primary" ng-disabled='profileForm.$invalid' ng-click='update()'>Update</md-button>
+  </md-content>
+</div>
