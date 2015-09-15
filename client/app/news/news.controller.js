@@ -2,11 +2,11 @@
 var app = angular.module('ratingApp');
 
 app.controller('NewsController', ['News', '$rootScope', '$scope', 'news', 'Review', 'User', 'Predictor', 'Asset', 
-    'GlobalData', '$http', 'VoteService', NewsController]);
+    'GlobalData', '$http', 'VoteService', 'facebook', NewsController]);
 
 VOTE_STATUS = {none: 0, upVote: 1, downVote: -1};
 
-function NewsController(News, $rootScope, $scope, news, Review, User, Predictor, Asset, GlobalData, $http, VoteService) {
+function NewsController(News, $rootScope, $scope, news, Review, User, Predictor, Asset, GlobalData, $http, VoteService, facebook) {
     $scope.news = news;
     $scope.reviews = [];
     $scope.input = { review: {} };
@@ -47,6 +47,8 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     	//query predictors and assets at the same time
     	cacheAllPredictor();
     	cacheAllAsset();
+
+        facebook.parseElements();
     }
 
     function getPrediction(review) {

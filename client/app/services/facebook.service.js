@@ -1,6 +1,6 @@
 var app = angular.module('ratingApp');
 
-app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$log', function ($q, $rootScope, User, GlobalData, UserAuth,$log) {
+app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '$log', '$timeout', function ($q, $rootScope, User, GlobalData, UserAuth, $log, $timeout) {
 
     function init() {
         var deferred = $q.defer();
@@ -64,7 +64,7 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '
                 
                 user.facebookId = facebookId;
                 user.email = facebookUser.email;
-                user.password = 'nopassword';
+                //no need password
                 
                 user.role = 1; //this has no meaning
                 user.admin = false;
@@ -116,12 +116,19 @@ app.factory('facebook', ['$q', '$rootScope', 'User', 'GlobalData', 'UserAuth', '
         return deferred.promise;
     }
 
+    function parseElements() {
+        $timeout(function() {
+            FB.XFBML.parse();
+        }, 500);
+    }
+
     return {
         init: init,
         getLoginStatus: getLoginStatus,
         getUserInfo: getUserInfo,
         getAvatar: getAvatar,
         logIn: logIn,
-        updateRootUserByFacebookId: updateRootUserByFacebookId
+        updateRootUserByFacebookId: updateRootUserByFacebookId,
+        parseElements: parseElements
     };
 }]);

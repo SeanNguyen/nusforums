@@ -2,9 +2,9 @@
     'use-strict';
     var app = angular.module('ratingApp');
 
-    app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', '$q', 'User', 'News', 'Predictor', 'Asset', statisticController]);
+    app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', '$q', 'User', 'News', 'Predictor', 'Asset', 'facebook', statisticController]);
 
-    function statisticController($rootScope, $scope, $http, $stateParams, $q, User, News, Predictor, Asset) {
+    function statisticController($rootScope, $scope, $http, $stateParams, $q, User, News, Predictor, Asset, facebook) {
     	
         $scope.loaded = true;
         $scope.error = { nullId: false };
@@ -94,6 +94,7 @@
                 alertError();
                 $scope.loaded = true;
             });
+            facebook.parseElements();
         }
 
     	function preprocessData(data) {

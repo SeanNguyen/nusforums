@@ -4,6 +4,7 @@ var UserController = {};
 var Bcrypt = require('bcrypt');
 var Crypto = require('crypto');
 var Promise = require('bluebird');
+var moment = require('moment');
 var Collections = require('../db/collection.js');
 
 UserController.login = function(req, res) {
@@ -129,7 +130,7 @@ UserController.create = function(req, res) {
     middleName: req.body.middleName,
     lastName: req.body.lastName,
     nickNameOnline: req.body.nickNameOnline,
-    signupDate: req.body.signupDate, // get now
+    signupDate: moment().format("YY-MM-DD HH:MM:ss"), // get now
     photo: req.body.photo,
     gender: req.body.gender,
     age: req.body.age,

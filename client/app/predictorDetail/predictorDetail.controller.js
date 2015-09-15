@@ -1,9 +1,9 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-app.controller('PredictorDetailController', ['$scope', '$stateParams', 'Predictor', PredictorDetailController]);
+app.controller('PredictorDetailController', ['$scope', '$stateParams', 'Predictor', 'facebook', PredictorDetailController]);
 
-function PredictorDetailController ($scope, $stateParams, Predictor) {
+function PredictorDetailController ($scope, $stateParams, Predictor, facebook) {
 	$scope.predictor;
 	$scope.loaded;
 
@@ -17,5 +17,7 @@ function PredictorDetailController ($scope, $stateParams, Predictor) {
 			$scope.predictor = predictor;
 			$scope.loaded = true;
 		});
+
+		facebook.parseElements();
 	}
 }
