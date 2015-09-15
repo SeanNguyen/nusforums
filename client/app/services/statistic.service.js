@@ -3,15 +3,21 @@ var app = angular.module('ratingApp');
 app.factory('statistic', ['$resource', function($resource) {
   
   // get price by date
-  function getPriceByIdAndDate(assetId, date) {
+  function priceByAssetAndDate(assetId, date) {
     return $resource('/api/prices', {}, {
       query: {method: 'GET', params: {id: assetId, startDate: date, endDate: date}, isArray: true}
     });
   };
 
-  function getPredictionByPredictor(predictorId) {
+  function predictionByPredictor(predictorId) {
     return $resource('/api/checked_news', {}, {
       query: {method: 'GET', params: {predictorID: predictorId}, isArray: true}
+    });
+  };
+
+  function predictionByPredictorAndAsset(predictorId, assetId) {
+    return $resource('/api/checked_news', {}, {
+      query: {method: 'GET', params: {predictorID: predictorId, assetID: assetId, isArray: true}
     });
   };
 
@@ -31,17 +37,24 @@ app.factory('statistic', ['$resource', function($resource) {
     return endPrice.adjClose / startPrice.adjClose -1;
   };
 
-  function getReturnRateByAssetAndPredictor(assetId, predictorId, startDate, endDate) {
+  function getReturnRateByAssetAndPredictor(assetId, predictorId, duration) {
     // retrieve assestIds predicted by predictor
-
-  };
-
-  function getReturnRateByPredictor(predictorId, startDate, endDate) {
-    var predictions = getPredictionByPredictor(predictorId);
-    var assetIds = predictions.map(function(prediction) {
-      return prediction.assetID;
+    var predictions = predictionByPredictorAndAsset(predictorId, assetId);
+    
+    var returnRateList = predictions.map(function(prediction) {
+      return getReturnRate(prediction.assetID, prediction.time, prediction.time + duration);
     });
 
+    return getAverage(returnRateList);
+  };
+
+  function getReturnRateByPredictor(predictorId, duration) {
+    var predictions = getPredictionByPredictor(predictorId);
+    var returnRateList = predictions.map(function(prediction) {
+      return getReturnRate(prediction.assetID, prediction.time, prediction.time + duration);
+    });
+    
+    return getAverage(returnRateList);
   };
 
   return {

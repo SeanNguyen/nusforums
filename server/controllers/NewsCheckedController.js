@@ -17,13 +17,16 @@ CheckedNewsController.retrieve = function(req, res) {
   Collections.CheckedNewsCollection.forge()
   .query(function(qb) {
     if (assetId && startDate && endDate) {
-  	  qb.where('assetId', '=', assetId)
+  	  qb.where('assetID', '=', assetId)
         .andWhere('timeStamp', '>=', startDate)
         .andWhere('timeStamp', '<=', endDate)
+    } else if (assetId && predictorId) {
+      qb.where('assetID', '=', assetId)
+        .andwhere('predictorID', '=', predictorId)
     } else if (assetId) {
-      qb.where('assetId', '=', assetId)
+      qb.where('assetID', '=', assetId)
     } else if (newsId) {
-      qb.where('newsId', '=', newsId);
+      qb.where('newsID', '=', newsId);
     } else if (predictorId) {
       qb.where('predictorID', '=', predictorId);
     }
