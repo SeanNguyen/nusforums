@@ -1,24 +1,22 @@
 var app = angular.module('ratingApp');
 
-app.factory('statistic', ['$resource', function($resource) {
+app.factory('statistic', ['$http', '$q', function($http, $q) {
   
   // get price by date
   function priceByAssetAndDate(assetId, date) {
-    return $resource('/api/prices', {}, {
-      query: {method: 'GET', params: {id: assetId, startDate: date, endDate: date}, isArray: true}
-    });
+    return $http.get('/api/prices', {params: {id: assetId, startDate: date, endDate: date}});
   };
 
   function predictionByPredictor(predictorId) {
-    return $resource('/api/checked_news', {}, {
-      query: {method: 'GET', params: {predictorID: predictorId}, isArray: true}
-    });
+  
+    return $http.get('/api/checked_news', {params: {predictorID: predictorId}});
   };
 
   function predictionByPredictorAndAsset(predictorId, assetId) {
-    return $resource('/api/checked_news', {}, {
-      query: {method: 'GET', params: {predictorID: predictorId, assetID: assetId, isArray: true}
-    });
+    /*return $resource('/api/checked_news', {}, {
+      query: {method: 'GET', params: {predictorID: predictorId, assetID: assetId} , isArray: true}
+    });*/
+    return $http.get('/api/checked_news', {params: {predictorID: predictorId, assetID: assetId}});
   };
 
   function getAverage(value) {
@@ -30,36 +28,55 @@ app.factory('statistic', ['$resource', function($resource) {
     return sum / value.length;
   };
 
-  function getReturnRate(assetId, startDate, endDate) {
-    var startPrice = getPriceByIdAndDate(assetId, startDate);
-    var endPrice = getPriceByIdAndDate(assetId, endDate);
+  function returnRate(assetId, startDate, endDate) {
+    var startPrice = priceByAssetAndDate(assetId, startDate);
+    var endPrice = priceByAssetAndDate(assetId, endDate);
 
-    return endPrice.adjClose / startPrice.adjClose -1;
+    return $q.all([startPrice, endPrice])
+    .then(function(price) {
+      console.log(price);
+    });
+
   };
 
-  function getReturnRateByAssetAndPredictor(assetId, predictorId, duration) {
+  function returnRateByAssetAndPredictor(assetId, predictorId, duration) {
     // retrieve assestIds predicted by predictor
     var predictions = predictionByPredictorAndAsset(predictorId, assetId);
     
     var returnRateList = predictions.map(function(prediction) {
-      return getReturnRate(prediction.assetID, prediction.time, prediction.time + duration);
+      return returnRate(prediction.assetID, prediction.time, prediction.time + duration);
     });
 
     return getAverage(returnRateList);
   };
 
-  function getReturnRateByPredictor(predictorId, duration) {
-    var predictions = getPredictionByPredictor(predictorId);
-    var returnRateList = predictions.map(function(prediction) {
-      return getReturnRate(prediction.assetID, prediction.time, prediction.time + duration);
+  function returnRateByPredictor(predictorId, duration) {
+    return predictionByPredictor(predictorId)
+    .then(function(res) {
+      var predictions = res.data;
+      
+      return predictions.map(function(prediction) {
+        return returnRate(prediction.assetID, prediction.timeStamp, prediction.timeStamp + duration);
+      });
+    })
+    .then(function(promises) {
+
+      $q.all(promises)
+      .then(function(res) {
+
+      });
+    });
+
+    /*var returnRateList = predictions.map(function(prediction) {
+      return returnRate(prediction.assetID, prediction.time, prediction.time + duration);
     });
     
-    return getAverage(returnRateList);
+    return getAverage(returnRateList);*/
   };
 
   return {
-    getReturnRate: getReturnRate,
-    getReturnRateByAssetAndPredictor: getReturnRateByAssetAndPredictor,
-    getReturnRateByPredictor: getReturnRateByPredictor
+    returnRate: returnRate,
+    returnRateByAssetAndPredictor: returnRateByAssetAndPredictor,
+    returnRateByPredictor: returnRateByPredictor
   };
 }]);
