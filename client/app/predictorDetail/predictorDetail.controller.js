@@ -6,7 +6,7 @@ app.controller('PredictorDetailController', ['$scope', '$log', '$stateParams', '
 function PredictorDetailController ($scope, $log, $stateParams, Predictor, facebook, statistic) {
 	$scope.predictor;
 	$scope.loaded;
-    $scope.statistic;
+	$scope.returnRate;
 
 	//start the controller
 	active();
@@ -15,17 +15,18 @@ function PredictorDetailController ($scope, $log, $stateParams, Predictor, faceb
 		$scope.loaded = false;
 		Predictor.get({id: $stateParams.id}).$promise
 		.then(function(predictor) {
-
 			$scope.predictor = predictor;
-            fetchStatistic(predictor.id);
-
 			$scope.loaded = true;
 		});
 
+		//load return rate info
+		$scope.returnRate = {
+			week: statistic.returnRateByPredictor($stateParams.id, 7),
+			month: statistic.returnRateByPredictor($stateParams.id, 30),
+			quater: statistic.returnRateByPredictor($stateParams.id, 90),
+			year: statistic.returnRateByPredictor($stateParams.id, 365)
+		}
+
 		facebook.parseElements();
 	};
-
-	function fetchStatistic(predictorId) {
-      return statistic.returnRateByPredictor(predictorId, 7);
-    };
 }
