@@ -15,7 +15,7 @@
 				<div>
 					<div ng-repeat='predictor in predictors'>
 						<md-checkbox ng-checked='predictor.showing' aria-label="predictor" ng-click='onSelectPredictor(predictor)' ng-show='isPredictorNameShown(predictor.commonName)'>
-							{{predictor.commonName}} (month {{predictorReturnRates[predictor.id].month}} year {{predictorReturnRates[predictor.id].year}})
+							{{predictor.commonName}} (month {{predictorReturnRates[predictor.id].month * 100 | number : 2}}% year {{predictorReturnRates[predictor.id].year * 100 | number : 2}}%)
 						</md-checkbox>
 					</div>
 				</div>
@@ -28,10 +28,10 @@
 				    <h5>Checked by: {{currentPredictionView.checker.email}}</h5>
 				    <br>
 				    <h4>Return rate:</h4>
-				    <p>Week: {{currentPredictionView.week}}</p>
-				    <p>Month: {{currentPredictionView.month}}</p>
-				    <p>Quater: {{currentPredictionView.quater}}</p>
-				    <p>Year: {{currentPredictionView.year}}</p>
+				    <p>Week: {{currentPredictionView.returnRate.week * 100 | number : 2}}%</p>
+				    <p>Month: {{currentPredictionView.returnRate.month * 100 | number : 2}}%</p>
+				    <p>Quater: {{currentPredictionView.returnRate.quater * 100 | number : 2}}%</p>
+				    <p>Year: {{currentPredictionView.returnRate.year * 100 | number : 2}}%</p>
 				</md-whiteframe>
 			</div>
 		</div>

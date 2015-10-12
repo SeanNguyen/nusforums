@@ -137,12 +137,23 @@
                             data.showing = true;
                         });
 
-                    $scope.predictorReturnRates[predictions[i].predictorID] = {
-                        week: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 7),
-                        month: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 30),
-                        quater: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 90),
-                        year: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 365)
-                    };
+                    $scope.predictorReturnRates[predictions[i].predictorID] = {};
+                    statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 7)
+                    .then(function(result) {
+                        $scope.predictorReturnRates[result.predictorId].week = result.returnRate;
+                    });
+                    statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 30)
+                    .then(function(result) {
+                        $scope.predictorReturnRates[result.predictorId].month = result.returnRate;
+                    });
+                    statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 90)
+                    .then(function(result) {
+                        $scope.predictorReturnRates[result.predictorId].quater = result.returnRate;
+                    });
+                    statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 365)
+                    .then(function(result) {
+                        $scope.predictorReturnRates[result.predictorId].year = result.returnRate;
+                    });
 
                     $scope.predictors[predictions[i].predictorID].showing = true;
                 };
@@ -331,12 +342,24 @@
             var aMonthDate = moment(startDate).add(1, 'months').format();
             var aQuartersDate = moment(startDate).add(1, 'quarters').format();
             var aYearDate = moment(startDate).add(1, 'years').format();
-            $scope.currentPredictionView.returnRate = { 
-                week: statistic.returnRate($stateParams.assetId, startDate, aWeekDate),
-                month: statistic.returnRate($stateParams.assetId, startDate, aMonthDate),
-                quater: statistic.returnRate($stateParams.assetId, startDate, aQuartersDate),
-                year: statistic.returnRate($stateParams.assetId, startDate, aYearDate)
-            };
+
+            $scope.currentPredictionView.returnRate = {};
+            statistic.returnRate($scope.asset.ticker1, startDate, aWeekDate)
+            .then(function(rate) {
+                $scope.currentPredictionView.returnRate.week = rate;
+            });
+            statistic.returnRate($scope.asset.ticker1, startDate, aMonthDate)
+            .then(function(rate) {
+                $scope.currentPredictionView.returnRate.month = rate;
+            });
+            statistic.returnRate($scope.asset.ticker1, startDate, aQuartersDate)
+            .then(function(rate) {
+                $scope.currentPredictionView.returnRate.quater = rate;
+            });
+            statistic.returnRate($scope.asset.ticker1, startDate, aYearDate)
+            .then(function(rate) {
+                $scope.currentPredictionView.returnRate.year = rate;
+            });
         }
 
         function alertError() {

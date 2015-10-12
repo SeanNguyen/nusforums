@@ -5,6 +5,7 @@ var mysql = require("mysql");
 var Collections = require('../db/collection.js'); 
 var ObjectController = require('./ObjectController.js');
 var NewsController = {};
+var connection = connectToDb();
 
 module.exports = NewsController;
 
@@ -16,8 +17,7 @@ module.exports = NewsController;
 
 // Get all Newss
 NewsController.retrieveAll = function(req, res) {
-  var connection = connectToDb();
-  var query = buildQuery(req.query.isFresh, req.query.keyword, req.query.predictor, req.query.asset);
+  var query = buildQuery(req.query.isFresh, req.query.keyword, req.query.predictor, req.query.asset, req.query.predictorId, req.query.assetId);
   connection.query(query, function(err,rows){
     if(err) {
       console.log('Error: ', err);
@@ -65,18 +65,35 @@ function connectToDb() {
   return con;
 }
 
-function buildQuery(isFresh, keyword, predictorName, assetName) {
+function buildQuery(isFresh, keyword, predictorName, assetName, predictorId, assetId) {
   if(isFresh === 'true') {
     return "SELECT * FROM news WHERE news.headline LIKE '%" + keyword + "%' AND not exists (SELECT * FROM news_checked, predictor WHERE news.id = news_checked.newsID)";
   } else if(isFresh === 'false') {
     var query = "SELECT * FROM news WHERE news.headline LIKE '%" + keyword + "%' AND  exists (SELECT * FROM news_checked, predictor, asset WHERE news.id = news_checked.newsID ";
-    if(predictorName) {
-      query += "AND predictor.id = news_checked.predictorID AND predictor.commonName LIKE '%" + predictorName + "%'";
+    
+    if(predictorId || predictorName) {
+      query += "AND predictor.id = news_checked.predictorID ";
     }
+    if(predictorName) {
+      query += "AND predictor.commonName LIKE '%" + predictorName + "%' ";
+    }
+    if(predictorId) {
+      query += "AND predictor.id = " + predictorId + " ";
+    }
+
+    if(assetName || assetId) {
+      query += "AND asset.id = news_checked.assetID ";
+    }
+    
     if(assetName) {
-      query += "AND asset.id = news_checked.assetID AND asset.assetName LIKE '%" + assetName + "%'";
+      query += "AND asset.assetName LIKE '%" + assetName + "%' ";
+    }
+    if(assetId) {
+      query += "AND asset.id =" + assetId + " ";
     }
     query += ")";
+
+    console.log(query);
     return query;
   } else {
     return "SELECT * FROM news";
