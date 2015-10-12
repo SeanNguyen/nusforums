@@ -15,16 +15,23 @@
 				<div>
 					<div ng-repeat='predictor in predictors'>
 						<md-checkbox ng-checked='predictor.showing' aria-label="predictor" ng-click='onSelectPredictor(predictor)' ng-show='isPredictorNameShown(predictor.commonName)'>
-							{{predictor.commonName}}
+							{{predictor.commonName}} (month {{predictorReturnRates[predictor.id].month}} year {{predictorReturnRates[predictor.id].year}})
 						</md-checkbox>
 					</div>
 				</div>
 			</div>
 			<div class="col- col-xs-12 col-sm-6">
-				<md-whiteframe class="md-whiteframe-z2 predictionInfo" layout="column" layout-align="center center" ng-show="currentPredictionView">
-				    <h4>News: {{currentPredictionView.news.headline}}</h4>
+				<md-whiteframe class="md-whiteframe-z2 predictionInfo" layout="column" layout-align="start start" ng-show="currentPredictionView">
+					<h4>Selected News:</h4>
+				    <p>News: {{currentPredictionView.news.headline}}</p>
 				    <h5>Predictor: {{currentPredictionView.predictor.commonName}}</h5>
 				    <h5>Checked by: {{currentPredictionView.checker.email}}</h5>
+				    <br>
+				    <h4>Return rate:</h4>
+				    <p>Week: {{currentPredictionView.week}}</p>
+				    <p>Month: {{currentPredictionView.month}}</p>
+				    <p>Quater: {{currentPredictionView.quater}}</p>
+				    <p>Year: {{currentPredictionView.year}}</p>
 				</md-whiteframe>
 			</div>
 		</div>

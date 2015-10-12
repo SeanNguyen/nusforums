@@ -2,15 +2,16 @@
     'use-strict';
     var app = angular.module('ratingApp');
 
-    app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', '$q', 'User', 'News', 'Predictor', 'Asset', 'facebook', statisticController]);
+    app.controller('statisticController', ['$rootScope', '$scope', '$http', '$stateParams', '$q', 'User', 'News', 'Predictor', 'Asset', 'facebook', 'statistic', statisticController]);
 
-    function statisticController($rootScope, $scope, $http, $stateParams, $q, User, News, Predictor, Asset, facebook) {
+    function statisticController($rootScope, $scope, $http, $stateParams, $q, User, News, Predictor, Asset, facebook, statistic) {
     	
         $scope.loaded = true;
         $scope.error = { nullId: false };
         $scope.checker = {};
         $scope.news = {};
         $scope.predictors = {};
+        $scope.predictorReturnRates = [];
         $scope.currentPredictionView = null;
         $scope.startDate;
         $scope.endDate;
@@ -135,6 +136,14 @@
                         function(data) {
                             data.showing = true;
                         });
+
+                    $scope.predictorReturnRates[predictions[i].predictorID] = {
+                        week: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 7),
+                        month: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 30),
+                        quater: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 90),
+                        year: statistic.returnRateByAssetAndPredictor(assetId, predictions[i].predictorID, 365)
+                    };
+
                     $scope.predictors[predictions[i].predictorID].showing = true;
                 };
 
@@ -316,6 +325,18 @@
             $scope.currentPredictionView.checker = $scope.checker[prediction.userID];
             $scope.currentPredictionView.news = $scope.news[prediction.newsID];
             $scope.currentPredictionView.predictor = $scope.predictors[prediction.predictorID];
+
+            var startDate = $scope.news[prediction.newsID].date;
+            var aWeekDate = moment(startDate).add(1, 'weeks').format();
+            var aMonthDate = moment(startDate).add(1, 'months').format();
+            var aQuartersDate = moment(startDate).add(1, 'quarters').format();
+            var aYearDate = moment(startDate).add(1, 'years').format();
+            $scope.currentPredictionView.returnRate = { 
+                week: statistic.returnRate($stateParams.assetId, startDate, aWeekDate),
+                month: statistic.returnRate($stateParams.assetId, startDate, aMonthDate),
+                quater: statistic.returnRate($stateParams.assetId, startDate, aQuartersDate),
+                year: statistic.returnRate($stateParams.assetId, startDate, aYearDate)
+            };
         }
 
         function alertError() {
