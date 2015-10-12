@@ -117,7 +117,7 @@
 
             $q.all([
                 $http({ url: '/api/prices', method: "GET", params: { id: priceId, startDate: startDate, endDate: endDate, limit: limit } }),
-                $http({ url: '/api/checked_news', method: "GET", params: { assetId: assetId, startDate: startDate, endDate: endDate } }),
+                $http({ url: '/api/checked_news', method: "GET", params: { assetId: assetId} }),
             ])
             .then(function(responses) {
                 //query info for the predictions as well
