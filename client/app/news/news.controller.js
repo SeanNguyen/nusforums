@@ -15,6 +15,7 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     $scope.users = {};
     $scope.predictors = {};
     $scope.assets = {};
+    $scope.predictionDate = {};
 
     //functions
     $scope.getPrediction = getPrediction;
@@ -36,6 +37,7 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
 	    		$scope.users[review.userID] = User.get({ id: review.userID });	
 	    		$scope.predictors[review.predictorID] = Predictor.get({ id: review.predictorID });	
 	    		$scope.assets[review.assetID] = Asset.get({ id: review.assetID });
+                $scope.predictionDate[review.id] = review.timeStamp;
 
                 var currentUser = GlobalData.getCurrentUser();
                 if(currentUser) {

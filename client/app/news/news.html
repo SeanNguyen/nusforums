@@ -106,7 +106,7 @@
 				<h5 class="col col-xs-12">Remarks: {{review.remarks}}</h5>
 
 				<h5 class="col col-xs-12 col-sm-6">Reviewer: {{users[review.userID].email}}</h5>
-				<h5 class="col col-xs-12 col-sm-6">Time: {{review.timeStamp | date}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Time: {{predictionDate[review.id] | date: 'short'}}</h5>
 			</div>
 
 			<button type="button" class="btn btn-default" ng-class='{ picked: localVoteStatuses[review.id] === 1}' ng-click='upVote(review)'>
