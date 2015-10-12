@@ -30,7 +30,6 @@ AssetPriceController.retrieve = function(req, res) {
   })
   .fetch()
   .then(function(prices) {
-    console.log('Prices: ', prices);
     if (prices) {
       // if the query has limit
       if (limit < prices.length) {
