@@ -96,8 +96,8 @@
 	<div class="reviewList">
 		<div ng-repeat='review in reviews' class="review">
 			<div class="row">
-				<h4 class="col col-xs-12">Predictor: {{review.predictor.commonName}}</h4>
-				<h4 class="col col-xs-12">Asset: {{review.asset.assetName}}</h4>
+				<h4 class="col col-xs-12">Predictor: {{predictors[review.predictorID].commonName}}</h4>
+				<h4 class="col col-xs-12">Asset: {{assets[review.assetID].assetName}}</h4>
 				
 				<h5 class="col col-xs-12 col-sm-6">Prediction: {{getPrediction(review)}}</h5>
 				<h5 class="col col-xs-12 col-sm-6">Duration: {{review.time}}</h5>
@@ -105,7 +105,7 @@
 
 				<h5 class="col col-xs-12">Remarks: {{review.remarks}}</h5>
 
-				<h5 class="col col-xs-12 col-sm-6">Reviewer: {{review.user.email}}</h5>
+				<h5 class="col col-xs-12 col-sm-6">Reviewer: {{users[review.userID].email}}</h5>
 				<h5 class="col col-xs-12 col-sm-6">Time: {{review.timeStamp | date}}</h5>
 			</div>
 

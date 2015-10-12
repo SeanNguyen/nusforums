@@ -12,6 +12,9 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     $scope.input = { review: {} };
     $scope.cache = { predictors: [], assets: [] };
     $scope.localVoteStatuses = {};
+    $scope.users = {};
+    $scope.predictors = {};
+    $scope.assets = {};
 
     //functions
     $scope.getPrediction = getPrediction;
@@ -30,9 +33,9 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
     		for (var i = $scope.reviews.length - 1; i >= 0; i--) {
     			var review = $scope.reviews[i];
 
-	    		review.user = User.get({ id: review.userID });	
-	    		review.predictor = Predictor.get({ id: review.predictorID });	
-	    		review.asset = Asset.get({ id: review.assetID });
+	    		$scope.users[review.userID] = User.get({ id: review.userID });	
+	    		$scope.predictors[review.predictorID] = Predictor.get({ id: review.predictorID });	
+	    		$scope.assets[review.assetID] = Asset.get({ id: review.assetID });
 
                 var currentUser = GlobalData.getCurrentUser();
                 if(currentUser) {
