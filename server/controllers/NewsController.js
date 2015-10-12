@@ -18,7 +18,6 @@ module.exports = NewsController;
 NewsController.retrieveAll = function(req, res) {
   var connection = connectToDb();
   var query = buildQuery(req.query.isFresh, req.query.keyword, req.query.predictor, req.query.asset);
-  console.log(query);
   connection.query(query, function(err,rows){
     if(err) {
       console.log('Error: ', err);
@@ -75,7 +74,7 @@ function buildQuery(isFresh, keyword, predictorName, assetName) {
       query += "AND predictor.id = news_checked.predictorID AND predictor.commonName LIKE '%" + predictorName + "%'";
     }
     if(assetName) {
-      query += "AND asset.id = news_checked.assetID AND asset.assetName LIKE '%" + assetName + "%')";
+      query += "AND asset.id = news_checked.assetID AND asset.assetName LIKE '%" + assetName + "%'";
     }
     query += ")";
     return query;
