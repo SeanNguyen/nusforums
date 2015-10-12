@@ -24,7 +24,7 @@
     "method-override": "~1.0.0",
     "moment": "^2.10.6",
     "morgan": "~1.0.0",
-    "mysql": "^2.7.0",
+    "mysql": "^2.9.0",
     "orchestrate": "^0.3.11",
     "q": "^1.0.1",
     "serve-favicon": "~2.0.1"

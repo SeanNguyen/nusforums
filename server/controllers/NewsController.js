@@ -1,5 +1,6 @@
 'use strict';
 var q = require('q');
+var mysql = require("mysql");
 
 var Collections = require('../db/collection.js'); 
 var ObjectController = require('./ObjectController.js');
@@ -15,56 +16,15 @@ module.exports = NewsController;
 
 // Get all Newss
 NewsController.retrieveAll = function(req, res) {
-  var keyword = '%' + req.query.keyword + '%';
-  
-  //get news by keywords
-  Collections.NewsCollection.forge()
-  .query(function(qb) {
-    qb.where('headline', 'like', keyword)
-  })
-  .fetch()
-  .then(function(news) {
-    //if result empty then return
-    if (!news) {
+  var connection = connectToDb();
+  var query = buildQuery(req.query.isFresh, req.query.keyword, req.query.predictor, req.query.asset);
+  console.log(query);
+  connection.query(query, function(err,rows){
+    if(err) {
       console.log('Error: ', err);
-      res.status(404).json(err);
-      return;
+      res.status(500).json(err);
     }
-      
-    var newsList = news.models;
-    //if there is no isFresh parameter then return all the thing
-    if(!req.query.isFresh) {
-      res.status(200).json(newsList);
-      return;
-    }
-
-    //filter all the fresh or not-fresh news to return
-    var promises = [];
-    for (var i = 0; i < newsList.length; i++) {
-      var promise = isNewsChecked(newsList[i].id);
-      promises.push(promise);
-    };
-
-    q.all(promises)
-    .then(function (data) {
-      //assume that the number of returned result is still the same as the number of news
-      var results = [];
-      var needFreshNews = false;
-      if(req.query.isFresh === 'true') {
-        needFreshNews = true;
-      }
-      for(var i = 0; i < newsList.length; i++) {
-        var isFresh = !data[i];
-        if(isFresh === needFreshNews) {
-          results.push(newsList[i]);
-        }
-      }
-      res.status(200).json(results);
-    });
-  })
-  .catch(function(err) {
-  	console.log('Error retrieve: ', err);
-  	res.status(500).json(err);
+    res.status(200).json(rows);
   });
 };
 
@@ -89,21 +49,37 @@ NewsController.delete = function(req, res) {
 };
 
 //private helper methods
-function isNewsChecked(newsId) {
-  return Collections.CheckedNewsCollection.forge()
-  .query(function(qb) {
-    qb.where('newsId', '=', newsId);
-  })
-  .fetch()
-  .then(function(checkedNews) {
-    if (checkedNews.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  })
-  .catch(function(err) {
-    console.log('Error retrieve: ', err);
-    return false;
+function connectToDb() {
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "test",
+    password: "123456",
+    database: "forumdb"
   });
+  con.connect(function(err){
+    if(err){
+      console.log('Error connecting to Db');
+      return;
+    }
+    console.log('Connection established');
+  });
+  return con;
+}
+
+function buildQuery(isFresh, keyword, predictorName, assetName) {
+  if(isFresh === 'true') {
+    return "SELECT * FROM news WHERE news.headline LIKE '%" + keyword + "%' AND not exists (SELECT * FROM news_checked, predictor WHERE news.id = news_checked.newsID)";
+  } else if(isFresh === 'false') {
+    var query = "SELECT * FROM news WHERE news.headline LIKE '%" + keyword + "%' AND  exists (SELECT * FROM news_checked, predictor, asset WHERE news.id = news_checked.newsID ";
+    if(predictorName) {
+      query += "AND predictor.id = news_checked.predictorID AND predictor.commonName LIKE '%" + predictorName + "%'";
+    }
+    if(assetName) {
+      query += "AND asset.id = news_checked.assetID AND asset.assetName LIKE '%" + assetName + "%')";
+    }
+    query += ")";
+    return query;
+  } else {
+    return "SELECT * FROM news";
+  }
 }
