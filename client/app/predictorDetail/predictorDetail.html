@@ -12,10 +12,10 @@
 		<p>{{predictor.description}}</p>
 
 		<h4>Prediction Return Rate:</h4>
-		<h5>Week: {{returnRate.week}}</h5>
-		<h5>Month: {{returnRate.month}}</h5>
-		<h5>Quater: {{returnRate.quater}}</h5>
-		<h5>Year: {{returnRate.year}}</h5>
+		<h5>Week: {{returnRate.week * 100 | number : 3}}%</h5>
+		<h5>Month: {{returnRate.month * 100 | number : 3}}%</h5>
+		<h5>Quater: {{returnRate.quater * 100 | number : 3}}%</h5>
+		<h5>Year: {{returnRate.year * 100 | number : 3}}%</h5>
 	</div>
 
 	<!-- PREDICTOR STATISTICS -->

@@ -92,8 +92,6 @@ function buildQuery(isFresh, keyword, predictorName, assetName, predictorId, ass
       query += "AND asset.id =" + assetId + " ";
     }
     query += ")";
-
-    console.log(query);
     return query;
   } else {
     return "SELECT * FROM news";
