@@ -157,11 +157,14 @@ function NewsController(News, $rootScope, $scope, news, Review, User, Predictor,
         review.downVote = review.downVote || 0;
         review.CannotTell = review.CannotTell || 0;
 
+        review.timeStamp = moment().format();
+
     	review.$save(function() {
     		//add to ui
-	    	review.user = User.get({ id: review.userID });	
-    		review.predictor = Predictor.get({ id: review.predictorID });	
-    		review.asset = Asset.get({ id: review.assetID });
+            $scope.users[review.userID] = User.get({ id: review.userID });    
+            $scope.predictors[review.predictorID] = Predictor.get({ id: review.predictorID });  
+            $scope.assets[review.assetID] = Asset.get({ id: review.assetID });
+            $scope.predictionDate[review.id] = moment(review.timeStamp, [moment.ISO_8601, 'YY-MM-DD HH:MM:ss']).format();
     	});
 
     	$scope.reviews.push(review);
