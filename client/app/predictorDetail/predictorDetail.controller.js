@@ -36,21 +36,6 @@ function PredictorDetailController ($scope, $q, $stateParams, Predictor, faceboo
 		  };
 		});
 
-		//load return rate info
-		/*$scope.returnRate = {
-		  week: statistic.returnRateByPredictor($stateParams.id, 7),
-		  month: statistic.returnRateByPredictor($stateParams.id, 30),
-		  quater: statistic.returnRateByPredictor($stateParams.id, 90),
-		  year: statistic.returnRateByPredictor($stateParams.id, 365)
-		};*/
-
-		/*$scope.returnRate = {
-			week: 0.081231,
-			month: -0.09343534,
-			quater: 0.1534543,
-			year: 0.3431231
-		}*/
-
 		facebook.parseElements();
 	};
 }

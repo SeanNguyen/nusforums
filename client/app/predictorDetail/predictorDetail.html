@@ -12,10 +12,10 @@
 		<p>{{predictor.description}}</p>
 
 		<h4>Prediction Return Rate:</h4>
-		<h5>Week: {{returnRate.week * 100 | number : 3}}%</h5>
-		<h5>Month: {{returnRate.month * 100 | number : 3}}%</h5>
-		<h5>Quater: {{returnRate.quater * 100 | number : 3}}%</h5>
-		<h5>Year: {{returnRate.year * 100 | number : 3}}%</h5>
+		<h5>Week: <span ng-show='!returnRate.week'>calculating</span><span ng-show='returnRate.week'>{{returnRate.week * 100 | number : 3}}%</span></h5>
+		<h5>Month: <span ng-show='!returnRate.month'>calculating</span><span ng-show='returnRate.week'>{{returnRate.month * 100 | number : 3}}%</span></h5>
+		<h5>Quater: <span ng-show='!returnRate.quater'>calculating</span><span ng-show='returnRate.week'>{{returnRate.quater * 100 | number : 3}}%</span></h5>
+		<h5>Year: <span ng-show='!returnRate.year'>calculating</span><span ng-show='returnRate.week'>{{returnRate.year * 100 | number : 3}}%</span></h5>
 	</div>
 
 	<!-- PREDICTOR STATISTICS -->
