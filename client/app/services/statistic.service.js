@@ -114,35 +114,9 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', 'Review', function($ht
         return rate.returnRate;
       });
       
-      console.log('Average: ', getAverage(rates));
       return getAverage(rates);
     });
 
-    // get startDate from original news, then get price from assetPrice
-
-
-
-    // return predictionByPredictor(predictorId)
-    // .then(function(res) {
-    //   var predictions = res.data;
-      
-    //   return predictions.map(function(prediction) {
-    //     return returnRate(prediction.assetID, prediction.timeStamp, prediction.timeStamp + duration);
-    //   });
-    // })
-    // .then(function(promises) {
-
-    //   $q.all(promises)
-    //   .then(function(res) {
-
-    //   });
-    // });
-
-    /*var returnRateList = predictions.map(function(prediction) {
-      return returnRate(prediction.assetID, prediction.time, prediction.time + duration);
-    });
-    
-    return getAverage(returnRateList);*/
   };
 
   return {
