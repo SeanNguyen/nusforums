@@ -1,6 +1,6 @@
 var app = angular.module('ratingApp');
 
-app.factory('statistic', ['$http', '$q', 'News', 'Asset', function($http, $q, News, Asset) {
+app.factory('statistic', ['$http', '$q', 'News', 'Asset', 'Review', function($http, $q, News, Asset, Review) {
   
   // get price by date
   function priceByAssetAndDate(priceId, startDate, endDate) {
@@ -8,7 +8,6 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', function($http, $q, Ne
   };
 
   function predictionByPredictor(predictorId) {
-  
     return $http.get('/api/checked_news', {params: {predictorID: predictorId}});
   };
 
@@ -34,8 +33,10 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', function($http, $q, Ne
       var prices = res.data;
       if(prices.length === 0)
         return 0;
+
       var firstPrice = prices[0].close;
       var lastPrice = prices[prices.length - 1].close;
+
       return (lastPrice - firstPrice) / firstPrice;
     });
   };
@@ -43,6 +44,20 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', function($http, $q, Ne
   function returnRateByAssetAndPredictor(assetId, predictorId, duration) {
     //get all the news that have this predictor and this asset
     var priceId;
+
+    if (assetId <= 0) {
+      var deferred = $q.defer();
+
+      var res = {
+          assetId: assetId,
+          predictorId: predictorId,
+          returnRate: 0
+      };
+      deferred.resolve(res);
+
+      return deferred.promise;
+    };
+
     var promise = Asset.get({id: assetId}).$promise
     .then(function(asset) {
       priceId = asset.ticker1;
@@ -63,11 +78,36 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', function($http, $q, Ne
     .then(function(rates) {
       return {assetId: assetId, predictorId: predictorId, duration: duration, returnRate: getAverage(rates)};
     });
+
     return promise;
   };
-
+  
+  /**
+   * Get average return rate for all assets of one predictor in all predictions predictions(checked_news)
+   */
   function returnRateByPredictor(predictorId, duration) {
     
+    // find all predictions in with predictorId
+    return Review.query({
+      predictorId: predictorId
+    }).$promise
+    .then(function(check_news) {
+      // get all predictions of this particular predictor
+      var promises = check_news.map(function(news) {
+        var assetId = news.assetID;
+        return returnRateByAssetAndPredictor(assetId, predictorId, duration);
+      });
+      
+      return $q.all(promises);
+    })
+    .then(function(rates) {
+      console.log('Rates: ', rates);
+      return getAverage(rates);
+    });
+
+    // get startDate from original news, then get price from assetPrice
+
+
 
     // return predictionByPredictor(predictorId)
     // .then(function(res) {
