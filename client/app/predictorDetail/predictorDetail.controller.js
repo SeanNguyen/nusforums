@@ -1,9 +1,9 @@
 'use-strict';
 var app = angular.module('ratingApp');
 
-app.controller('PredictorDetailController', ['$scope', '$log', '$stateParams', 'Predictor', 'facebook','statistic', PredictorDetailController]);
+app.controller('PredictorDetailController', ['$scope', '$q', '$stateParams', 'Predictor', 'facebook','statistic', PredictorDetailController]);
 
-function PredictorDetailController ($scope, $log, $stateParams, Predictor, facebook, statistic) {
+function PredictorDetailController ($scope, $q, $stateParams, Predictor, facebook, statistic) {
 	$scope.predictor;
 	$scope.loaded;
 	$scope.returnRate;
@@ -19,14 +19,31 @@ function PredictorDetailController ($scope, $log, $stateParams, Predictor, faceb
 			$scope.loaded = true;
 		});
 
+		var promises = [
+          statistic.returnRateByPredictor($stateParams.id, 7),
+          statistic.returnRateByPredictor($stateParams.id, 30),
+          statistic.returnRateByPredictor($stateParams.id, 90),
+          statistic.returnRateByPredictor($stateParams.id, 365)
+		];
+
+		$q.all(promises)
+		.then(function(res) {
+		  $scope.returnRate = {
+			week: res[0],
+			month: res[1],
+			quater: res[2],
+			year: res[3]
+		  };
+		});
+
 		//load return rate info
-		$scope.returnRate = {
+		/*$scope.returnRate = {
 		  week: statistic.returnRateByPredictor($stateParams.id, 7),
 		  month: statistic.returnRateByPredictor($stateParams.id, 30),
 		  quater: statistic.returnRateByPredictor($stateParams.id, 90),
 		  year: statistic.returnRateByPredictor($stateParams.id, 365)
-		};
-		
+		};*/
+
 		/*$scope.returnRate = {
 			week: 0.081231,
 			month: -0.09343534,

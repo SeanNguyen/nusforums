@@ -28,6 +28,13 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', 'Review', function($ht
   };
 
   function returnRate(priceId, startDate, endDate) {
+
+    if (!priceId) {
+      var deferred = $q.defer();
+      deferred.resolve(0);
+      return deferred.promise;
+    }
+
     return priceByAssetAndDate(priceId, startDate, endDate)
     .then(function(res) {
       var prices = res.data;
@@ -47,20 +54,20 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', 'Review', function($ht
 
     if (assetId <= 0) {
       var deferred = $q.defer();
-
-      var res = {
-          assetId: assetId,
-          predictorId: predictorId,
-          returnRate: 0
-      };
-      deferred.resolve(res);
+      deferred.resolve({
+        assetId: assetId,
+        predictorId: predictorId,
+        returnRate: 0
+      });
 
       return deferred.promise;
-    };
+
+    } else {
 
     var promise = Asset.get({id: assetId}).$promise
     .then(function(asset) {
       priceId = asset.ticker1;
+
       return News.query({ isFresh: false, assetId: assetId, predictorId: predictorId, keyword: ''}).$promise;
     })
     .then(function(news) {
@@ -80,6 +87,7 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', 'Review', function($ht
     });
 
     return promise;
+  }
   };
   
   /**
@@ -101,7 +109,12 @@ app.factory('statistic', ['$http', '$q', 'News', 'Asset', 'Review', function($ht
       return $q.all(promises);
     })
     .then(function(rates) {
-      console.log('Rates: ', rates);
+
+      var rates = rates.map(function(rate) {
+        return rate.returnRate;
+      });
+      
+      console.log('Average: ', getAverage(rates));
       return getAverage(rates);
     });
 
